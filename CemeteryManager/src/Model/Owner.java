@@ -1,17 +1,20 @@
 package Model;
 
-public class User {
+public class Owner {
 	private int id;
 	private String firstName;
 	private String lastName;
-	private String type;
+	private String domicile;
+	private int receipt; // chitanta de plata
 
-	public User(int id, String firstName, String lastName, String type) {
+	public Owner(int id, String firstName, String lastName, String domicile,
+			int receipt) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.type = type;
+		this.domicile = domicile;
+		this.receipt = receipt;
 	}
 
 	public int getId() {
@@ -38,12 +41,19 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getType() {
-		return type;
+	public String getDomicile() {
+		return domicile;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setDomicile(String domicile) {
+		this.domicile = domicile;
 	}
 
+	public int getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(int receipt) {
+		this.receipt = receipt;
+	}
 }
