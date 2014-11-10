@@ -4,20 +4,20 @@ public class Grave {
 	private int id;
 	private String cemetery;
 	private String parcel;
-	private int idOwner; // daca exista
+	private Owner  owner; // daca exista
 	private String surface;
-	private int idObservation;
+	private Observation observation;
 	private String type;
 
-	public Grave(int id, String cemetery, String parcel, int idOwner,
-			String surface, int idObservation, String type) {
+	public Grave(int id, String cemetery, String parcel, Owner owner,
+			String surface, Observation observation, String type) {
 		super();
 		this.id = id;
 		this.cemetery = cemetery;
 		this.parcel = parcel;
-		this.idOwner = idOwner;
+		this.owner = owner;
 		this.surface = surface;
-		this.idObservation = idObservation;
+		this.observation = observation;
 		this.type = type;
 	}
 
@@ -53,12 +53,12 @@ public class Grave {
 		this.parcel = parcel;
 	}
 
-	public int getIdOwner() {
-		return idOwner;
+	public Owner getOwner() {
+		return owner;
 	}
 
-	public void setIdOwner(int idOwner) {
-		this.idOwner = idOwner;
+	public void setIdOwner(Owner owner) {
+		this.owner = owner;
 	}
 
 	public String getSurface() {
@@ -69,11 +69,11 @@ public class Grave {
 		this.surface = surface;
 	}
 
-	public int getIdObservation() {
-		return idObservation;
+	public Observation getObservation() {
+		return observation;
 	}
 
-	public void setIdObservation(int idObservation) {
-		this.idObservation = idObservation;
+	public void setObservation(Observation observation) {
+		this.observation = observation;
 	}
 }

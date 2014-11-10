@@ -7,17 +7,17 @@ public class Deceased {
 	private String firstName;
 	private String lastName;
 	private String religion;
-	private int idGrave;
+	private Grave grave;
 	private Date burialDate;
 
 	public Deceased(int id, String firstName, String lastName, String religion,
-			int idGrave, Date burialDate) {
+			Grave grave, Date burialDate) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.religion = religion;
-		this.idGrave = idGrave;
+		this.grave = grave;
 		this.burialDate = burialDate;
 	}
 
@@ -53,12 +53,12 @@ public class Deceased {
 		this.religion = religion;
 	}
 
-	public int getIdGrave() {
-		return idGrave;
+	public Grave getGrave() {
+		return grave;
 	}
 
-	public void setIdGrave(int idGrave) {
-		this.idGrave = idGrave;
+	public void setGrave(Grave grave) {
+		this.grave = grave;
 	}
 
 	public Date getBurialDate() {
