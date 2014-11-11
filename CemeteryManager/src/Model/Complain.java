@@ -2,14 +2,22 @@ package Model;
 
 public class Complain {
 	private int id;
-	private String complainer;
+	private Person complainer;
 	private String reason;
-
-	public Complain(int id, String complainer, String reason) {
+	
+	public Complain(int id, Person complainer, String reason) {
 		super();
 		this.id = id;
 		this.complainer = complainer;
 		this.reason = reason;
+	}	
+
+	public Person getComplainer() {
+		return complainer;
+	}
+
+	public void setComplainer(Person complainer) {
+		this.complainer = complainer;
 	}
 
 	public int getId() {
@@ -20,13 +28,6 @@ public class Complain {
 		this.id = id;
 	}
 
-	public String getComplainer() {
-		return complainer;
-	}
-
-	public void setComplainer(String complainer) {
-		this.complainer = complainer;
-	}
 
 	public String getReason() {
 		return reason;

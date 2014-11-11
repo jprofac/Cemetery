@@ -1,44 +1,25 @@
 package Model;
 
-public class Owner {
-	private int id;
-	private String firstName;
-	private String lastName;
+public class Owner extends Person {
 	private String domicile;
 	private int receipt; // chitanta de plata
-
+	private String period;
+	
+	
 	public Owner(int id, String firstName, String lastName, String domicile,
-			int receipt) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
+			int receipt, String period) {
+		super(id, firstName, lastName);
 		this.domicile = domicile;
 		this.receipt = receipt;
+		this.period = period;
 	}
 
-	public int getId() {
-		return id;
+	public String getPeriod() {
+		return period;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setPeriod(String period) {
+		this.period = period;
 	}
 
 	public String getDomicile() {
@@ -55,5 +36,6 @@ public class Owner {
 
 	public void setReceipt(int receipt) {
 		this.receipt = receipt;
-	}
+	}	
+	
 }
