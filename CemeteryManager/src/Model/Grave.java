@@ -2,18 +2,16 @@ package Model;
 
 public class Grave {
 	private int id;
-	private int cemeteryId;
 	private int parcelId;
 	private int  ownerId; // daca exista
 	private String surface;
 	private int observationId;
 	private String type;
 	
-	public Grave(int id, int cemeteryId, int parcelId, int ownerId,
+	public Grave(int id, int parcelId, int ownerId,
 			String surface, int observationId, String type) {
 		super();
 		this.id = id;
-		this.cemeteryId = cemeteryId;
 		this.parcelId = parcelId;
 		this.ownerId = ownerId;
 		this.surface = surface;
@@ -27,14 +25,6 @@ public class Grave {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getCemeteryId() {
-		return cemeteryId;
-	}
-
-	public void setCemeteryId(int cemeteryId) {
-		this.cemeteryId = cemeteryId;
 	}
 
 	public int getParcelId() {
