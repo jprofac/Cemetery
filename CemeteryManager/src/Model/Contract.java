@@ -7,13 +7,18 @@ public class Contract {
 	private int ownerId;
 	private int graveId;
 	private Date date;
-	
-	public Contract(int id, int ownerId, int graveId, Date date) {
+	private int period;
+	private int receipt;	//numarul chitantei de plata
+
+	public Contract(int id, int ownerId, int graveId, Date date, int period,
+			int receipt) {
 		super();
 		this.id = id;
 		this.ownerId = ownerId;
 		this.graveId = graveId;
 		this.date = date;
+		this.receipt = receipt;
+		this.period = period;
 	}
 
 	public int getId() {
@@ -47,4 +52,21 @@ public class Contract {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	public int getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(int receipt) {
+		this.receipt = receipt;
+	}
+
+	public int getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+
 }

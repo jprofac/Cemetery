@@ -3,17 +3,14 @@ package Model;
 public class Grave {
 	private int id;
 	private int parcelId;
-	private int  ownerId; // daca exista
-	private String surface;
+	private int surface;
 	private int observationId;
 	private String type;
 	
-	public Grave(int id, int parcelId, int ownerId,
-			String surface, int observationId, String type) {
+	public Grave(int id, int parcelId, int surface, int observationId, String type) {
 		super();
 		this.id = id;
 		this.parcelId = parcelId;
-		this.ownerId = ownerId;
 		this.surface = surface;
 		this.observationId = observationId;
 		this.type = type;
@@ -35,19 +32,12 @@ public class Grave {
 		this.parcelId = parcelId;
 	}
 
-	public int getOwnerId() {
-		return ownerId;
-	}
 
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
-	}
-
-	public String getSurface() {
+	public int getSurface() {
 		return surface;
 	}
 
-	public void setSurface(String surface) {
+	public void setSurface(int surface) {
 		this.surface = surface;
 	}
 

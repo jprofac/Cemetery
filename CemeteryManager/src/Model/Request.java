@@ -3,13 +3,12 @@ package Model;
 import java.util.Date;
 
 public class Request {
-	public static int field = 0;
 	private int id;
 	private Date date;
-	private String infocet;
+	private int infocet;
 	private boolean completed; // stadiu de solutionare
 
-	public Request(int id, Date date, String infocet, boolean completed) {
+	public Request(int id, Date date, int infocet, boolean completed) {
 		super();
 		this.id = id;
 		this.date = date;
@@ -17,13 +16,6 @@ public class Request {
 		this.completed = completed;
 	}
 
-	public static int getField() {
-		return field;
-	}
-
-	public static void setField(int field) {
-		Request.field = field;
-	}
 
 	public int getId() {
 		return id;
@@ -41,11 +33,11 @@ public class Request {
 		this.date = date;
 	}
 
-	public String getInfocet() {
+	public int getInfocet() {
 		return infocet;
 	}
 
-	public void setInfocet(String infocet) {
+	public void setInfocet(int infocet) {
 		this.infocet = infocet;
 	}
 
