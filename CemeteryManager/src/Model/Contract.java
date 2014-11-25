@@ -4,19 +4,16 @@ import java.util.Date;
 
 public class Contract {
 	private int id;
+	private int ownerId;
+	private int graveId;
 	private Date date;
-	private String lastName;
-	private String firstName;
-	private String address;
-
-	public Contract(int id, Date date, String lastName, String firstName,
-			String address) {
+	
+	public Contract(int id, int ownerId, int graveId, Date date) {
 		super();
 		this.id = id;
+		this.ownerId = ownerId;
+		this.graveId = graveId;
 		this.date = date;
-		this.lastName = lastName;
-		this.firstName = firstName;
-		this.address = address;
 	}
 
 	public int getId() {
@@ -27,35 +24,27 @@ public class Contract {
 		this.id = id;
 	}
 
+	public int getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public int getGraveId() {
+		return graveId;
+	}
+
+	public void setGraveId(int graveId) {
+		this.graveId = graveId;
+	}
+
 	public Date getDate() {
 		return date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 }

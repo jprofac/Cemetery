@@ -2,30 +2,22 @@ package Model;
 
 public class Grave {
 	private int id;
-	private String cemetery;
-	private String parcel;
-	private Owner  owner; // daca exista
+	private int cemeteryId;
+	private int parcelId;
+	private int  ownerId; // daca exista
 	private String surface;
-	private Observation observation;
+	private int observationId;
 	private String type;
-
-	public Grave(int id, String cemetery, String parcel, Owner owner,
-			String surface, Observation observation, String type) {
+	
+	public Grave(int id, int cemeteryId, int parcelId, int ownerId,
+			String surface, int observationId, String type) {
 		super();
 		this.id = id;
-		this.cemetery = cemetery;
-		this.parcel = parcel;
-		this.owner = owner;
+		this.cemeteryId = cemeteryId;
+		this.parcelId = parcelId;
+		this.ownerId = ownerId;
 		this.surface = surface;
-		this.observation = observation;
-		this.type = type;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
+		this.observationId = observationId;
 		this.type = type;
 	}
 
@@ -37,28 +29,28 @@ public class Grave {
 		this.id = id;
 	}
 
-	public String getCemetery() {
-		return cemetery;
+	public int getCemeteryId() {
+		return cemeteryId;
 	}
 
-	public void setCemetery(String cemetery) {
-		this.cemetery = cemetery;
+	public void setCemeteryId(int cemeteryId) {
+		this.cemeteryId = cemeteryId;
 	}
 
-	public String getParcel() {
-		return parcel;
+	public int getParcelId() {
+		return parcelId;
 	}
 
-	public void setParcel(String parcel) {
-		this.parcel = parcel;
+	public void setParcelId(int parcelId) {
+		this.parcelId = parcelId;
 	}
 
-	public Owner getOwner() {
-		return owner;
+	public int getOwnerId() {
+		return ownerId;
 	}
 
-	public void setIdOwner(Owner owner) {
-		this.owner = owner;
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 
 	public String getSurface() {
@@ -69,11 +61,24 @@ public class Grave {
 		this.surface = surface;
 	}
 
-	public Observation getObservation() {
-		return observation;
+	public int getObservationId() {
+		return observationId;
 	}
 
-	public void setObservation(Observation observation) {
-		this.observation = observation;
+	public void setObservationId(int observationId) {
+		this.observationId = observationId;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
+	
 }
+
+	

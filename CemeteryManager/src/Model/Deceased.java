@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Deceased extends Person {
 	private String religion;
-	private Grave grave;
+	private int graveId;
 	private Date burialDate;	
 	
 	public Deceased(int id, String firstName, String lastName, String religion,
-			Grave grave, Date burialDate) {
+			int grave, Date burialDate) {
 		super(id, firstName, lastName);
 		this.religion = religion;
-		this.grave = grave;
+		this.graveId = grave;
 		this.burialDate = burialDate;
 	}
 	
@@ -21,11 +21,11 @@ public class Deceased extends Person {
 	public void setReligion(String religion) {
 		this.religion = religion;
 	}
-	public Grave getGrave() {
-		return grave;
+	public int getGrave() {
+		return graveId;
 	}
-	public void setGrave(Grave grave) {
-		this.grave = grave;
+	public void setGrave(int grave) {
+		this.graveId = grave;
 	}
 	public Date getBurialDate() {
 		return burialDate;
