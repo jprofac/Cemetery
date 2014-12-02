@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Date;
 
-public class Request {
+public class Request  implements Data{
 	private int id;
 	private Date date;
 	private int infocet;
@@ -47,5 +47,12 @@ public class Request {
 
 	public void setCompleted(boolean comleted) {
 		this.completed = comleted;
+	}
+
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

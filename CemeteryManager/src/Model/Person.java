@@ -1,6 +1,6 @@
 package Model;
 
-public class Person {
+public class Person  implements Data{
 	int id;
 	String firstName;
 	String lastName;
@@ -35,6 +35,16 @@ public class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+	@Override
+	public boolean isValid() {
+		if (id <=0 && firstName.matches("[a-zA-Z]+") && lastName.matches("[a-zA-Z]+")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	
 }

@@ -1,6 +1,6 @@
 package Model;
 
-public class Cemetery {
+public class Cemetery  implements Data{
 	int id;
 	String name;
 	String address;
@@ -34,6 +34,14 @@ public class Cemetery {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	@Override
+	public boolean isValid() {
+		if (name.matches("[a-zA-Z]+") && address.matches("[a-zA-z0-9.,]+")) {
+			return true;
+		}
+		return false;
 	}
 	
 	

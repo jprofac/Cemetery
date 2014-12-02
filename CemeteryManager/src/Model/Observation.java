@@ -1,6 +1,6 @@
 package Model;
 
-public class Observation {
+public class Observation  implements Data{
 	private int id;
 	private boolean tomb; // existenta/inexistenta constructiilor funerare
 	private int modificationNr; // nrActuluiModificari
@@ -45,6 +45,12 @@ public class Observation {
 
 	public void setPhotography(String photography) {
 		this.photography = photography;
+	}
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Date;
 
-public class Contract {
+public class Contract implements Data{
 	private int id;
 	private int ownerId;
 	private int graveId;
@@ -68,5 +68,12 @@ public class Contract {
 	public void setPeriod(int period) {
 		this.period = period;
 	}
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

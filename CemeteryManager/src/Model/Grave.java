@@ -1,6 +1,6 @@
 package Model;
 
-public class Grave {
+public class Grave  implements Data{
 	private int id;
 	private int parcelId;
 	private int surface;
@@ -55,6 +55,12 @@ public class Grave {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

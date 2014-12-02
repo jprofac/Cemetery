@@ -1,18 +1,40 @@
 package Repository;
 
-import java.security.acl.Owner;
-import java.util.List;
-
-import Model.Complainer;
-import Model.Contract;
-import Model.Deceased;
-import Model.Grave;
-import Model.Observation;
-import Model.Request;
-import Model.User;
-
 public class Repository {
-	private List<Deceased> deceased;
+	
+	
+	//the main repository hold the sub repositories as public fields
+	// we can access the through a Repository object in the controller
+	// such as rep.cemeteryRepo.*method*(*params*);
+	public CemeteryRepo cemeteryRepo;
+	public ComplainerRepo complainerRepo;
+	public ContractRepo contractRepo;
+	public DeceasedRepo deceasedRepo;
+	public GraveRepo graveRepo;
+	public ObservationRepo observationRepo;
+	public RequestRepo requestRepo;
+	public UserRepo userRepo;
+	public ParcelRepo parcelRepo;
+	public OwnerRepo ownerRepo;
+	
+	public Repository(){
+		try {
+		cemeteryRepo = new CemeteryRepo();
+		complainerRepo = new ComplainerRepo();
+		contractRepo = new ContractRepo();
+		deceasedRepo = new DeceasedRepo();
+		graveRepo = new GraveRepo();
+		observationRepo = new ObservationRepo();
+		requestRepo = new RequestRepo();
+		userRepo = new UserRepo();
+		parcelRepo = new ParcelRepo();
+		ownerRepo = new OwnerRepo();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	/*private List<Deceased> deceased;
 	private List<Contract> contracts;
 	private List<Observation> observations;
 	private List<Owner> owners;
@@ -84,6 +106,6 @@ public class Repository {
 	public void updateUser(User u){}
 	public void deleteUser(User u){}
 	public User uetUserById(int id){return null;}
-	public List<User> searchUser(String s){return null;}
+	public List<User> searchUser(String s){return null;}*/
 	
 }

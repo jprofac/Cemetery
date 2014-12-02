@@ -1,6 +1,6 @@
 package Model;
 
-public class Parcel {
+public class Parcel  implements Data{
 	int id;
 	String code;		//ex. A1 or B3
 	int cemeteryId;
@@ -30,5 +30,11 @@ public class Parcel {
 	}
 	public void setCemeteryId(int cemeteryId) {
 		this.cemeteryId = cemeteryId;
+	}
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
