@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Model.Cemetery;
+import Model.Data;
 import Model.Request;
 
 import com.mysql.jdbc.Statement;
@@ -26,81 +28,39 @@ public class RequestRepo {
 	}
 
 	public List<Request> getAllRequest() throws SQLException {
-		allRequest = new ArrayList<Request>();
-		resultSet = statement.executeQuery("select * from request");
-		while (resultSet.next()) {
-			int id = resultSet.getInt("id");
-			Date date = resultSet.getDate("date");
-			int infocet = resultSet.getInt("infocet");
-			boolean completed = resultSet.getBoolean("completed");
-			Request newRequest = new Request(id, date, infocet, completed);
-			allRequest.add(newRequest);
+		ArrayList<Request> list = new ArrayList<Request>();
+		for (Data d : DataBase.getInstance().getAll(DataBase.REQUEST)){
+			list.add((Request) d);
 		}
-		return allRequest;
+		return list;
 	}
 
 	public void addRequest(Request g) throws SQLException {
-		if (getRequestById(g.getId()) == null) {
-			preparedStatement = connect
-					.prepareStatement("insert into  request values (?, ?, ?, ?)");
-			preparedStatement.setInt(1, g.getId());
-			preparedStatement.setDate(2, (Date) g.getDate());
-			preparedStatement.setInt(3, g.getInfocet());
-			preparedStatement.setBoolean(4, g.isCompleted());
-			preparedStatement.executeUpdate();
-			allRequest.add(g);
-		}
+		DataBase.getInstance().addData(g);
 	}
 
 	public void updateRequest(Request g) throws SQLException {
-		if (getRequestById(g.getId()) != null) {
-			preparedStatement = connect
-					.prepareStatement("update request set date = ?, infocet = ?, completed = ? where id = ?");
-			preparedStatement.setDate(1, (Date) g.getDate());
-			preparedStatement.setInt(2, g.getInfocet());
-			preparedStatement.setBoolean(3, g.isCompleted());
-			preparedStatement.setInt(4, g.getId());
-			preparedStatement.executeUpdate();
-
-			for (Request request : allRequest) {
-				if (request.getId() == g.getId()) {
-					request.setDate(g.getDate());
-					request.setInfocet(g.getInfocet());
-					request.setCompleted(g.isCompleted());
-				}
-			}
-		}
+		DataBase.getInstance().updateData(g);
 	}
 
 	public void deleteRequest(Request g) throws SQLException {
-		if (getRequestById(g.getId()) != null) {
-			preparedStatement = connect
-					.prepareStatement("delete from request where id = ?");
-			preparedStatement.setInt(1, g.getId());
-			preparedStatement.executeUpdate();
-			allRequest.remove(g);
-		}
+		DataBase.getInstance().deleteData(g);
 	}
 
 	public Request getRequestById(int id) {
-		for (Request request : allRequest) {
-			if (request.getId() == id) {
-				return request;
-			}
-		}
-		return null;
+		return (Request)DataBase.getInstance().getDataById(id, DataBase.REQUEST);
 	}
 
 	public List<Request> searchRequest(String s) {
-		List<Request> searchResult = new ArrayList<Request>();
+		/*List<Request> searchResult = new ArrayList<Request>();
 		for (Request request : allRequest) {
 			String infocet = Integer.toString(request.getInfocet());
 			String date = request.getDate().toString();
 			if (date.contains(s) || infocet.contains(s)) {
 				searchResult.add(request);
 			}
-		}
-		return searchResult;
+		}*/
+		return null;
 	}
 
 	private void connectToDB() throws ClassNotFoundException, SQLException {

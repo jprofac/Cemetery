@@ -1,6 +1,7 @@
 package Repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import Model.Cemetery;
 import Model.Complainer;
 import Model.Data;
+import Model.Request;
 
 import com.mysql.jdbc.Statement;
 
@@ -90,7 +92,19 @@ public class DataBase {
 				}
 			} else if (data instanceof Complainer){
 				
-			}// else if (){...} ... treating every data type the same way
+			} else if (data instanceof Request){
+				if (getDataById(((Request) data).getId(), REQUEST) == null) {
+					preparedStatement = connect
+							.prepareStatement("insert into  request values (?, ?, ?, ?)");
+					preparedStatement.setInt(1, ((Request) data).getId());
+					preparedStatement.setDate(2, (Date) ((Request) data).getDate());
+					preparedStatement.setInt(3, ((Request) data).getInfocet());
+					preparedStatement.setBoolean(4, ((Request) data).isCompleted());
+					}
+			}
+			
+			
+			// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
@@ -109,6 +123,16 @@ public class DataBase {
 					data = new Cemetery(id, name, address);
 				}
 				break;
+			case REQUEST:
+				resultSet = statement.executeQuery("select * from request where id = "+id);
+				while (resultSet.next()) {				
+					Date date = resultSet.getDate("date");
+					int infocet = resultSet.getInt("infocet");
+					boolean completed = resultSet.getBoolean("completed");
+					data = new Request(id, date, infocet, completed);
+				}
+				break;
+				
 			//etc
 	
 			default:
@@ -132,6 +156,18 @@ public class DataBase {
 					String address = resultSet.getString("address");
 					Cemetery newCemetery = new Cemetery(id, name, address);
 					dataList.add(newCemetery);
+				}
+				break;
+			case REQUEST:
+				dataList = new ArrayList<Data>();
+				resultSet = statement.executeQuery("select * from request");
+				while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					Date date = resultSet.getDate("date");
+					int infocet = resultSet.getInt("infocet");
+					boolean completed = resultSet.getBoolean("completed");
+					Request newRequest = new Request(id, date, infocet, completed);
+					dataList.add(newRequest);
 				}
 				break;
 			//etc
@@ -164,7 +200,25 @@ public class DataBase {
 						}
 					}
 				}
-			} else if (data instanceof Complainer){
+			} else if (data instanceof Request){
+				if (((Request)data).isValid()){
+					preparedStatement = connect
+							.prepareStatement("update request set date = ?, infocet = ?, completed = ? where id = ?");
+					preparedStatement.setDate(1, (Date) ((Request)data).getDate());
+					preparedStatement.setInt(2, ((Request)data).getInfocet());
+					preparedStatement.setBoolean(3, ((Request)data).isCompleted());
+					preparedStatement.setInt(4, ((Request)data).getId());
+					preparedStatement.executeUpdate();
+					
+					for (Data request : getAll(REQUEST)) {
+						if (((Request)request).getId() == ((Request)data).getId()) {
+							((Request)request).setDate(((Request)data).getDate());
+							((Request)request).setInfocet(((Request)data).getInfocet());
+							((Request)request).setCompleted(((Request)data).isCompleted());							
+						}
+					}
+				}
+			}else if (data instanceof Complainer){
 				
 			}// else if (){...} ... treating every data type the same way
 			
@@ -183,7 +237,15 @@ public class DataBase {
 					preparedStatement.setInt(1, ((Cemetery)data).getId());
 					preparedStatement.executeUpdate();
 				}
-			} else if (data instanceof Complainer){
+			} else if (data instanceof Request){
+				if (getDataById(((Request)data).getId(), REQUEST) != null) {
+					preparedStatement = connect
+							.prepareStatement("delete from request where id = ?");
+					preparedStatement.setInt(1, ((Request)data).getId());
+					preparedStatement.executeUpdate();
+				}
+			}
+			else if (data instanceof Complainer){
 				
 			}// else if (){...} ... treating every data type the same way
 			
