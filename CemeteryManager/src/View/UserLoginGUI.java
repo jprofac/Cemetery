@@ -14,12 +14,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
+import javax.swing.JPasswordField;
 
 public class UserLoginGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -54,11 +55,6 @@ public class UserLoginGUI extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(206, 120, 116, 22);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
-		
 		JLabel lblUsername = new JLabel("Nume Utilizator:");
 		lblUsername.setBounds(99, 83, 108, 19);
 		contentPane.add(lblUsername);
@@ -78,5 +74,9 @@ public class UserLoginGUI extends JFrame {
 			}
 		});
 		contentPane.add(btnLogIn);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(206, 120, 116, 22);
+		contentPane.add(passwordField);
 	}
 }
