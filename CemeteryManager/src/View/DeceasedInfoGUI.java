@@ -32,6 +32,7 @@ public class DeceasedInfoGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public DeceasedInfoGUI() {
+		setTitle("Date Decedat");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 419, 485);
 		contentPane = new JPanel();

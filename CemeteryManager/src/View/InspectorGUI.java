@@ -23,6 +23,7 @@ public class InspectorGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public InspectorGUI() {
+		setTitle("Inspector\r\n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 737, 521);
 		contentPane = new JPanel();

@@ -26,6 +26,7 @@ public class GraveInfoGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public GraveInfoGUI() {
+		setTitle("Informatii Mormant");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 334, 485);
 		contentPane = new JPanel();

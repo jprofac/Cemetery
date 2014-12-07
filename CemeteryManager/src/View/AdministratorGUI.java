@@ -26,6 +26,7 @@ public class AdministratorGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public AdministratorGUI() {
+		setTitle("Administrator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 711, 501);
 		contentPane = new JPanel();

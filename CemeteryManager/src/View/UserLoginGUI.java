@@ -42,6 +42,7 @@ public class UserLoginGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public UserLoginGUI() {
+		setTitle("Log In");
 		setBackground(Color.DARK_GRAY);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

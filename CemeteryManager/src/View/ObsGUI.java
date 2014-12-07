@@ -22,6 +22,7 @@ public class ObsGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public ObsGUI() {
+		setTitle("Observatii");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 314, 447);
 		contentPane = new JPanel();
