@@ -85,11 +85,7 @@ public class DeceasedInfoGUI extends JFrame {
 		datePicker.setBounds(170, 234, 149, 39);
 		contentPane.add(datePicker);
 		
-		JButton button = new JButton("Salveaza");
-		button.setBounds(43, 304, 91, 25);
-		contentPane.add(button);
-		
-		JLabel lblNrMormint = new JLabel("Nr. Mormint");
+		JLabel lblNrMormint = new JLabel("Nr. Mormant");
 		lblNrMormint.setBounds(43, 200, 91, 16);
 		contentPane.add(lblNrMormint);
 		
@@ -97,6 +93,10 @@ public class DeceasedInfoGUI extends JFrame {
 		textField_4.setColumns(10);
 		textField_4.setBounds(176, 201, 115, 18);
 		contentPane.add(textField_4);
+		
+		JButton button = new JButton("Salveaza");
+		button.setBounds(12, 375, 200, 50);
+		contentPane.add(button);
 		
 		setVisible(true);
 	}

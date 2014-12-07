@@ -71,6 +71,7 @@ public class UserLoginGUI extends JFrame {
 				
 				new AdministratorGUI();
 				new InspectorGUI();
+			
 			}
 		});
 		contentPane.add(btnLogIn);

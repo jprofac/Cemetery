@@ -43,7 +43,9 @@ public class InspectorGUI extends JFrame {
 		JButton btnAdauga = new JButton("Adauga");
 		btnAdauga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//TODO separate Adauga button for the different tabs 
 				new DeceasedInfoGUI();
+				new GraveInfoGUI();
 			}
 		});
 		btnAdauga.setBounds(60, 409, 97, 25);
