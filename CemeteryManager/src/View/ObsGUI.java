@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import java.awt.Choice;
 import java.awt.Label;
 import javax.swing.JTextField;
+import net.miginfocom.swing.MigLayout;
 
 public class ObsGUI extends JFrame {
 
@@ -23,43 +24,36 @@ public class ObsGUI extends JFrame {
 	 */
 	public ObsGUI() {
 		setTitle("Observatii");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 314, 447);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 311, 255);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new MigLayout("", "[131px][20px][108px]", "[27px][27px][27px][50px]"));
 		
 		JButton btnSalveaza = new JButton("Salveaza");
-		btnSalveaza.setBounds(46, 337, 200, 50);
-		contentPane.add(btnSalveaza);
+		contentPane.add(btnSalveaza, "cell 0 3 3 1,grow");
 		
 		JLabel lblConstructiiFunerare = new JLabel("Constructii Funerare:");
-		lblConstructiiFunerare.setBounds(10, 105, 131, 27);
-		contentPane.add(lblConstructiiFunerare);
+		contentPane.add(lblConstructiiFunerare, "cell 0 0,grow");
 		
 		Choice choice = new Choice();
-		choice.setBounds(161, 105, 91, 27);
 		choice.add("Da");
 		choice.add("Nu");		
-		contentPane.add(choice);
+		contentPane.add(choice, "cell 2 0,growx,aligny top");
 		
 		textField = new JTextField();
-		textField.setBounds(161, 154, 91, 22);
-		contentPane.add(textField);
+		contentPane.add(textField, "cell 2 1,growx,aligny center");
 		textField.setColumns(10);
 		
 		JLabel lblAdaugaImagine = new JLabel("Adauga imagine:");
-		lblAdaugaImagine.setBounds(10, 207, 129, 16);
-		contentPane.add(lblAdaugaImagine);
+		contentPane.add(lblAdaugaImagine, "cell 0 2,growx,aligny center");
 		
 		JLabel label_1 = new JLabel("Nr. Actului Modificarii:");
-		label_1.setBounds(10, 152, 131, 27);
-		contentPane.add(label_1);
+		contentPane.add(label_1, "cell 0 1,grow");
 		
 		JButton btnCauta = new JButton("Cauta");
-		btnCauta.setBounds(161, 202, 108, 27);
-		contentPane.add(btnCauta);
+		contentPane.add(btnCauta, "cell 2 2,grow");
 		setVisible(true);
 	}
 }

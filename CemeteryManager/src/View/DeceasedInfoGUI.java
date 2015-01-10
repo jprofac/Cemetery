@@ -16,6 +16,7 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilCalendarModel;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import javax.swing.JButton;
+import net.miginfocom.swing.MigLayout;
 
 
 public class DeceasedInfoGUI extends JFrame {
@@ -33,71 +34,58 @@ public class DeceasedInfoGUI extends JFrame {
 	 */
 	public DeceasedInfoGUI() {
 		setTitle("Date Decedat");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 419, 485);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 363, 369);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new MigLayout("", "[146px][12px][149px]", "[18px][18px][18px][18px][19px][39px][50px]"));
 		
 		JLabel lblCnp = new JLabel("CNP: ");
-		lblCnp.setBounds(43, 84, 32, 16);
-		contentPane.add(lblCnp);
+		contentPane.add(lblCnp, "cell 0 0,alignx center,aligny bottom");
 		
 		JLabel lblNume = new JLabel("Nume:");
-		lblNume.setBounds(43, 113, 56, 16);
-		contentPane.add(lblNume);
+		contentPane.add(lblNume, "cell 0 1,alignx center,aligny bottom");
 		
 		JLabel lblPrenume = new JLabel("Prenume:");
-		lblPrenume.setBounds(43, 142, 56, 16);
-		contentPane.add(lblPrenume);
+		contentPane.add(lblPrenume, "cell 0 2,alignx center,aligny top");
 		
 		JLabel lblReligia = new JLabel("Religia:");
-		lblReligia.setBounds(43, 171, 56, 16);
-		contentPane.add(lblReligia);
+		contentPane.add(lblReligia, "cell 0 3,alignx center,aligny top");
 		
 		JLabel lblTimpulInhumarii = new JLabel("Timpul Inhumarii:");
-		lblTimpulInhumarii.setBounds(43, 234, 115, 16);
-		contentPane.add(lblTimpulInhumarii);
+		contentPane.add(lblTimpulInhumarii, "cell 0 5,alignx right,aligny top");
 		
 		textField = new JTextField();
-		textField.setBounds(176, 82, 115, 18);
-		contentPane.add(textField);
+		contentPane.add(textField, "cell 2 0,alignx left,growy");
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(176, 111, 115, 18);
-		contentPane.add(textField_1);
+		contentPane.add(textField_1, "cell 2 1,alignx left,growy");
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(176, 142, 115, 18);
-		contentPane.add(textField_2);
+		contentPane.add(textField_2, "cell 2 2,alignx left,growy");
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(176, 171, 115, 18);
-		contentPane.add(textField_3);
+		contentPane.add(textField_3, "cell 2 3,alignx left,growy");
 			
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
 		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
-		datePicker.setBounds(170, 234, 149, 39);
-		contentPane.add(datePicker);
+		contentPane.add(datePicker, "cell 2 5,grow");
 		
 		JLabel lblNrMormint = new JLabel("Nr. Mormant");
-		lblNrMormint.setBounds(43, 200, 91, 16);
-		contentPane.add(lblNrMormint);
+		contentPane.add(lblNrMormint, "cell 0 4,alignx center,aligny top");
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(176, 201, 115, 18);
-		contentPane.add(textField_4);
+		contentPane.add(textField_4, "cell 2 4,alignx left,growy");
 		
 		JButton button = new JButton("Salveaza");
-		button.setBounds(12, 375, 200, 50);
-		contentPane.add(button);
+		contentPane.add(button, "cell 0 6 3 1,grow");
 		
 		setVisible(true);
 	}

@@ -13,8 +13,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import net.miginfocom.swing.MigLayout;
 
 public class InspectorGUI extends JFrame {
+
 
 	private JPanel contentPane;
 
@@ -23,23 +25,23 @@ public class InspectorGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public InspectorGUI() {
+	
 		setTitle("Inspector\r\n");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 737, 521);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new MigLayout("", "[180px][91px][140px][79px][160px]", "[336px][50px]"));
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(20, 20, 650, 336);
 		JTable decedati = new JTable();
 		JTable morminte = new JTable();
 		JTable monumente = new JTable();
 		tabbedPane.addTab("Decedati", decedati);
 		tabbedPane.addTab("Morminte", morminte);
 		tabbedPane.addTab("Monumente", monumente);
-		contentPane.add(tabbedPane);
+		contentPane.add(tabbedPane, "cell 0 0 5 1,grow");
 		
 		JButton btnAdauga = new JButton("Adauga");
 		btnAdauga.addActionListener(new ActionListener() {
@@ -49,16 +51,13 @@ public class InspectorGUI extends JFrame {
 				new GraveInfoGUI();
 			}
 		});
-		btnAdauga.setBounds(60, 409, 97, 25);
-		contentPane.add(btnAdauga);
+		contentPane.add(btnAdauga, "cell 0 1,grow");
 		
 		JButton btnModifica = new JButton("Modifica");
-		btnModifica.setBounds(291, 409, 97, 25);
-		contentPane.add(btnModifica);
+		contentPane.add(btnModifica, "cell 2 1,grow");
 		
 		JButton btnDelete = new JButton("Delete");
-		btnDelete.setBounds(510, 409, 97, 25);
-		contentPane.add(btnDelete);
+		contentPane.add(btnDelete, "cell 4 1,grow");
 		setVisible(true);
 	}
 }

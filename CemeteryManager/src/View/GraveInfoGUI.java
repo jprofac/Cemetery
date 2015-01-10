@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import net.miginfocom.swing.MigLayout;
 
 public class GraveInfoGUI extends JFrame {
 
@@ -27,57 +28,47 @@ public class GraveInfoGUI extends JFrame {
 	 */
 	public GraveInfoGUI() {
 		setTitle("Informatii Mormant");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 334, 485);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 271, 315);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new MigLayout("", "[86px][1px][123px]", "[18px][18px][18px][18px][18px][25px][50px]"));
 		
 		JLabel lblNewLabel = new JLabel("Nr. Mormant:");
-		lblNewLabel.setBounds(50, 101, 86, 16);
-		contentPane.add(lblNewLabel);
+		contentPane.add(lblNewLabel, "cell 0 0,growx,aligny center");
 		
 		JLabel label = new JLabel("Cimitirul:");
-		label.setBounds(50, 130, 56, 16);
-		contentPane.add(label);
+		contentPane.add(label, "cell 0 1,alignx left,aligny top");
 		
 		JLabel label_1 = new JLabel("Parcela:");
-		label_1.setBounds(50, 161, 56, 16);
-		contentPane.add(label_1);
+		contentPane.add(label_1, "cell 0 2,alignx left,aligny bottom");
 		
 		JLabel label_2 = new JLabel("Detinator:");
-		label_2.setBounds(50, 190, 75, 16);
-		contentPane.add(label_2);
+		contentPane.add(label_2, "cell 0 3,growx,aligny bottom");
 		
 		JLabel label_3 = new JLabel("Suprafata:");
-		label_3.setBounds(50, 219, 75, 16);
-		contentPane.add(label_3);
+		contentPane.add(label_3, "cell 0 4,growx,aligny top");
 		
 		textField = new JTextField();
-		textField.setBounds(137, 100, 105, 18);
-		contentPane.add(textField);
+		contentPane.add(textField, "cell 2 0,alignx left,growy");
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
-		textField_1.setBounds(137, 130, 105, 18);
-		contentPane.add(textField_1);
+		contentPane.add(textField_1, "cell 2 1,alignx left,growy");
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		textField_2.setBounds(137, 159, 105, 18);
-		contentPane.add(textField_2);
+		contentPane.add(textField_2, "cell 2 2,alignx left,growy");
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(137, 188, 105, 18);
-		contentPane.add(textField_3);
+		contentPane.add(textField_3, "cell 2 3,alignx left,growy");
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(137, 219, 105, 18);
-		contentPane.add(textField_4);
+		contentPane.add(textField_4, "cell 2 4,alignx left,growy");
 		
 		JButton btnObservatii = new JButton("Observatii");
 		btnObservatii.addActionListener(new ActionListener() {
@@ -85,12 +76,10 @@ public class GraveInfoGUI extends JFrame {
 				new ObsGUI();
 			}
 		});
-		btnObservatii.setBounds(93, 260, 94, 25);
-		contentPane.add(btnObservatii);
+		contentPane.add(btnObservatii, "cell 0 5 3 1,alignx center,aligny top");
 		
 		button_1 = new JButton("Salveaza");
-		button_1.setBounds(60, 375, 200, 50);
-		contentPane.add(button_1);
+		contentPane.add(button_1, "cell 0 6 3 1,grow");
 		setVisible(true);
 	}
 

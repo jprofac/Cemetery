@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
+import net.miginfocom.swing.MigLayout;
 
 public class AdministratorGUI extends JFrame {
 
@@ -27,42 +28,38 @@ public class AdministratorGUI extends JFrame {
 	 */
 	public AdministratorGUI() {
 		setTitle("Administrator");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 711, 501);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBounds(100, 100, 667, 502);
 		setContentPane(contentPane);
 		
 		JButton btnAddUser = new JButton("Adauga Utilizator");
-		btnAddUser.setBounds(56, 405, 141, 25);
 		btnAddUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 				new AddUserGUI(-1);
 			}
 		});
-		contentPane.setLayout(null);
-		contentPane.add(btnAddUser);
+		contentPane.setLayout(new MigLayout("", "[205px][25px][140px][89px][140px]", "[302px][25px][50px]"));
+		contentPane.add(btnAddUser, "cell 0 2,alignx left,growy");
 		
 		table_1 = new JTable();
-		table_1.setBounds(46, 47, 594, 302);
-		contentPane.add(table_1);
+		contentPane.add(table_1, "cell 0 0 5 1,grow");
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(46, 362, 116, 22);
-		contentPane.add(textField_3);
+		contentPane.add(textField_3, "cell 0 1,growx,aligny top");
 		textField_3.setColumns(10);
 		
 		JButton btnSearch = new JButton("Cauta Utilizator");
-		btnSearch.setBounds(174, 361, 119, 25);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO search for users in table
 			}
 		});
-		contentPane.add(btnSearch);
+		contentPane.add(btnSearch, "cell 2 1,growx,aligny top");
 		
 		JButton btnModify = new JButton("Modifica Utilizator");
-		btnModify.setBounds(287, 405, 133, 25);
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO userId for the selected item from table
@@ -70,16 +67,15 @@ public class AdministratorGUI extends JFrame {
 				new AddUserGUI(userId);
 			}
 		});
-		contentPane.add(btnModify);
+		contentPane.add(btnModify, "cell 2 2,grow");
 		
 		JButton btnDelete = new JButton("Sterge");
-		btnDelete.setBounds(505, 405, 121, 25);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO delete selected user
 			}
 		});
-		contentPane.add(btnDelete);
+		contentPane.add(btnDelete, "cell 4 2,grow");
 		
 		setVisible(true);
 	}
