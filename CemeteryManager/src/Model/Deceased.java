@@ -1,12 +1,9 @@
 package Model;
-
 import java.util.Date;
-
 public class Deceased extends Person {
 	private String religion;
 	private int graveId;
-	private Date burialDate;	
-	
+	private Date burialDate;
 	public Deceased(int id, String firstName, String lastName, String religion,
 			int grave, Date burialDate) {
 		super(id, firstName, lastName);
@@ -14,7 +11,6 @@ public class Deceased extends Person {
 		this.graveId = grave;
 		this.burialDate = burialDate;
 	}
-	
 	public String getReligion() {
 		return religion;
 	}
@@ -34,5 +30,10 @@ public class Deceased extends Person {
 		this.burialDate = burialDate;
 	}
 	
-	
+	private boolean isValid(String firstName, String lastName, String religion) {
+		if (firstName.matches("[a-zA-Z]+") && lastName.matches("[a-zA-Z]+")  && religion.matches("[a-zA-z0-9.,]+")) {
+			return true;
+		}
+		return false;
+	}
 }
