@@ -12,10 +12,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Cemetery;
+import Model.Data;
 import Model.Grave;
+import Model.Request;
 
 import com.mysql.jdbc.Statement;
 
 public class GraveRepo {
 	
+	public GraveRepo() {
+	}
+
+	public List<Grave> getAllGrave() throws SQLException {
+		ArrayList<Grave> list = new ArrayList<Grave>();
+		for (Data d : DataBase.getInstance().getAll(DataBase.GRAVE)){
+			list.add((Grave) d);
+		}
+		return list;
+	}
+
+	public void addGrave(Grave g) throws SQLException {
+		DataBase.getInstance().addData(g);
+	}
+
+	public void updateGrave(Grave g) throws SQLException {
+		DataBase.getInstance().updateData(g);
+	}
+
+	public void deleteGrave(Grave g) throws SQLException {
+		DataBase.getInstance().deleteData(g);
+	}
+
+	public Grave getGraveById(int id) {
+		return (Grave)DataBase.getInstance().getDataById(id, DataBase.GRAVE);
+	}
+
+	public List<Grave> searchGrave(String s) {
+		return null;
+	}
 }

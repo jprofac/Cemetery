@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import Model.Cemetery;
 import Model.Complainer;
 import Model.Data;
+import Model.Deceased;
+import Model.Grave;
 import Model.Request;
 
 import com.mysql.jdbc.Statement;
@@ -90,7 +92,16 @@ public class DataBase {
 					preparedStatement.setString(3, ((Cemetery) data).getAddress());
 					
 				}
-			} else if (data instanceof Complainer){
+			} else if (data instanceof Grave){
+				if (getDataById(((Grave) data).getId(), GRAVE) == null) {
+					preparedStatement = connect
+							.prepareStatement("insert into  grave values (?, ?, ?, ?, ?)");
+					preparedStatement.setInt(1, ((Grave) data).getId());
+					preparedStatement.setInt(2, ((Grave) data).getParcelId());
+					preparedStatement.setInt(3, ((Grave) data).getSurface());
+					preparedStatement.setInt(4, ((Grave) data).getObservationId());
+					preparedStatement.setString(5, ((Grave) data).getType());
+					}
 				
 			} else if (data instanceof Request){
 				if (getDataById(((Request) data).getId(), REQUEST) == null) {
@@ -117,7 +128,8 @@ public class DataBase {
 			// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
-		} catch (Exception e) {
+			}
+			} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
@@ -152,7 +164,18 @@ public class DataBase {
 					Date burialDate = resultSet.getDate("burialDate");
 					Deceased d = new Deceased(id, firstName, lastName, religion, graveId, burialDate);
 				}
-				break;	
+				break;
+			case GRAVE:
+				resultSet = statement.executeQuery("select * from grave where id = "+id);
+				while (resultSet.next()) {				
+					int graveId = resultSet.getInt("id");
+					int parcelId = resultSet.getInt("parcelId");
+					int surface = resultSet.getInt("surface");
+					int observationId = resultSet.getInt("observationId");
+					String type = resultSet.getString("type");
+					data = new Grave(graveId, parcelId, surface, observationId, type);
+				}
+				break;
 			//etc
 	
 			default:
@@ -204,6 +227,19 @@ public class DataBase {
 					dataList.add(newDeceased);
 				}
 				break;
+			case GRAVE:
+				dataList = new ArrayList<Data>();
+				resultSet = statement.executeQuery("select * from grave");
+				while (resultSet.next()) {
+					int graveId = resultSet.getInt("id");
+					int parcelId = resultSet.getInt("parcelId");
+					int surface = resultSet.getInt("surface");
+					int observationId = resultSet.getInt("observationId");
+					String type = resultSet.getString("type");
+					Grave newGrave = new Grave(graveId, parcelId, surface, observationId, type);
+					dataList.add(newGrave);
+				}
+				break;
 	
 			default:
 				break;
@@ -251,8 +287,26 @@ public class DataBase {
 						}
 					}
 				}
-			}else if (data instanceof Complainer){
-				
+			}else if (data instanceof Grave){
+				if (((Grave)data).isValid()){
+					preparedStatement = connect
+							.prepareStatement("update grave set parcelId = ?, surface = ?, observationId = ?, type = ? where id = ?");
+					preparedStatement.setInt(1, ((Grave)data).getId());
+					preparedStatement.setInt(2, ((Grave)data).getParcelId());
+					preparedStatement.setInt(3, ((Grave)data).getSurface());
+					preparedStatement.setInt(4, ((Grave)data).getObservationId());
+					preparedStatement.setString(5, ((Grave)data).getType());
+					preparedStatement.executeUpdate();
+					
+					for (Data grave : getAll(GRAVE)) {
+						if (((Grave)grave).getId() == ((Grave)data).getId()) {
+							((Grave)grave).setParcelId(((Grave)data).getParcelId());
+							((Grave)grave).setSurface(((Grave)data).getSurface());
+							((Grave)grave).setObservationId(((Grave)data).getObservationId());
+							((Grave)grave).setType(((Grave)data).getType());
+						}
+					}
+				}				
 			}else if (data instanceof Deceased){
 				if (((Deceased)data).isValid()){
 					preparedStatement = connect
@@ -300,7 +354,13 @@ public class DataBase {
 					preparedStatement.executeUpdate();
 				}
 			}
-			else if (data instanceof Complainer){
+			else if (data instanceof Grave){
+				if (getDataById(((Grave)data).getId(), GRAVE) != null) {
+					preparedStatement = connect
+							.prepareStatement("delete from grave where id = ?");
+					preparedStatement.setInt(1, ((Grave)data).getId());
+					preparedStatement.executeUpdate();
+				}
 				
 			}else if (data instanceof Deceased){
 				if (getDataById(((Deceased)data).getId(), DECEASED) != null){
