@@ -14,6 +14,7 @@ import Model.Data;
 import Model.Deceased;
 import Model.Grave;
 import Model.Request;
+import Model.Contract;
 
 import com.mysql.jdbc.Statement;
 
@@ -122,13 +123,24 @@ public class DataBase {
 					preparedStatement.setString(4, ((Deceased) data).getReligion());
 					preparedStatement.setInt(5, ((Deceased) data).getGrave());
 					preparedStatement.setDate(6, (Date) ((Deceased) data).getBurialDate());
+				}
+			} else if (data instanceof Contract){
+				if (getDataById(((Request) data).getId(), REQUEST) == null ) {
+					preparedStatement = connect
+							.prepareStatement("insert into contract values (?, ?, ?, ?, ?, ?)");
+					preparedStatement.setInt(1, ((Contract) data).getId());
+					preparedStatement.setInt(2, ((Contract) data).getOwnerId());
+					preparedStatement.setInt(3, ((Contract) data).getGraveId());
+					preparedStatement.setDate(4, (Date) ((Contract) data).getDate());
+					preparedStatement.setInt(5, ((Contract) data).getPeriod());
+					preparedStatement.setInt(6, ((Contract) data).getReceipt());
+				}
 			}
-			
 			
 			// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
-			}
+			
 			} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -176,6 +188,16 @@ public class DataBase {
 					data = new Grave(graveId, parcelId, surface, observationId, type);
 				}
 				break;
+			case CONTRACT: 
+				resultSet = statement.executeQuery("select * from contract where id = "+id);
+				while (resultSet.next()) {
+					int ownerId = resultSet.getInt("ownerId");
+					int graveId = resultSet.getInt("graveId");
+					Date date = resultSet.getDate("date");
+					int period = resultSet.getInt("period");
+					int receipt = resultSet.getInt("receipt");
+					data = new Contract(id, ownerId, graveId, date, period, receipt);
+				}		
 			//etc
 	
 			default:
@@ -240,7 +262,19 @@ public class DataBase {
 					dataList.add(newGrave);
 				}
 				break;
-	
+			case CONTRACT:
+				dataList = new ArrayList<Data>();
+				resultSet = statement.executeQuery("select * from contract");
+				while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					int ownerId = resultSet.getInt("ownerId");
+					int graveId = resultSet.getInt("graveId");
+					Date date = resultSet.getDate("date"); 
+				    int period = resultSet.getInt("period");
+				    int receipt = resultSet.getInt("receipt");				
+				    Contract newContract = new Contract(id, ownerId, graveId, date, period, receipt);
+				    dataList.add(newContract);
+				}
 			default:
 				break;
 			}
@@ -329,6 +363,21 @@ public class DataBase {
 						}
 					}
 				}
+			}else if (data instanceof Contract){
+				if (((Contract)data).isValid()){
+					preparedStatement = connect
+							.prepareStatement("update contract set ownerId = ?, graveId = ?, date = ?, receipt = ?, period = ? where id = ?");
+					preparedStatement.setInt(1, ((Contract)data).getId());
+					preparedStatement.setInt(2, ((Contract)data).getOwnerId());
+					preparedStatement.setInt(3, ((Contract)data).getGraveId());
+					preparedStatement.setDate(4, (Date) ((Contract)data).getDate());
+					preparedStatement.setInt(5, ((Contract)data).getPeriod());
+					preparedStatement.setInt(6, ((Contract)data).getReceipt());
+					preparedStatement.executeUpdate();
+				}
+			
+			
+			
 			}// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
@@ -369,6 +418,14 @@ public class DataBase {
 					preparedStatement.setInt(1, ((Deceased)data).getId());
 					preparedStatement.executeUpdate();
 				}
+			}else if (data instanceof Contract){
+				if (getDataById(((Contract)data).getId(), CONTRACT) != null){
+					preparedStatement = connect
+							.prepareStatement("delete from contract where id = ?");
+					preparedStatement.setInt(1, ((Contract)data).getId());
+					preparedStatement.executeUpdate();
+					
+				}	
 			}// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
