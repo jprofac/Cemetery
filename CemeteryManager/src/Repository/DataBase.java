@@ -101,6 +101,16 @@ public class DataBase {
 					preparedStatement.setInt(3, ((Request) data).getInfocet());
 					preparedStatement.setBoolean(4, ((Request) data).isCompleted());
 					}
+			} else if (data instanceof Deceased){
+				if (getDataById(((Deceased) data).getId(), DECEASED) == null) {
+					preparedStatement = connect
+							.prepareStatement("insert into deceased values (?, ?, ?, ?, ?, ?)");
+					preparedStatement.setInt(1, ((Deceased) data).getId());
+					preparedStatement.setString(2, ((Deceased) data).getFirstName());
+					preparedStatement.setString(3, ((Deceased) data).getLastName());
+					preparedStatement.setString(4, ((Deceased) data).getReligion());
+					preparedStatement.setInt(5, ((Deceased) data).getGrave());
+					preparedStatement.setDate(6, (Date) ((Deceased) data).getBurialDate());
 			}
 			
 			
@@ -132,7 +142,17 @@ public class DataBase {
 					data = new Request(id, date, infocet, completed);
 				}
 				break;
-				
+			case DECEASED:
+				resultSet = statement.executeQuery("select * from deceased where id = "+id);
+				while (resultSet.next()){
+					String firstName = resultSet.getString("firstName");
+					String lastName = resultSet.getString("lastName");
+					String religion = resultSet.getString("religion");
+					int graveId = resultSet.getInt("graveId");
+					Date burialDate = resultSet.getDate("burialDate");
+					Deceased d = new Deceased(id, firstName, lastName, religion, graveId, burialDate);
+				}
+				break;	
 			//etc
 	
 			default:
@@ -170,7 +190,20 @@ public class DataBase {
 					dataList.add(newRequest);
 				}
 				break;
-			//etc
+			case DECEASED:
+				dataList = new ArrayList<Data>();
+				resultSet = statement.executeQuery("select * from deceased");
+				while (resultSet.next()){
+					int id = resultSet.getInt("id");
+					String firstName = resultSet.getString("firstName");
+					String lastName = resultSet.getString("lastName");
+					String religion = resultSet.getString("religion");
+					int graveId = resultSet.getInt("graveId");
+					Date burialDate = resultSet.getDate("burialDate");
+					Deceased newDeceased = new Deceased(id, firstName, lastName, religion, graveId, burialDate);
+					dataList.add(newDeceased);
+				}
+				break;
 	
 			default:
 				break;
@@ -220,6 +253,28 @@ public class DataBase {
 				}
 			}else if (data instanceof Complainer){
 				
+			}else if (data instanceof Deceased){
+				if (((Deceased)data).isValid()){
+					preparedStatement = connect
+							.prepareStatement("update deceased set firstName = ?, lastName = ?, religion = ?, graveId = ?, burialDate = ? where id = ?");
+					preparedStatement.setString(1, ((Deceased)data).getFirstName());
+					preparedStatement.setString(2, ((Deceased)data).getLastName());
+					preparedStatement.setString(3, ((Deceased)data).getReligion());
+					preparedStatement.setInt(4, ((Deceased)data).getGrave());
+					preparedStatement.setDate(5, (Date) ((Deceased)data).getBurialDate());
+					preparedStatement.setInt(6, ((Deceased)data).getId());
+					preparedStatement.executeUpdate();
+					
+					for (Data deceased : getAll(DECEASED)) {
+						if (((Deceased)deceased).getId() == ((Deceased)data).getId()) {
+							((Deceased)deceased).setFirstName(((Deceased)data).getFirstName());
+							((Deceased)deceased).setLastName(((Deceased)data).getLastName());
+							((Deceased)deceased).setReligion(((Deceased)data).getReligion());
+							((Deceased)deceased).setGrave(((Deceased)data).getGrave());
+							((Deceased)deceased).setBurialDate(((Deceased)data).getBurialDate());
+						}
+					}
+				}
 			}// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
@@ -247,6 +302,13 @@ public class DataBase {
 			}
 			else if (data instanceof Complainer){
 				
+			}else if (data instanceof Deceased){
+				if (getDataById(((Deceased)data).getId(), DECEASED) != null){
+					preparedStatement = connect
+							.prepareStatement("delete from deceased where id = ?");
+					preparedStatement.setInt(1, ((Deceased)data).getId());
+					preparedStatement.executeUpdate();
+				}
 			}// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
