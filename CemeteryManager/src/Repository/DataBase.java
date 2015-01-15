@@ -16,6 +16,7 @@ import Model.Deceased;
 import Model.Grave;
 import Model.Request;
 import Model.Contract;
+import Model.Parcel;
 
 import com.mysql.jdbc.Statement;
 
@@ -23,43 +24,43 @@ public class DataBase {
 	// you work with these types as the dataType parameter in the methods
 	// set the correct value for the type of object you're passing
 	public static final int CEMETERY = 0;
-	
+
 	public static final int COMPLAINER = 1;
-	
+
 	public static final int CONTRACT = 2;
-	
+
 	public static final int DECEASED = 3;
-	
+
 	public static final int GRAVE = 4;
-	
+
 	public static final int OBSERVATION = 5;
-	
+
 	public static final int OWNER = 6;
-	
+
 	public static final int PARCEL = 7;
-	
+
 	public static final int REQUEST = 8;
-	
+
 	public static final int USER = 9;
-	
 
 	private Connection connect = null;
-	
+
 	private Statement statement = null;
-	
+
 	private PreparedStatement preparedStatement = null;
-	
+
 	private ResultSet resultSet = null;
-	
+
 	public static DataBase instance;
-	
-	public static DataBase getInstance(){
-		if (instance == null){
+
+	public static DataBase getInstance() {
+		if (instance == null) {
 			instance = new DataBase();
 		}
 		return instance;
 	}
-	public DataBase(){
+
+	public DataBase() {
 		connectToDB();
 	}
 
@@ -67,12 +68,12 @@ public class DataBase {
 		// this will load the MySQL driver, each DB has its own driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			
+
 			// setup the connection with the DB.
 			connect = DriverManager
 					.getConnection("jdbc:mysql://localhost/proiectcolectiv?"
 							+ "user=root&password=root");
-	
+
 			// statements allow to issue SQL queries to the database
 			statement = (Statement) connect.createStatement();
 		} catch (ClassNotFoundException e) {
@@ -81,8 +82,8 @@ public class DataBase {
 			e.printStackTrace();
 		}
 	}
-	
-	public void addData(Data data){
+
+	public void addData(Data data) {
 		try {
 			if (data instanceof Cemetery) {
 				if (getDataById(((Cemetery) data).getId(), CEMETERY) == null
@@ -91,85 +92,110 @@ public class DataBase {
 							.prepareStatement("insert into  cemetery values (? , ?, ?)");
 					preparedStatement.setInt(1, ((Cemetery) data).getId());
 					preparedStatement.setString(2, ((Cemetery) data).getName());
-					preparedStatement.setString(3, ((Cemetery) data).getAddress());
-					
+					preparedStatement.setString(3,
+							((Cemetery) data).getAddress());
+
 				}
-			} else if (data instanceof Grave){
+			} else if (data instanceof Grave) {
 				if (getDataById(((Grave) data).getId(), GRAVE) == null) {
 					preparedStatement = connect
 							.prepareStatement("insert into  grave values (?, ?, ?, ?, ?)");
 					preparedStatement.setInt(1, ((Grave) data).getId());
 					preparedStatement.setInt(2, ((Grave) data).getParcelId());
 					preparedStatement.setInt(3, ((Grave) data).getSurface());
-					preparedStatement.setInt(4, ((Grave) data).getObservationId());
+					preparedStatement.setInt(4,
+							((Grave) data).getObservationId());
 					preparedStatement.setString(5, ((Grave) data).getType());
-					}
-				
-			} else if (data instanceof Request){
+				}
+
+			} else if (data instanceof Request) {
 				if (getDataById(((Request) data).getId(), REQUEST) == null) {
 					preparedStatement = connect
 							.prepareStatement("insert into  request values (?, ?, ?, ?)");
 					preparedStatement.setInt(1, ((Request) data).getId());
-					preparedStatement.setDate(2, (Date) ((Request) data).getDate());
+					preparedStatement.setDate(2,
+							(Date) ((Request) data).getDate());
 					preparedStatement.setInt(3, ((Request) data).getInfocet());
-					preparedStatement.setBoolean(4, ((Request) data).isCompleted());
-					}
-			} else if (data instanceof Deceased){
+					preparedStatement.setBoolean(4,
+							((Request) data).isCompleted());
+				}
+			} else if (data instanceof Deceased) {
 				if (getDataById(((Deceased) data).getId(), DECEASED) == null) {
 					preparedStatement = connect
 							.prepareStatement("insert into deceased values (?, ?, ?, ?, ?, ?)");
 					preparedStatement.setInt(1, ((Deceased) data).getId());
-					preparedStatement.setString(2, ((Deceased) data).getFirstName());
-					preparedStatement.setString(3, ((Deceased) data).getLastName());
-					preparedStatement.setString(4, ((Deceased) data).getReligion());
+					preparedStatement.setString(2,
+							((Deceased) data).getFirstName());
+					preparedStatement.setString(3,
+							((Deceased) data).getLastName());
+					preparedStatement.setString(4,
+							((Deceased) data).getReligion());
 					preparedStatement.setInt(5, ((Deceased) data).getGrave());
-					preparedStatement.setDate(6, (Date) ((Deceased) data).getBurialDate());
+					preparedStatement.setDate(6,
+							(Date) ((Deceased) data).getBurialDate());
 				}
-			} else if (data instanceof Contract){
-				if (getDataById(((Contract) data).getId(), CONTRACT) == null ) {
+			} else if (data instanceof Contract) {
+				if (getDataById(((Contract) data).getId(), CONTRACT) == null) {
 					preparedStatement = connect
 							.prepareStatement("insert into contract values (?, ?, ?, ?, ?, ?)");
 					preparedStatement.setInt(1, ((Contract) data).getId());
 					preparedStatement.setInt(2, ((Contract) data).getOwnerId());
 					preparedStatement.setInt(3, ((Contract) data).getGraveId());
-					preparedStatement.setDate(4, (Date) ((Contract) data).getDate());
+					preparedStatement.setDate(4,
+							(Date) ((Contract) data).getDate());
 					preparedStatement.setInt(5, ((Contract) data).getPeriod());
 					preparedStatement.setInt(6, ((Contract) data).getReceipt());
 				}
-			} else if (data instanceof Complainer){
+			} else if (data instanceof Complainer) {
 				if (getDataById(((Complainer) data).getId(), COMPLAINER) == null) {
 					preparedStatement = connect
 							.prepareStatement("insert into complainer values (?, ?, ?, ?)");
-					preparedStatement.setInt(1,  ((Complainer) data).getId());
-					preparedStatement.setString(2, ((Complainer) data).getFirstName());
-					preparedStatement.setString(3, ((Complainer) data).getLastName());
-					preparedStatement.setString(3, ((Complainer) data).getReason());
+					preparedStatement.setInt(1, ((Complainer) data).getId());
+					preparedStatement.setString(2,
+							((Complainer) data).getFirstName());
+					preparedStatement.setString(3,
+							((Complainer) data).getLastName());
+					preparedStatement.setString(3,
+							((Complainer) data).getReason());
 				}
-			} else if (data instanceof Observation){
+			} else if (data instanceof Observation) {
 				if (getDataById(((Observation) data).getId(), OBSERVATION) == null) {
 					preparedStatement = connect
 							.prepareStatement("insert into observation values (?, ?, ?, ?)");
 					preparedStatement.setInt(1, ((Observation) data).getId());
-					preparedStatement.setBoolean(2, ((Observation) data).isTomb());
-					preparedStatement.setInt(3, ((Observation)data).getModificationNr());
-					preparedStatement.setString(4, (((Observation)data).getPhotography();
+					preparedStatement.setBoolean(2,
+							((Observation) data).isTomb());
+					preparedStatement.setInt(3,
+							((Observation) data).getModificationNr());
+					preparedStatement.setString(4,
+							(((Observation) data).getPhotography()));
+				}
+			} else if (data instanceof Parcel) {
+				if (getDataById(((Parcel) data).getId(), OBSERVATION) == null) {
+					preparedStatement = connect
+							.prepareStatement("insert into observation values (?, ?, ?)");
+					preparedStatement.setInt(1, ((Parcel) data).getId());
+					preparedStatement.setString(2,((Parcel) data).getCode());
+					preparedStatement.setInt(2,((Parcel) data).getCemeteryId());
 				}
 			}
-			
+
 			// else if (){...} ... treating every data type the same way
-			
+
 			preparedStatement.executeUpdate();
-			
-			} catch (Exception e) {
+
+		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
-	public Data getDataById(int id, int dataType){
+
+	public Data getDataById(int id, int dataType) {
 		Data data = null;
 		try {
 			switch (dataType) {
 			case CEMETERY:
-				resultSet = statement.executeQuery("select * from cemetery where id = "+id);
+				resultSet = statement
+						.executeQuery("select * from cemetery where id = " + id);
 				while (resultSet.next()) {
 					String name = resultSet.getString("name");
 					String address = resultSet.getString("address");
@@ -177,8 +203,9 @@ public class DataBase {
 				}
 				break;
 			case REQUEST:
-				resultSet = statement.executeQuery("select * from request where id = "+id);
-				while (resultSet.next()) {				
+				resultSet = statement
+						.executeQuery("select * from request where id = " + id);
+				while (resultSet.next()) {
 					Date date = resultSet.getDate("date");
 					int infocet = resultSet.getInt("infocet");
 					boolean completed = resultSet.getBoolean("completed");
@@ -186,40 +213,48 @@ public class DataBase {
 				}
 				break;
 			case DECEASED:
-				resultSet = statement.executeQuery("select * from deceased where id = "+id);
-				while (resultSet.next()){
+				resultSet = statement
+						.executeQuery("select * from deceased where id = " + id);
+				while (resultSet.next()) {
 					String firstName = resultSet.getString("firstName");
 					String lastName = resultSet.getString("lastName");
 					String religion = resultSet.getString("religion");
 					int graveId = resultSet.getInt("graveId");
 					Date burialDate = resultSet.getDate("burialDate");
-					Deceased d = new Deceased(id, firstName, lastName, religion, graveId, burialDate);
+					Deceased d = new Deceased(id, firstName, lastName,
+							religion, graveId, burialDate);
 				}
 				break;
 			case GRAVE:
-				resultSet = statement.executeQuery("select * from grave where id = "+id);
-				while (resultSet.next()) {				
+				resultSet = statement
+						.executeQuery("select * from grave where id = " + id);
+				while (resultSet.next()) {
 					int graveId = resultSet.getInt("id");
 					int parcelId = resultSet.getInt("parcelId");
 					int surface = resultSet.getInt("surface");
 					int observationId = resultSet.getInt("observationId");
 					String type = resultSet.getString("type");
-					data = new Grave(graveId, parcelId, surface, observationId, type);
+					data = new Grave(graveId, parcelId, surface, observationId,
+							type);
 				}
 				break;
-			case CONTRACT: 
-				resultSet = statement.executeQuery("select * from contract where id = "+id);
+			case CONTRACT:
+				resultSet = statement
+						.executeQuery("select * from contract where id = " + id);
 				while (resultSet.next()) {
 					int ownerId = resultSet.getInt("ownerId");
 					int graveId = resultSet.getInt("graveId");
 					Date date = resultSet.getDate("date");
 					int period = resultSet.getInt("period");
 					int receipt = resultSet.getInt("receipt");
-					data = new Contract(id, ownerId, graveId, date, period, receipt);
+					data = new Contract(id, ownerId, graveId, date, period,
+							receipt);
 				}
 				break;
 			case COMPLAINER:
-				resultSet = statement.executeQuery("select + from complainer where id = "+id);
+				resultSet = statement
+						.executeQuery("select + from complainer where id = "
+								+ id);
 				while (resultSet.next()) {
 					String firstName = resultSet.getString("firstName");
 					String lastName = resultSet.getString("lastName");
@@ -228,16 +263,29 @@ public class DataBase {
 				}
 				break;
 			case OBSERVATION:
-				resultSet = statement.executeQuery("select + from observation where id = "+id);
+				resultSet = statement
+						.executeQuery("select + from observation where id = "
+								+ id);
 				while (resultSet.next()) {
 					boolean tomb = resultSet.getBoolean("tomb");
 					int modificationNr = resultSet.getInt("modificationNr");
 					String photography = resultSet.getString("photography");
-					data = new Observation(id, tomb, modificationNr, photography);	
+					data = new Observation(id, tomb, modificationNr,
+							photography);
 				}
 				break;
-			//etc
-	
+			case PARCEL:
+				resultSet = statement
+						.executeQuery("select + from parcel where id = " + id);
+				while (resultSet.next()) {
+					String code = resultSet.getString("code");
+					int cemeteryId = resultSet.getInt("cemeteryId");
+					data = new Parcel(id, code, cemeteryId);
+				}
+				break;
+			
+			// etc
+
 			default:
 				break;
 			}
@@ -246,7 +294,8 @@ public class DataBase {
 		}
 		return data;
 	}
-	public ArrayList<Data> getAll(int dataType){
+
+	public ArrayList<Data> getAll(int dataType) {
 		ArrayList<Data> dataList = null;
 		try {
 			switch (dataType) {
@@ -269,21 +318,23 @@ public class DataBase {
 					Date date = resultSet.getDate("date");
 					int infocet = resultSet.getInt("infocet");
 					boolean completed = resultSet.getBoolean("completed");
-					Request newRequest = new Request(id, date, infocet, completed);
+					Request newRequest = new Request(id, date, infocet,
+							completed);
 					dataList.add(newRequest);
 				}
 				break;
 			case DECEASED:
 				dataList = new ArrayList<Data>();
 				resultSet = statement.executeQuery("select * from deceased");
-				while (resultSet.next()){
+				while (resultSet.next()) {
 					int id = resultSet.getInt("id");
 					String firstName = resultSet.getString("firstName");
 					String lastName = resultSet.getString("lastName");
 					String religion = resultSet.getString("religion");
 					int graveId = resultSet.getInt("graveId");
 					Date burialDate = resultSet.getDate("burialDate");
-					Deceased newDeceased = new Deceased(id, firstName, lastName, religion, graveId, burialDate);
+					Deceased newDeceased = new Deceased(id, firstName,
+							lastName, religion, graveId, burialDate);
 					dataList.add(newDeceased);
 				}
 				break;
@@ -296,7 +347,8 @@ public class DataBase {
 					int surface = resultSet.getInt("surface");
 					int observationId = resultSet.getInt("observationId");
 					String type = resultSet.getString("type");
-					Grave newGrave = new Grave(graveId, parcelId, surface, observationId, type);
+					Grave newGrave = new Grave(graveId, parcelId, surface,
+							observationId, type);
 					dataList.add(newGrave);
 				}
 				break;
@@ -307,11 +359,12 @@ public class DataBase {
 					int id = resultSet.getInt("id");
 					int ownerId = resultSet.getInt("ownerId");
 					int graveId = resultSet.getInt("graveId");
-					Date date = resultSet.getDate("date"); 
-				    int period = resultSet.getInt("period");
-				    int receipt = resultSet.getInt("receipt");				
-				    Contract newContract = new Contract(id, ownerId, graveId, date, period, receipt);
-				    dataList.add(newContract);
+					Date date = resultSet.getDate("date");
+					int period = resultSet.getInt("period");
+					int receipt = resultSet.getInt("receipt");
+					Contract newContract = new Contract(id, ownerId, graveId,
+							date, period, receipt);
+					dataList.add(newContract);
 				}
 				break;
 			case COMPLAINER:
@@ -322,7 +375,8 @@ public class DataBase {
 					String firstName = resultSet.getString("firstName");
 					String lastName = resultSet.getString("lastName");
 					String reason = resultSet.getString("reason");
-					Complainer newComplainer = new Complainer(id, firstName, lastName, reason);
+					Complainer newComplainer = new Complainer(id, firstName,
+							lastName, reason);
 					dataList.add(newComplainer);
 				}
 				break;
@@ -334,232 +388,320 @@ public class DataBase {
 					boolean tomb = resultSet.getBoolean("tomb");
 					int modificationNr = resultSet.getInt("modificationNr");
 					String photography = resultSet.getString("photography");
-					Observation newObservation = new Observation(id, tomb, modificationNr, photography);
-					dataList.add(newObservation);					
+					Observation newObservation = new Observation(id, tomb,
+							modificationNr, photography);
+					dataList.add(newObservation);
 				}
 				break;
-			//etc
+			case PARCEL:
+				dataList = new ArrayList<Data>();
+				resultSet = statement.executeQuery("select + from parcel");
+				while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					int cemeteryId = resultSet.getInt("cemeteryId");
+					String code = resultSet.getString("code");
+					Parcel newObservation = new Parcel(id, code, cemeteryId);
+					dataList.add(newObservation);
+				}
+				break;
+			// etc
 			default:
 				break;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 		return dataList;
 	}
-	
-	public void updateData(Data data){
+
+	public void updateData(Data data) {
 		try {
 			if (data instanceof Cemetery) {
-				if (((Cemetery)data).isValid()) {
+				if (((Cemetery) data).isValid()) {
 					preparedStatement = connect
 							.prepareStatement("update cemetery set name = ?, address = ? where id = ?");
-					preparedStatement.setString(1, ((Cemetery)data).getName());
-					preparedStatement.setString(2, ((Cemetery)data).getAddress());
-					preparedStatement.setInt(3, ((Cemetery)data).getId());
+					preparedStatement.setString(1, ((Cemetery) data).getName());
+					preparedStatement.setString(2,
+							((Cemetery) data).getAddress());
+					preparedStatement.setInt(3, ((Cemetery) data).getId());
 					preparedStatement.executeUpdate();
 
 					for (Data cemetery : getAll(CEMETERY)) {
-						if (((Cemetery)cemetery).getId() == ((Cemetery)data).getId()) {
-							((Cemetery)cemetery).setName(((Cemetery)data).getName());
-							((Cemetery)cemetery).setAddress(((Cemetery)data).getAddress());
+						if (((Cemetery) cemetery).getId() == ((Cemetery) data)
+								.getId()) {
+							((Cemetery) cemetery).setName(((Cemetery) data)
+									.getName());
+							((Cemetery) cemetery).setAddress(((Cemetery) data)
+									.getAddress());
 						}
 					}
 				}
-			} else if (data instanceof Request){
-				if (((Request)data).isValid()){
+			} else if (data instanceof Request) {
+				if (((Request) data).isValid()) {
 					preparedStatement = connect
 							.prepareStatement("update request set date = ?, infocet = ?, completed = ? where id = ?");
-					preparedStatement.setDate(1, (Date) ((Request)data).getDate());
-					preparedStatement.setInt(2, ((Request)data).getInfocet());
-					preparedStatement.setBoolean(3, ((Request)data).isCompleted());
-					preparedStatement.setInt(4, ((Request)data).getId());
+					preparedStatement.setDate(1,
+							(Date) ((Request) data).getDate());
+					preparedStatement.setInt(2, ((Request) data).getInfocet());
+					preparedStatement.setBoolean(3,
+							((Request) data).isCompleted());
+					preparedStatement.setInt(4, ((Request) data).getId());
 					preparedStatement.executeUpdate();
-					
+
 					for (Data request : getAll(REQUEST)) {
-						if (((Request)request).getId() == ((Request)data).getId()) {
-							((Request)request).setDate(((Request)data).getDate());
-							((Request)request).setInfocet(((Request)data).getInfocet());
-							((Request)request).setCompleted(((Request)data).isCompleted());							
+						if (((Request) request).getId() == ((Request) data)
+								.getId()) {
+							((Request) request).setDate(((Request) data)
+									.getDate());
+							((Request) request).setInfocet(((Request) data)
+									.getInfocet());
+							((Request) request).setCompleted(((Request) data)
+									.isCompleted());
 						}
 					}
 				}
-			}else if (data instanceof Grave){
-				if (((Grave)data).isValid()){
+			} else if (data instanceof Grave) {
+				if (((Grave) data).isValid()) {
 					preparedStatement = connect
 							.prepareStatement("update grave set parcelId = ?, surface = ?, observationId = ?, type = ? where id = ?");
-					preparedStatement.setInt(1, ((Grave)data).getId());
-					preparedStatement.setInt(2, ((Grave)data).getParcelId());
-					preparedStatement.setInt(3, ((Grave)data).getSurface());
-					preparedStatement.setInt(4, ((Grave)data).getObservationId());
-					preparedStatement.setString(5, ((Grave)data).getType());
+					preparedStatement.setInt(1, ((Grave) data).getId());
+					preparedStatement.setInt(2, ((Grave) data).getParcelId());
+					preparedStatement.setInt(3, ((Grave) data).getSurface());
+					preparedStatement.setInt(4,
+							((Grave) data).getObservationId());
+					preparedStatement.setString(5, ((Grave) data).getType());
 					preparedStatement.executeUpdate();
-					
+
 					for (Data grave : getAll(GRAVE)) {
-						if (((Grave)grave).getId() == ((Grave)data).getId()) {
-							((Grave)grave).setParcelId(((Grave)data).getParcelId());
-							((Grave)grave).setSurface(((Grave)data).getSurface());
-							((Grave)grave).setObservationId(((Grave)data).getObservationId());
-							((Grave)grave).setType(((Grave)data).getType());
+						if (((Grave) grave).getId() == ((Grave) data).getId()) {
+							((Grave) grave).setParcelId(((Grave) data)
+									.getParcelId());
+							((Grave) grave).setSurface(((Grave) data)
+									.getSurface());
+							((Grave) grave).setObservationId(((Grave) data)
+									.getObservationId());
+							((Grave) grave).setType(((Grave) data).getType());
 						}
 					}
-				}				
-			}else if (data instanceof Deceased){
-				if (((Deceased)data).isValid()){
+				}
+			} else if (data instanceof Deceased) {
+				if (((Deceased) data).isValid()) {
 					preparedStatement = connect
 							.prepareStatement("update deceased set firstName = ?, lastName = ?, religion = ?, graveId = ?, burialDate = ? where id = ?");
-					preparedStatement.setString(1, ((Deceased)data).getFirstName());
-					preparedStatement.setString(2, ((Deceased)data).getLastName());
-					preparedStatement.setString(3, ((Deceased)data).getReligion());
-					preparedStatement.setInt(4, ((Deceased)data).getGrave());
-					preparedStatement.setDate(5, (Date) ((Deceased)data).getBurialDate());
-					preparedStatement.setInt(6, ((Deceased)data).getId());
+					preparedStatement.setString(1,
+							((Deceased) data).getFirstName());
+					preparedStatement.setString(2,
+							((Deceased) data).getLastName());
+					preparedStatement.setString(3,
+							((Deceased) data).getReligion());
+					preparedStatement.setInt(4, ((Deceased) data).getGrave());
+					preparedStatement.setDate(5,
+							(Date) ((Deceased) data).getBurialDate());
+					preparedStatement.setInt(6, ((Deceased) data).getId());
 					preparedStatement.executeUpdate();
-					
+
 					for (Data deceased : getAll(DECEASED)) {
-						if (((Deceased)deceased).getId() == ((Deceased)data).getId()) {
-							((Deceased)deceased).setFirstName(((Deceased)data).getFirstName());
-							((Deceased)deceased).setLastName(((Deceased)data).getLastName());
-							((Deceased)deceased).setReligion(((Deceased)data).getReligion());
-							((Deceased)deceased).setGrave(((Deceased)data).getGrave());
-							((Deceased)deceased).setBurialDate(((Deceased)data).getBurialDate());
+						if (((Deceased) deceased).getId() == ((Deceased) data)
+								.getId()) {
+							((Deceased) deceased)
+									.setFirstName(((Deceased) data)
+											.getFirstName());
+							((Deceased) deceased).setLastName(((Deceased) data)
+									.getLastName());
+							((Deceased) deceased).setReligion(((Deceased) data)
+									.getReligion());
+							((Deceased) deceased).setGrave(((Deceased) data)
+									.getGrave());
+							((Deceased) deceased)
+									.setBurialDate(((Deceased) data)
+											.getBurialDate());
 						}
 					}
 				}
-			}else if (data instanceof Contract){
-				if (((Contract)data).isValid()){
+			} else if (data instanceof Contract) {
+				if (((Contract) data).isValid()) {
 					preparedStatement = connect
 							.prepareStatement("update contract set ownerId = ?, graveId = ?, date = ?, receipt = ?, period = ? where id = ?");
-					preparedStatement.setInt(1, ((Contract)data).getOwnerId());
-					preparedStatement.setInt(2, ((Contract)data).getGraveId());
-					preparedStatement.setDate(3, (Date) ((Contract)data).getDate());
-					preparedStatement.setInt(4, ((Contract)data).getPeriod());
-					preparedStatement.setInt(5, ((Contract)data).getReceipt());
-					preparedStatement.setInt(6, ((Contract)data).getId());
+					preparedStatement.setInt(1, ((Contract) data).getOwnerId());
+					preparedStatement.setInt(2, ((Contract) data).getGraveId());
+					preparedStatement.setDate(3,
+							(Date) ((Contract) data).getDate());
+					preparedStatement.setInt(4, ((Contract) data).getPeriod());
+					preparedStatement.setInt(5, ((Contract) data).getReceipt());
+					preparedStatement.setInt(6, ((Contract) data).getId());
 					preparedStatement.executeUpdate();
-					
+
 					for (Data contract : getAll(CONTRACT)) {
-						if (((Contract)contract).getId() == ((Contract)data).getId()) {
-							((Contract)contract).setOwnerId(((Contract)data).getOwnerId());
-							((Contract)contract).setGraveId(((Contract)data).getGraveId());
-							((Contract)contract).setDate(((Contract)data).getDate());
-							((Contract)contract).setPeriod(((Contract)data).getPeriod());
-							((Contract)contract).setReceipt(((Contract)data).getReceipt());	
+						if (((Contract) contract).getId() == ((Contract) data)
+								.getId()) {
+							((Contract) contract).setOwnerId(((Contract) data)
+									.getOwnerId());
+							((Contract) contract).setGraveId(((Contract) data)
+									.getGraveId());
+							((Contract) contract).setDate(((Contract) data)
+									.getDate());
+							((Contract) contract).setPeriod(((Contract) data)
+									.getPeriod());
+							((Contract) contract).setReceipt(((Contract) data)
+									.getReceipt());
 						}
 					}
 				}
-			}else if (data instanceof Complainer){
-				if (((Complainer)data).isValid()){
+			} else if (data instanceof Complainer) {
+				if (((Complainer) data).isValid()) {
 					preparedStatement = connect
 							.prepareStatement("update complainer set firstName = ?, lastName = ?, reason = ?");
-					preparedStatement.setString(1, ((Complainer)data).getFirstName());
-					preparedStatement.setString(2,((Complainer)data).getLastName());
-					preparedStatement.setString(3, ((Complainer)data).getReason());
-					preparedStatement.setInt(4, ((Complainer)data).getId());
+					preparedStatement.setString(1,
+							((Complainer) data).getFirstName());
+					preparedStatement.setString(2,
+							((Complainer) data).getLastName());
+					preparedStatement.setString(3,
+							((Complainer) data).getReason());
+					preparedStatement.setInt(4, ((Complainer) data).getId());
 					preparedStatement.executeUpdate();
-					
+
 					for (Data complainer : getAll(COMPLAINER)) {
-						if (((Complainer)complainer).getId() == ((Complainer)data).getId()) {
-							((Complainer)complainer).setFirstName(((Complainer)data).getFirstName());
-							((Complainer)complainer).setLastName(((Complainer)data).getLastName());
-							((Complainer)complainer).setReason(((Complainer)data).getReason());
+						if (((Complainer) complainer).getId() == ((Complainer) data)
+								.getId()) {
+							((Complainer) complainer)
+									.setFirstName(((Complainer) data)
+											.getFirstName());
+							((Complainer) complainer)
+									.setLastName(((Complainer) data)
+											.getLastName());
+							((Complainer) complainer)
+									.setReason(((Complainer) data).getReason());
 						}
 					}
 				}
-			}else if (data instanceof Observation){
-				if (((Observation)data).isValid()){
+			} else if (data instanceof Observation) {
+				if (((Observation) data).isValid()) {
 					preparedStatement = connect
 							.prepareStatement("update observation set tomn = ?, modificationNr = ?, photography = ?");
-					preparedStatement.setBoolean(1, ((Observation)data).isTomb());
-					preparedStatement.setInt(2, ((Observation)data).getModificationNr());
-					preparedStatement.setString(3, ((Observation)data).getPhotography());
-					preparedStatement.setInt(4, ((Observation)data).getId());
+					preparedStatement.setBoolean(1,
+							((Observation) data).isTomb());
+					preparedStatement.setInt(2,
+							((Observation) data).getModificationNr());
+					preparedStatement.setString(3,
+							((Observation) data).getPhotography());
+					preparedStatement.setInt(4, ((Observation) data).getId());
 					preparedStatement.executeUpdate();
-					
+
 					for (Data observation : getAll(OBSERVATION)) {
-						if (((Observation)observation).getId() == ((Observation)data).getId()) {
-							((Observation)observation).setTomb(((Observation)data).isTomb());
-							((Observation)observation).setModificationNr(((Observation)data).getModificationNr());
-							((Observation)observation).setPhotography(((Observation)data).getPhotography());
+						if (((Observation) observation).getId() == ((Observation) data)
+								.getId()) {
+							((Observation) observation)
+									.setTomb(((Observation) data).isTomb());
+							((Observation) observation)
+									.setModificationNr(((Observation) data)
+											.getModificationNr());
+							((Observation) observation)
+									.setPhotography(((Observation) data)
+											.getPhotography());
+						}
+					}
+				}
+			} else if (data instanceof Parcel) {
+				if (((Parcel) data).isValid()) {
+					preparedStatement = connect
+							.prepareStatement("update parcel set code = ?, cemeteryId = ?");
+					preparedStatement.setInt(2,
+							((Parcel) data).getCemeteryId());
+					preparedStatement.setString(1,
+							((Parcel) data).getCode());
+					
+					for (Data parcel : getAll(PARCEL)) {
+						if (((Parcel) parcel).getId() == ((Parcel) data)
+								.getId()) {
+							((Parcel) parcel)
+									.setCode(((Parcel) data)
+											.getCode());
+							((Parcel) parcel)
+									.setCemeteryId(((Parcel) data)
+											.getCemeteryId());
 						}
 					}
 				}
 			}
-			
-			
+
 			// else if (){...} ... treating every data type the same way
-			
+
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
-	
-	public void deleteData(Data data){
+
+	public void deleteData(Data data) {
 		try {
 			if (data instanceof Cemetery) {
-				if (getDataById(((Cemetery)data).getId(), CEMETERY) != null) {
+				if (getDataById(((Cemetery) data).getId(), CEMETERY) != null) {
 					preparedStatement = connect
 							.prepareStatement("delete from cemetery where id = ?");
-					preparedStatement.setInt(1, ((Cemetery)data).getId());
+					preparedStatement.setInt(1, ((Cemetery) data).getId());
 					preparedStatement.executeUpdate();
 				}
-			} else if (data instanceof Request){
-				if (getDataById(((Request)data).getId(), REQUEST) != null) {
+			} else if (data instanceof Request) {
+				if (getDataById(((Request) data).getId(), REQUEST) != null) {
 					preparedStatement = connect
 							.prepareStatement("delete from request where id = ?");
-					preparedStatement.setInt(1, ((Request)data).getId());
+					preparedStatement.setInt(1, ((Request) data).getId());
 					preparedStatement.executeUpdate();
 				}
-			}
-			else if (data instanceof Grave){
-				if (getDataById(((Grave)data).getId(), GRAVE) != null) {
+			} else if (data instanceof Grave) {
+				if (getDataById(((Grave) data).getId(), GRAVE) != null) {
 					preparedStatement = connect
 							.prepareStatement("delete from grave where id = ?");
-					preparedStatement.setInt(1, ((Grave)data).getId());
+					preparedStatement.setInt(1, ((Grave) data).getId());
 					preparedStatement.executeUpdate();
 				}
-				
-			}else if (data instanceof Deceased){
-				if (getDataById(((Deceased)data).getId(), DECEASED) != null){
+
+			} else if (data instanceof Deceased) {
+				if (getDataById(((Deceased) data).getId(), DECEASED) != null) {
 					preparedStatement = connect
 							.prepareStatement("delete from deceased where id = ?");
-					preparedStatement.setInt(1, ((Deceased)data).getId());
+					preparedStatement.setInt(1, ((Deceased) data).getId());
 					preparedStatement.executeUpdate();
 				}
-			}else if (data instanceof Contract){
-				if (getDataById(((Contract)data).getId(), CONTRACT) != null){
+			} else if (data instanceof Contract) {
+				if (getDataById(((Contract) data).getId(), CONTRACT) != null) {
 					preparedStatement = connect
 							.prepareStatement("delete from contract where id = ?");
-					preparedStatement.setInt(1, ((Contract)data).getId());
+					preparedStatement.setInt(1, ((Contract) data).getId());
 					preparedStatement.executeUpdate();
-					
-				}	
-			}else if (data instanceof Complainer){
-				if (getDataById(((Complainer)data).getId(), COMPLAINER) != null){
+
+				}
+			} else if (data instanceof Complainer) {
+				if (getDataById(((Complainer) data).getId(), COMPLAINER) != null) {
 					preparedStatement = connect
 							.prepareStatement("delete from complainer where id = ?");
-					preparedStatement.setInt(1, ((Complainer)data).getId());
+					preparedStatement.setInt(1, ((Complainer) data).getId());
 					preparedStatement.executeUpdate();
 				}
-			}else if (data instanceof Observation){
-				if (getDataById(((Observation)data).getId(), OBSERVATION) != null){
+			} else if (data instanceof Observation) {
+				if (getDataById(((Observation) data).getId(), OBSERVATION) != null) {
 					preparedStatement = connect
 							.prepareStatement("delete from observation where id = ?");
-					preparedStatement.setInt(1, ((Observation)data).getId());
+					preparedStatement.setInt(1, ((Observation) data).getId());
+					preparedStatement.executeUpdate();
+				}
+			} else if (data instanceof Parcel) {
+				if (getDataById(((Parcel) data).getId(), PARCEL) != null) {
+					preparedStatement = connect
+							.prepareStatement("delete from parcel where id = ?");
+					preparedStatement.setInt(1, ((Parcel) data).getId());
 					preparedStatement.executeUpdate();
 				}
 			}
-			
+
 			// else if (){...} ... treating every data type the same way
-			
+
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 	}
-	
-	
+
 }
