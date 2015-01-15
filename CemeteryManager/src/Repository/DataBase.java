@@ -10,10 +10,12 @@ import java.util.ArrayList;
 
 import Model.Cemetery;
 import Model.Complainer;
+import Model.Observation;
 import Model.Data;
 import Model.Deceased;
 import Model.Grave;
 import Model.Request;
+import Model.Contract;
 
 import com.mysql.jdbc.Statement;
 
@@ -122,13 +124,42 @@ public class DataBase {
 					preparedStatement.setString(4, ((Deceased) data).getReligion());
 					preparedStatement.setInt(5, ((Deceased) data).getGrave());
 					preparedStatement.setDate(6, (Date) ((Deceased) data).getBurialDate());
+				}
+			} else if (data instanceof Contract){
+				if (getDataById(((Contract) data).getId(), CONTRACT) == null ) {
+					preparedStatement = connect
+							.prepareStatement("insert into contract values (?, ?, ?, ?, ?, ?)");
+					preparedStatement.setInt(1, ((Contract) data).getId());
+					preparedStatement.setInt(2, ((Contract) data).getOwnerId());
+					preparedStatement.setInt(3, ((Contract) data).getGraveId());
+					preparedStatement.setDate(4, (Date) ((Contract) data).getDate());
+					preparedStatement.setInt(5, ((Contract) data).getPeriod());
+					preparedStatement.setInt(6, ((Contract) data).getReceipt());
+				}
+			} else if (data instanceof Complainer){
+				if (getDataById(((Complainer) data).getId(), COMPLAINER) == null) {
+					preparedStatement = connect
+							.prepareStatement("insert into complainer values (?, ?, ?, ?)");
+					preparedStatement.setInt(1,  ((Complainer) data).getId());
+					preparedStatement.setString(2, ((Complainer) data).getFirstName());
+					preparedStatement.setString(3, ((Complainer) data).getLastName());
+					preparedStatement.setString(3, ((Complainer) data).getReason());
+				}
+			} else if (data instanceof Observation){
+				if (getDataById(((Observation) data).getId(), OBSERVATION) == null) {
+					preparedStatement = connect
+							.prepareStatement("insert into observation values (?, ?, ?, ?)");
+					preparedStatement.setInt(1, ((Observation) data).getId());
+					preparedStatement.setBoolean(2, ((Observation) data).isTomb());
+					preparedStatement.setInt(3, ((Observation)data).getModificationNr());
+					preparedStatement.setString(4, (((Observation)data).getPhotography();
+				}
 			}
-			
 			
 			// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
-			}
+			
 			} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -174,6 +205,35 @@ public class DataBase {
 					int observationId = resultSet.getInt("observationId");
 					String type = resultSet.getString("type");
 					data = new Grave(graveId, parcelId, surface, observationId, type);
+				}
+				break;
+			case CONTRACT: 
+				resultSet = statement.executeQuery("select * from contract where id = "+id);
+				while (resultSet.next()) {
+					int ownerId = resultSet.getInt("ownerId");
+					int graveId = resultSet.getInt("graveId");
+					Date date = resultSet.getDate("date");
+					int period = resultSet.getInt("period");
+					int receipt = resultSet.getInt("receipt");
+					data = new Contract(id, ownerId, graveId, date, period, receipt);
+				}
+				break;
+			case COMPLAINER:
+				resultSet = statement.executeQuery("select + from complainer where id = "+id);
+				while (resultSet.next()) {
+					String firstName = resultSet.getString("firstName");
+					String lastName = resultSet.getString("lastName");
+					String reason = resultSet.getString("reason");
+					data = new Complainer(id, firstName, lastName, reason);
+				}
+				break;
+			case OBSERVATION:
+				resultSet = statement.executeQuery("select + from observation where id = "+id);
+				while (resultSet.next()) {
+					boolean tomb = resultSet.getBoolean("tomb");
+					int modificationNr = resultSet.getInt("modificationNr");
+					String photography = resultSet.getString("photography");
+					data = new Observation(id, tomb, modificationNr, photography);	
 				}
 				break;
 			//etc
@@ -240,7 +300,45 @@ public class DataBase {
 					dataList.add(newGrave);
 				}
 				break;
-	
+			case CONTRACT:
+				dataList = new ArrayList<Data>();
+				resultSet = statement.executeQuery("select * from contract");
+				while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					int ownerId = resultSet.getInt("ownerId");
+					int graveId = resultSet.getInt("graveId");
+					Date date = resultSet.getDate("date"); 
+				    int period = resultSet.getInt("period");
+				    int receipt = resultSet.getInt("receipt");				
+				    Contract newContract = new Contract(id, ownerId, graveId, date, period, receipt);
+				    dataList.add(newContract);
+				}
+				break;
+			case COMPLAINER:
+				dataList = new ArrayList<Data>();
+				resultSet = statement.executeQuery("select * from complainer");
+				while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					String firstName = resultSet.getString("firstName");
+					String lastName = resultSet.getString("lastName");
+					String reason = resultSet.getString("reason");
+					Complainer newComplainer = new Complainer(id, firstName, lastName, reason);
+					dataList.add(newComplainer);
+				}
+				break;
+			case OBSERVATION:
+				dataList = new ArrayList<Data>();
+				resultSet = statement.executeQuery("select + from observation");
+				while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					boolean tomb = resultSet.getBoolean("tomb");
+					int modificationNr = resultSet.getInt("modificationNr");
+					String photography = resultSet.getString("photography");
+					Observation newObservation = new Observation(id, tomb, modificationNr, photography);
+					dataList.add(newObservation);					
+				}
+				break;
+			//etc
 			default:
 				break;
 			}
@@ -329,7 +427,68 @@ public class DataBase {
 						}
 					}
 				}
-			}// else if (){...} ... treating every data type the same way
+			}else if (data instanceof Contract){
+				if (((Contract)data).isValid()){
+					preparedStatement = connect
+							.prepareStatement("update contract set ownerId = ?, graveId = ?, date = ?, receipt = ?, period = ? where id = ?");
+					preparedStatement.setInt(1, ((Contract)data).getOwnerId());
+					preparedStatement.setInt(2, ((Contract)data).getGraveId());
+					preparedStatement.setDate(3, (Date) ((Contract)data).getDate());
+					preparedStatement.setInt(4, ((Contract)data).getPeriod());
+					preparedStatement.setInt(5, ((Contract)data).getReceipt());
+					preparedStatement.setInt(6, ((Contract)data).getId());
+					preparedStatement.executeUpdate();
+					
+					for (Data contract : getAll(CONTRACT)) {
+						if (((Contract)contract).getId() == ((Contract)data).getId()) {
+							((Contract)contract).setOwnerId(((Contract)data).getOwnerId());
+							((Contract)contract).setGraveId(((Contract)data).getGraveId());
+							((Contract)contract).setDate(((Contract)data).getDate());
+							((Contract)contract).setPeriod(((Contract)data).getPeriod());
+							((Contract)contract).setReceipt(((Contract)data).getReceipt());	
+						}
+					}
+				}
+			}else if (data instanceof Complainer){
+				if (((Complainer)data).isValid()){
+					preparedStatement = connect
+							.prepareStatement("update complainer set firstName = ?, lastName = ?, reason = ?");
+					preparedStatement.setString(1, ((Complainer)data).getFirstName());
+					preparedStatement.setString(2,((Complainer)data).getLastName());
+					preparedStatement.setString(3, ((Complainer)data).getReason());
+					preparedStatement.setInt(4, ((Complainer)data).getId());
+					preparedStatement.executeUpdate();
+					
+					for (Data complainer : getAll(COMPLAINER)) {
+						if (((Complainer)complainer).getId() == ((Complainer)data).getId()) {
+							((Complainer)complainer).setFirstName(((Complainer)data).getFirstName());
+							((Complainer)complainer).setLastName(((Complainer)data).getLastName());
+							((Complainer)complainer).setReason(((Complainer)data).getReason());
+						}
+					}
+				}
+			}else if (data instanceof Observation){
+				if (((Observation)data).isValid()){
+					preparedStatement = connect
+							.prepareStatement("update observation set tomn = ?, modificationNr = ?, photography = ?");
+					preparedStatement.setBoolean(1, ((Observation)data).isTomb());
+					preparedStatement.setInt(2, ((Observation)data).getModificationNr());
+					preparedStatement.setString(3, ((Observation)data).getPhotography());
+					preparedStatement.setInt(4, ((Observation)data).getId());
+					preparedStatement.executeUpdate();
+					
+					for (Data observation : getAll(OBSERVATION)) {
+						if (((Observation)observation).getId() == ((Observation)data).getId()) {
+							((Observation)observation).setTomb(((Observation)data).isTomb());
+							((Observation)observation).setModificationNr(((Observation)data).getModificationNr());
+							((Observation)observation).setPhotography(((Observation)data).getPhotography());
+						}
+					}
+				}
+			}
+			
+			
+			// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
@@ -369,7 +528,31 @@ public class DataBase {
 					preparedStatement.setInt(1, ((Deceased)data).getId());
 					preparedStatement.executeUpdate();
 				}
-			}// else if (){...} ... treating every data type the same way
+			}else if (data instanceof Contract){
+				if (getDataById(((Contract)data).getId(), CONTRACT) != null){
+					preparedStatement = connect
+							.prepareStatement("delete from contract where id = ?");
+					preparedStatement.setInt(1, ((Contract)data).getId());
+					preparedStatement.executeUpdate();
+					
+				}	
+			}else if (data instanceof Complainer){
+				if (getDataById(((Complainer)data).getId(), COMPLAINER) != null){
+					preparedStatement = connect
+							.prepareStatement("delete from complainer where id = ?");
+					preparedStatement.setInt(1, ((Complainer)data).getId());
+					preparedStatement.executeUpdate();
+				}
+			}else if (data instanceof Observation){
+				if (getDataById(((Observation)data).getId(), OBSERVATION) != null){
+					preparedStatement = connect
+							.prepareStatement("delete from observation where id = ?");
+					preparedStatement.setInt(1, ((Observation)data).getId());
+					preparedStatement.executeUpdate();
+				}
+			}
+			
+			// else if (){...} ... treating every data type the same way
 			
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
