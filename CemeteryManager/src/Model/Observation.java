@@ -19,10 +19,6 @@ public class Observation extends MainData implements Data{
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public boolean isTomb() {
 		return tomb;
 	}
