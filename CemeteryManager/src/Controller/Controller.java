@@ -16,8 +16,14 @@ import Repository.Repository;
 public class Controller {
 	private Repository repo;
 	
+	Controller(Repository repo){
+		this.repo=repo;
+	}
+	
 	//GENERAL
-	public TableModel getBurialRegister(int year) {return null;} 			//a) REGISTRUL ANUAL DE PROGRAMARE A INMORMANTARILOR
+	public TableModel getBurialRegister(int year) {							//a) REGISTRUL ANUAL DE PROGRAMARE A INMORMANTARILOR
+		return new BurialRegisterTableModel(repo,year);
+	} 			
 	public TableModel getGraveRegister(){return null;}						//b) REGISTRUL DE MORMINTE 
 	public TableModel getMonumentRegister(){return null;}					//c) REGISTRUL DE MORMINTE-MONUMENTE FUNERARE 
 	public TableModel getDeceasedRegister(int year){return null;}			//d) REGISTRUL INDEX ANUAL AL DECEDATILOR
