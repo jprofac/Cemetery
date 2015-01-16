@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
@@ -13,9 +14,12 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.SpringLayout;
 import javax.swing.JPasswordField;
 import net.miginfocom.swing.MigLayout;
+import Repository.DataBase;
 
 public class UserLoginGUI extends JFrame {
 
@@ -66,13 +70,61 @@ public class UserLoginGUI extends JFrame {
 		contentPane.add(passwordField, "cell 2 3,growx,aligny top");
 		
 		JButton btnLogIn = new JButton("Autentificare");
+
+		final JFrame view = this;
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO verify type of the user and display the appropriate window
-				
-				new InspectorGUI();
+				int userType=DataBase.getInstance().logIn(textField.getText(), passwordField.getText());
+				JFrame frame = null;
+				switch (userType){
+					case DataBase.USER_ADMIN:
+						frame = new AdministratorGUI();
+						break;
+					default:
+						JOptionPane.showMessageDialog(contentPane, "Wrong username or password!");
+				}
 
-				dispose();
+
+				if (frame != null)
+				frame.addWindowListener(new WindowListener() {
+					@Override
+					public void windowOpened(WindowEvent e) {
+
+					}
+
+					@Override
+					public void windowClosing(WindowEvent e) {
+
+					}
+
+					@Override
+					public void windowClosed(WindowEvent e) {
+						view.setVisible(true);
+					}
+
+					@Override
+					public void windowIconified(WindowEvent e) {
+
+					}
+
+					@Override
+					public void windowDeiconified(WindowEvent e) {
+
+					}
+
+					@Override
+					public void windowActivated(WindowEvent e) {
+
+					}
+
+					@Override
+					public void windowDeactivated(WindowEvent e) {
+
+					}
+				});
+
+				view.setVisible(false);
 			}
 		});
 		contentPane.add(btnLogIn, "cell 2 6,alignx center,aligny top");

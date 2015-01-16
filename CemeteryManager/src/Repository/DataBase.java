@@ -43,6 +43,14 @@ public class DataBase {
 
 	public static final int USER = 9;
 
+	public static final int USER_ADMIN = 0;
+
+	public static final int USER_INSPECTOR = 1;
+
+	public static final int USER_RELATII = 2;
+
+	public static final int USER_REGISTRATURA = 3;
+
 	private Connection connect = null;
 
 	private Statement statement = null;
@@ -71,7 +79,7 @@ public class DataBase {
 
 			// setup the connection with the DB.
 			connect = DriverManager.getConnection(
-					"jdbc:mysql://localhost/proiectcolectiv", "root", "root");
+					"jdbc:mysql://localhost/proiectcolectiv", "root", "");
 
 			// statements allow to issue SQL queries to the database
 			statement = (Statement) connect.createStatement();
@@ -838,5 +846,22 @@ public class DataBase {
 			e.printStackTrace();
 		}
 		return dataList;
+	}
+
+	public int logIn(String user, String password) {
+		int type = -1;
+		try {
+			resultSet = statement.executeQuery("select type from users where name='"+user+"' and password='"+password+"'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			while (resultSet.next()) {
+                type = resultSet.getInt("type");
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return type;
 	}
 }

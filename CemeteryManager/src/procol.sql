@@ -1,9 +1,19 @@
 CREATE DATABASE  IF NOT EXISTS `proiectcolectiv`;
 USE `proiectcolectiv`;
 
+DROP TABLE IF EXISTS `Users`;
+CREATE TABLE `Users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `proiectcolectiv`.`users` (`id`, `name`, `password`, `type`) VALUES ('1', 'admin', 'admin', '0')
+
 DROP TABLE IF EXISTS `Cemetery`;
 CREATE TABLE `Cemetery` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
   `valid` tinyint(1) DEFAULT 1,
@@ -12,7 +22,7 @@ CREATE TABLE `Cemetery` (
 
 DROP TABLE IF EXISTS `Parcel`;
 CREATE TABLE `Parcel` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(45) DEFAULT NULL,
   `cemeteryId` int(11) NOT NULL,
   `valid` tinyint(1) DEFAULT 1,
@@ -22,7 +32,7 @@ CREATE TABLE `Parcel` (
 
 DROP TABLE IF EXISTS `Owner`;
 CREATE TABLE `Owner` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(45) DEFAULT NULL,
   `lastName` varchar(45) DEFAULT NULL,
   `domicile` varchar(45) DEFAULT NULL,
@@ -32,7 +42,7 @@ CREATE TABLE `Owner` (
 
 DROP TABLE IF EXISTS `Observation`;
 CREATE TABLE `Observation` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tomb` boolean DEFAULT false,
   `modificationNr` int(11) DEFAULT NULL,
   `photography` varchar(45) DEFAULT NULL,
@@ -42,7 +52,7 @@ CREATE TABLE `Observation` (
 
 DROP TABLE IF EXISTS `Grave`;
 CREATE TABLE `Grave` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `parcelId` int(11) NOT NULL,
   `surface` int(11) NOT NULL,
   `observationId` int(11) NOT NULL,
@@ -54,7 +64,7 @@ CREATE TABLE `Grave` (
 
 DROP TABLE IF EXISTS `Deceased`;
 CREATE TABLE `Deceased` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(45) DEFAULT NULL,
   `lastName` varchar(45) DEFAULT NULL,
   `religion` varchar(45) DEFAULT NULL,
@@ -67,7 +77,7 @@ CREATE TABLE `Deceased` (
 
 DROP TABLE IF EXISTS `Complainer`;
 CREATE TABLE `Complainer` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(45) DEFAULT NULL,
   `lastName` varchar(45) DEFAULT NULL,
   `reason` varchar(45) DEFAULT NULL,
@@ -77,7 +87,7 @@ CREATE TABLE `Complainer` (
 
 DROP TABLE IF EXISTS `Contract`;
 CREATE TABLE `Contract` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ownerId` int(11) NOT NULL,
   `graveId` int(11) NOT NULL,
   `date` datetime DEFAULT NULL,
@@ -91,7 +101,7 @@ CREATE TABLE `Contract` (
 
 DROP TABLE IF EXISTS `Request`;
 CREATE TABLE `Request` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` varchar(45) DEFAULT NULL,
   `infocet` int(11) DEFAULT NULL,
   `completed` boolean DEFAULT false,
@@ -101,7 +111,7 @@ CREATE TABLE `Request` (
 
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(45) DEFAULT NULL,
   `lastName` varchar(45) DEFAULT NULL,
   `username` varchar(45) DEFAULT NULL,
