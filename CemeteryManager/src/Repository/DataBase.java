@@ -777,4 +777,66 @@ public class DataBase {
 		return dataList;
 	}
 
+	public ArrayList<Data> getExpiringGraves(int year) {
+		ArrayList<Data> dataList = new ArrayList<Data>();
+		try {
+			resultSet = statement.executeQuery("select g.id, g.parcelId, g.surface, g.observationId, g.type from grave G join contract C on G.id=C.graveId where year(c.date)+c.period=" + year);
+			while (resultSet.next()) {
+				int graveId = resultSet.getInt("id");
+				int parcelId = resultSet.getInt("parcelId");
+				int surface = resultSet.getInt("surface");
+				int observationId = resultSet.getInt("observationId");
+				String type = resultSet.getString("type");
+				Grave newGrave = new Grave(graveId, parcelId, surface,
+						observationId, type);
+				dataList.add(newGrave);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
+
+	public Data getContractByGrave(int grave2) {
+		Data data = null;
+		try{
+			resultSet = statement.executeQuery("select * from contract where graveId = " + grave2);
+		while (resultSet.next()) {
+			int ownerId = resultSet.getInt("ownerId");
+			int id = resultSet.getInt("id");
+			Date date = resultSet.getDate("date");
+			int period = resultSet.getInt("period");
+			int receipt = resultSet.getInt("receipt");
+			data = new Contract(id, ownerId, grave2, date, period,
+					receipt);
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
+	
+	public ArrayList<Data> getPaidGraves() {
+		ArrayList<Data> dataList = new ArrayList<Data>();
+		try {
+			resultSet = statement.executeQuery("select g.id, g.parcelId, g.surface, g.observationId, g.type from grave G join contract C on G.id=C.graveId where year(c.date)+c.period>" + 2014);
+			while (resultSet.next()) {
+				int graveId = resultSet.getInt("id");
+				int parcelId = resultSet.getInt("parcelId");
+				int surface = resultSet.getInt("surface");
+				int observationId = resultSet.getInt("observationId");
+				String type = resultSet.getString("type");
+				Grave newGrave = new Grave(graveId, parcelId, surface,
+						observationId, type);
+				dataList.add(newGrave);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
 }

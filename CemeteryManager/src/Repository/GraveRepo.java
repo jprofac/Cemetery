@@ -47,7 +47,19 @@ public class GraveRepo {
 		return (Grave)DataBase.getInstance().getDataById(id, DataBase.GRAVE);
 	}
 
-	public List<Grave> searchGrave(String s) {
-		return null;
+	public List<Grave> getExpiring(int year) {
+		ArrayList<Grave> list = new ArrayList<Grave>();
+		for (Data d : DataBase.getInstance().getExpiringGraves(year)){
+			list.add((Grave) d);
+		}
+		return list;
+	}
+	
+	public List<Grave> getPaid() {
+		ArrayList<Grave> list = new ArrayList<Grave>();
+		for (Data d : DataBase.getInstance().getPaidGraves()){
+			list.add((Grave) d);
+		}
+		return list;
 	}
 }

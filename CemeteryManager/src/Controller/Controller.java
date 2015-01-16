@@ -1,6 +1,7 @@
 package Controller;
 
 import java.security.acl.Owner;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -23,24 +24,20 @@ public class Controller {
 	//GENERAL
 	public TableModel getBurialRegister(int year) {	
 		return new BurialRegisterTableModel(repo,year);
-	} 	
-	
+	} 		
 	
 	public TableModel getGraveRegister(){			 
 		return new GraveRegisterTableModel(repo);
-	}
-	
+	}	
 	
 	
 	public TableModel getDeceasedRegister(int year){
-		return new DeceasedRegisterTableModel(repo, year);
-	
+		return new DeceasedRegisterTableModel(repo, year);	
 	}
 	
 	public TableModel getRequests(){
 		return new RequestTableModel(repo);
-	}
-	
+	}	
 	
 	public TableModel getContracts(int year){		
 		return new ContractTableModel(repo,year);
@@ -48,17 +45,36 @@ public class Controller {
 	}					
 	public TableModel getComplains(){
 		return new ComplainTableModel(repo);
-	}
-	
+	}	
 	
 	//ALTE FUNCTIONALITATI
-	public TableModel getExpiredGravesByYear(int year){return null;}		//locurile de veci expirate pe ani, cu toate datele de identificare 
-	public TableModel getExpiringGraves() {return null;}					//locurile de veci care expira in anul in curs
-	public TableModel getReceiptNumber(String graveId) {return null;}		//numărul chitantei cu care s-a facut plata si data emiterii
-	public String getPaidPeriod(String graveId) {return null;}				//intervalul de timp pentru care s-a emis plata
-	public TableModel getAllPaidGraves() {return null;}						//locuri de veci plătite în anul în curs cu toate datele de identificare de mai sus
-	public void sendAlert(){}												// redactarea unei scrisori	catre concesionar prin care sa fie atentionat asupra situatiei platii locului de veci
+	public TableModel getExpiredGravesByYear(int year){
+		return new GraveTableModel(repo.graveRepo.getExpiring(year));
+	}		
 	
+	public TableModel getExpiringGraves() {
+		return new GraveTableModel(repo.graveRepo.getExpiring(Calendar.getInstance().get(Calendar.YEAR)));
+	}
+	
+	//numărul chitantei cu care s-a facut plata si data emiterii	
+	public String getReceiptNumber(String graveId) {	
+		return "Chitanta: "+repo.contractRepo.getContractByGrave(Integer.parseInt(graveId)).getReceipt()+"\nData: "
+				+repo.contractRepo.getContractByGrave(Integer.parseInt(graveId)).getDate();
+	}	
+	
+	//intervalul de timp pentru care s-a emis plata
+	public String getPaidPeriod(String graveId) {
+		Date date1= repo.contractRepo.getContractByGrave(Integer.parseInt(graveId)).getDate();
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(date1);
+	    int year = cal.get(Calendar.YEAR);
+	    int month = cal.get(Calendar.MONTH);
+	    int day = cal.get(Calendar.DAY_OF_MONTH);
+	    year+=repo.contractRepo.getContractByGrave(Integer.parseInt(graveId)).getPeriod();
+	    return "Intervalul platit: "+date1+" - "+year+"-"+month+"-"+day;
+	}
+		
+	public TableModel getAllPaidGraves() {return new GraveTableModel(repo.graveRepo.getPaid());}		
 	
 	
 	//ADMIN

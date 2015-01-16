@@ -50,4 +50,8 @@ public class ContractRepo {
 			list.add((Contract) d);
 		}
 		return list;}
+	
+	public Contract getContractByGrave(int grave){
+		return (Contract)DataBase.getInstance().getContractByGrave(grave);
+	}
 }
