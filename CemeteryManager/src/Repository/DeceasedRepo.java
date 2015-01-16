@@ -46,20 +46,19 @@ public class DeceasedRepo {
 	public Deceased getDeceasedById(int id){
 		return (Deceased)DataBase.getInstance().getDataById(id, DataBase.DECEASED);
 	}
-
-	public List<Deceased> searchDeceased(String s){
-		/*List<Deceased> searchResult = new ArrayList<Deceased>();
-		for (Deceased d : allDeceased){
-			String firstName = d.getFirstName();
-			String lastName = d.getLastName();
-			String religion = d.getReligion();
-			String date = d.getBurialDate().toString();		
-			if (firstName.contains(s) || lastName.contains(s) || religion.contains(s) || date.contains(s))
-				searchResult.add(d);
-		}
-		return searchResult; */
-		return null;
+	
+	public Deceased getDeceasedByGrave(int id){
+		return (Deceased)DataBase.getInstance().getDeceasedById(id);
 	}
+
+
+	public List<Deceased> getDeceasedByYear(int year) {
+		ArrayList<Deceased> list = new ArrayList<Deceased>();
+		for (Data d : DataBase.getInstance().getDeceasedByYear(year)){
+			list.add((Deceased) d);
+			}
+			return list;
+		}
 	
 }
 

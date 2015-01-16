@@ -16,22 +16,39 @@ import Repository.Repository;
 public class Controller {
 	private Repository repo;
 	
-	Controller(Repository repo){
+	public Controller(Repository repo){
 		this.repo=repo;
 	}
 	
 	//GENERAL
-	public TableModel getBurialRegister(int year) {							//a) REGISTRUL ANUAL DE PROGRAMARE A INMORMANTARILOR
+	public TableModel getBurialRegister(int year) {	
 		return new BurialRegisterTableModel(repo,year);
-	} 			
-	public TableModel getGraveRegister(){return null;}						//b) REGISTRUL DE MORMINTE 
-	public TableModel getMonumentRegister(){return null;}					//c) REGISTRUL DE MORMINTE-MONUMENTE FUNERARE 
-	public TableModel getDeceasedRegister(int year){return null;}			//d) REGISTRUL INDEX ANUAL AL DECEDATILOR
-	public TableModel getDeceasedWithoutCaregiver(int year){return null;}	//e) REGISTRUL ANUAL DE EVIDENTA A DECEDATILOR FARA APARTINATORI
-	public TableModel getRequests(){return null;}							//f) REGISTRUL CU EVIDENTA CERERILOR DE ATRIBUIRE A LOCURILOR DE INHUMARE
-	public TableModel getContracts(int year){return null;}					//g) REGISTRUL ANUAL DE EVIDENTA A CONTRACTELOR DE CONCESIUNE
-	public TableModel getComplains(int year){return null;}					//h) REGISTRUL ANUAL CU EVIDENTA SESIZARILOR SI RECLAMATIILE CETATENILOR 
+	} 	
 	
+	
+	public TableModel getGraveRegister(){			 
+		return new GraveRegisterTableModel(repo);
+	}
+	
+	
+	
+	public TableModel getDeceasedRegister(int year){
+		return new DeceasedRegisterTableModel(repo, year);
+	
+	}
+	
+	public TableModel getRequests(){
+		return new RequestTableModel(repo);
+	}
+	
+	
+	public TableModel getContracts(int year){		
+		return new ContractTableModel(repo,year);
+		
+	}					
+	public TableModel getComplains(){
+		return new ComplainTableModel(repo);
+	}
 	
 	
 	//ALTE FUNCTIONALITATI

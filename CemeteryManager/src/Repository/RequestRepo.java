@@ -12,7 +12,7 @@ public class RequestRepo {
 	public RequestRepo() {
 	}
 
-	public List<Request> getAllRequest() throws SQLException {
+	public List<Request> getAllRequest(){
 		ArrayList<Request> list = new ArrayList<Request>();
 		for (Data d : DataBase.getInstance().getAll(DataBase.REQUEST)){
 			list.add((Request) d);
@@ -20,15 +20,15 @@ public class RequestRepo {
 		return list;
 	}
 
-	public void addRequest(Request g) throws SQLException {
+	public void addRequest(Request g){
 		DataBase.getInstance().addData(g);
 	}
 
-	public void updateRequest(Request g) throws SQLException {
+	public void updateRequest(Request g){
 		DataBase.getInstance().updateData(g);
 	}
 
-	public void deleteRequest(Request g) throws SQLException {
+	public void deleteRequest(Request g){
 		DataBase.getInstance().deleteData(g);
 	}
 

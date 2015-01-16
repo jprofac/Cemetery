@@ -1,6 +1,7 @@
 package Controller;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -13,9 +14,9 @@ import Repository.Repository;
 
 public class BurialRegisterTableModel extends AbstractTableModel {
 	private Repository repo;
-	private int size;
 	private int year;
-	private String[] cols = {"Nume","Prenume","Religia", "Locul inmormantarii", "Data inmormantarii)" };
+	private String[] cols = { "Nume", "Prenume", "Religia",
+			"Locul inmormantarii", "Data inmormantarii" };
 
 	public BurialRegisterTableModel(Repository repo, int year) {
 		this.repo = repo;
@@ -27,37 +28,32 @@ public class BurialRegisterTableModel extends AbstractTableModel {
 	}
 
 	public int getRowCount() {
-		return size;
+		return repo.deceasedRepo.getDeceasedByYear(year).size();
 	}
 
 	public int getColumnCount() {
 		return cols.length;
 	}
-	
-	public void setRegistry() {
-		for (Deceased d: repo.deceasedRepo.getAllDeceased()){
-			Grave g=repo.graveRepo.getGraveById(d.getGrave());
-			Parcel p=repo.parcelRepo.getParcelById(g.getParcelId());
-			Calendar cal = Calendar.getInstance();
-		    cal.setTime(d.getBurialDate());
-		    int y = cal.get(Calendar.YEAR);
-		    if (this.year==y){
-		    	cols[0]=d.getLastName();
-				cols[1]=d.getFirstName();
-				cols[2]=d.getReligion();
-				cols[3]=p.getCode();
-				cols[4]=d.getBurialDate().toString();
-		    }
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		List<Deceased> list = repo.deceasedRepo.getDeceasedByYear(year);
+		switch (columnIndex) {
+		case 0:
+			return list.get(rowIndex).getLastName();
+		case 1:
+			return list.get(rowIndex).getFirstName();
+		case 2:
+			return list.get(rowIndex).getReligion();
+		case 3: {
+			Grave g = repo.graveRepo
+					.getGraveById(list.get(rowIndex).getGrave());
+			Parcel p = repo.parcelRepo.getParcelById(g.getParcelId());
+			return p.getCode();
 		}
-	}
-
-	@Override
-	public boolean isCellEditable(int row, int column) {
-		return false;
-	}
-
-	@Override
-	public Object getValueAt(int arg0, int arg1) {
+		case 4:
+			return list.get(rowIndex).getBurialDate().toString();
+		}
 		return null;
 	}
 }

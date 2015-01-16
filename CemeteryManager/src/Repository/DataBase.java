@@ -176,8 +176,8 @@ public class DataBase {
 							.prepareStatement("insert into  parcel values (? , ?, ?)");
 					preparedStatement.setInt(1, ((Parcel) data).getId());
 					preparedStatement.setString(2, ((Parcel) data).getCode());
-					preparedStatement.setInt(3,
-							((Parcel) data).getCemeteryId());
+					preparedStatement
+							.setInt(3, ((Parcel) data).getCemeteryId());
 
 				}
 			}
@@ -223,8 +223,8 @@ public class DataBase {
 					String religion = resultSet.getString("religion");
 					int graveId = resultSet.getInt("graveId");
 					Date burialDate = resultSet.getDate("burialDate");
-					data = new Deceased(id, firstName, lastName,
-							religion, graveId, burialDate);
+					data = new Deceased(id, firstName, lastName, religion,
+							graveId, burialDate);
 				}
 				break;
 			case GRAVE:
@@ -703,6 +703,78 @@ public class DataBase {
 			// TODO: handle exception
 		}
 
+	}
+
+	public Deceased getDeceasedById(int id) {
+		try {
+			resultSet = statement
+					.executeQuery("select * from deceased where graveId = "
+							+ id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (resultSet.next()) {
+				String firstName = resultSet.getString("firstName");
+				String lastName = resultSet.getString("lastName");
+				String religion = resultSet.getString("religion");
+				int graveId = resultSet.getInt("graveId");
+				Date burialDate = resultSet.getDate("burialDate");
+				return new Deceased(id, firstName, lastName, religion, graveId,
+						burialDate);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public ArrayList<Data> getDeceasedByYear(int year) {
+		ArrayList<Data> dataList = new ArrayList<Data>();
+		try {
+			resultSet = statement
+					.executeQuery("select * from deceased where YEAR(burialDate) = "
+							+ year);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String firstName = resultSet.getString("firstName");
+				String lastName = resultSet.getString("lastName");
+				String religion = resultSet.getString("religion");
+				int graveId = resultSet.getInt("graveId");
+				Date burialDate = resultSet.getDate("burialDate");
+				Deceased newDeceased = new Deceased(id, firstName, lastName,
+						religion, graveId, burialDate);
+				dataList.add(newDeceased);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
+	}
+
+	public ArrayList<Data> getContractsByYear(int year) {
+		ArrayList<Data> dataList = new ArrayList<Data>();
+		try {
+			resultSet = statement.executeQuery("select * from contract where YEAR(date) =" + year);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				int ownerId = resultSet.getInt("ownerId");
+				int graveId = resultSet.getInt("graveId");
+				Date date = resultSet.getDate("date");
+				int period = resultSet.getInt("period");
+				int receipt = resultSet.getInt("receipt");
+				Contract newContract = new Contract(id, ownerId, graveId, date,
+						period, receipt);
+				dataList.add(newContract);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataList;
 	}
 
 }

@@ -43,17 +43,5 @@ public class ComplainerRepo {
 	public Complainer getComplainerById(int id){
 		return (Complainer)DataBase.getInstance().getDataById(id, DataBase.COMPLAINER);
 	}
-	public List<Complainer> searchComplainer(String s){
-		/*List<Complainer> searchResult = new ArrayList<Complainer>();
-		for (Complainer complainer : allComplainer){
-			String firstName = complainer.getFirstName();
-			String lastName = complainer.getLastName();
-			String reason = complainer.getReason();
-			if (firstName.contains(s) || lastName.contains(s) || reason.contains(s)) {
-				searchResult.add(complainer);
-			}
-		}
-		return searchResult; */
-		return null;
-	}
+
 }

@@ -43,17 +43,11 @@ public class ContractRepo {
 	public Contract getContractById(int id){
 		return (Contract)DataBase.getInstance().getDataById(id, DataBase.CONTRACT);
 	}
-	public List<Contract> searchContract(String s){
-		/*List<Contract> searchResult = new ArrayList<Contract>();
-		for (Contract contract : allContract){
-			String date = contract.getDate().toString();
-			String period = Integer.toString(contract.getPeriod());
-			String receipt = Integer.toString(contract.getReceipt());
-			if (date.contains(s) || period.contains(s) || receipt.contains(s)) {
-				searchResult.add(contract);
-			}
-			
+	
+	public List<Contract> getContractsByYear(int year){
+		ArrayList<Contract> list = new ArrayList<Contract>();
+		for (Data d : DataBase.getInstance().getContractsByYear(year)){
+			list.add((Contract) d);
 		}
-		return searchResult; */
-		return null;}
+		return list;}
 }
