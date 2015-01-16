@@ -23,7 +23,7 @@ public class GraveRepo {
 	public GraveRepo() {
 	}
 
-	public List<Grave> getAllGrave() throws SQLException {
+	public List<Grave> getAllGrave(){
 		ArrayList<Grave> list = new ArrayList<Grave>();
 		for (Data d : DataBase.getInstance().getAll(DataBase.GRAVE)){
 			list.add((Grave) d);
@@ -31,15 +31,15 @@ public class GraveRepo {
 		return list;
 	}
 
-	public void addGrave(Grave g) throws SQLException {
+	public void addGrave(Grave g){
 		DataBase.getInstance().addData(g);
 	}
 
-	public void updateGrave(Grave g) throws SQLException {
+	public void updateGrave(Grave g){
 		DataBase.getInstance().updateData(g);
 	}
 
-	public void deleteGrave(Grave g) throws SQLException {
+	public void deleteGrave(Grave g){
 		DataBase.getInstance().deleteData(g);
 	}
 

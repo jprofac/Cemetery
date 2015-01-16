@@ -70,9 +70,8 @@ public class DataBase {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// setup the connection with the DB.
-			connect = DriverManager
-					.getConnection("jdbc:mysql://localhost/proiectcolectiv?"
-							+ "user=root&password=root");
+			connect = DriverManager.getConnection(
+					"jdbc:mysql://localhost/proiectcolectiv", "root", "root");
 
 			// statements allow to issue SQL queries to the database
 			statement = (Statement) connect.createStatement();
@@ -171,12 +170,15 @@ public class DataBase {
 							(((Observation) data).getPhotography()));
 				}
 			} else if (data instanceof Parcel) {
-				if (getDataById(((Parcel) data).getId(), OBSERVATION) == null) {
+				if (getDataById(((Parcel) data).getId(), PARCEL) == null
+						&& ((Parcel) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into observation values (?, ?, ?)");
+							.prepareStatement("insert into  parcel values (? , ?, ?)");
 					preparedStatement.setInt(1, ((Parcel) data).getId());
-					preparedStatement.setString(2,((Parcel) data).getCode());
-					preparedStatement.setInt(2,((Parcel) data).getCemeteryId());
+					preparedStatement.setString(2, ((Parcel) data).getCode());
+					preparedStatement.setInt(3,
+							((Parcel) data).getCemeteryId());
+
 				}
 			}
 
@@ -221,7 +223,7 @@ public class DataBase {
 					String religion = resultSet.getString("religion");
 					int graveId = resultSet.getInt("graveId");
 					Date burialDate = resultSet.getDate("burialDate");
-					Deceased d = new Deceased(id, firstName, lastName,
+					data = new Deceased(id, firstName, lastName,
 							religion, graveId, burialDate);
 				}
 				break;
@@ -253,7 +255,7 @@ public class DataBase {
 				break;
 			case COMPLAINER:
 				resultSet = statement
-						.executeQuery("select + from complainer where id = "
+						.executeQuery("select * from complainer where id = "
 								+ id);
 				while (resultSet.next()) {
 					String firstName = resultSet.getString("firstName");
@@ -264,7 +266,7 @@ public class DataBase {
 				break;
 			case OBSERVATION:
 				resultSet = statement
-						.executeQuery("select + from observation where id = "
+						.executeQuery("select * from observation where id = "
 								+ id);
 				while (resultSet.next()) {
 					boolean tomb = resultSet.getBoolean("tomb");
@@ -276,14 +278,14 @@ public class DataBase {
 				break;
 			case PARCEL:
 				resultSet = statement
-						.executeQuery("select + from parcel where id = " + id);
+						.executeQuery("select * from parcel where id = " + id);
 				while (resultSet.next()) {
 					String code = resultSet.getString("code");
 					int cemeteryId = resultSet.getInt("cemeteryId");
 					data = new Parcel(id, code, cemeteryId);
 				}
 				break;
-			
+
 			// etc
 
 			default:
@@ -382,7 +384,7 @@ public class DataBase {
 				break;
 			case OBSERVATION:
 				dataList = new ArrayList<Data>();
-				resultSet = statement.executeQuery("select + from observation");
+				resultSet = statement.executeQuery("select * from observation");
 				while (resultSet.next()) {
 					int id = resultSet.getInt("id");
 					boolean tomb = resultSet.getBoolean("tomb");
@@ -395,13 +397,13 @@ public class DataBase {
 				break;
 			case PARCEL:
 				dataList = new ArrayList<Data>();
-				resultSet = statement.executeQuery("select + from parcel");
+				resultSet = statement.executeQuery("select * from parcel");
 				while (resultSet.next()) {
 					int id = resultSet.getInt("id");
 					int cemeteryId = resultSet.getInt("cemeteryId");
 					String code = resultSet.getString("code");
-					Parcel newObservation = new Parcel(id, code, cemeteryId);
-					dataList.add(newObservation);
+					Parcel newParcel = new Parcel(id, code, cemeteryId);
+					dataList.add(newParcel);
 				}
 				break;
 			// etc
@@ -605,21 +607,20 @@ public class DataBase {
 			} else if (data instanceof Parcel) {
 				if (((Parcel) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("update parcel set code = ?, cemeteryId = ?");
-					preparedStatement.setInt(2,
-							((Parcel) data).getCemeteryId());
-					preparedStatement.setString(1,
-							((Parcel) data).getCode());
-					
+							.prepareStatement("update parcel set code = ?, cemeteryId = ? where id = ?");
+					preparedStatement.setString(1, ((Parcel) data).getCode());
+					preparedStatement
+							.setInt(2, ((Parcel) data).getCemeteryId());
+					preparedStatement.setInt(3, ((Parcel) data).getId());
+					preparedStatement.executeUpdate();
+
 					for (Data parcel : getAll(PARCEL)) {
 						if (((Parcel) parcel).getId() == ((Parcel) data)
 								.getId()) {
 							((Parcel) parcel)
-									.setCode(((Parcel) data)
-											.getCode());
-							((Parcel) parcel)
-									.setCemeteryId(((Parcel) data)
-											.getCemeteryId());
+									.setCode(((Parcel) data).getCode());
+							((Parcel) parcel).setCemeteryId(((Parcel) data)
+									.getCemeteryId());
 						}
 					}
 				}

@@ -36,11 +36,11 @@ public class DeceasedRepo {
 	}
 	
 	public void updateDeceased(Deceased d){
-		DataBase.getInstance().updateData(data);
+		DataBase.getInstance().updateData(d);
 	}
 
 	public void deleteDeceased(Deceased d){
-		DataBase.getInstance().deleteData(data);
+		DataBase.getInstance().deleteData(d);
 	}
 
 	public Deceased getDeceasedById(int id){
