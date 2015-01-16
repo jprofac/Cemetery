@@ -10,12 +10,22 @@ import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 public class ResponseGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
+	private JTextPane textPane;
 
 
 	/**
@@ -31,7 +41,7 @@ public class ResponseGUI extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setLayout(new MigLayout("", "[378px][]", "[391px][][36px][13px][50px]"));
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		contentPane.add(textPane, "cell 0 0,grow");
 		
 		JLabel lblNewLabel = new JLabel("Nume Proprietar");
@@ -42,6 +52,22 @@ public class ResponseGUI extends JFrame {
 		textField.setColumns(10);
 		
 		JButton button = new JButton("Trimite Raspuns");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Writer writer = null;
+				 try {
+				     writer = new BufferedWriter(new OutputStreamWriter(
+				           new FileOutputStream("Raspunsuri/"+textField.getText() + ".txt"), "utf-8"));
+				     writer.write(textPane.getText());
+				 } catch (IOException ex) {
+				   // report
+				 } finally {
+				    try {writer.close();} catch (Exception ex) {}
+				 }
+				 setVisible(false);
+			}
+		});
 		contentPane.add(button, "cell 0 4,alignx center,growy");
 		setVisible(true);
 	}
