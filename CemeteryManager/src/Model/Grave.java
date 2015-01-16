@@ -1,6 +1,6 @@
 package Model;
 
-public class Grave  implements Data{
+public class Grave extends MainData implements Data{
 	private int id;
 	private int parcelId;
 	private int surface;

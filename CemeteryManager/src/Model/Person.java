@@ -1,6 +1,6 @@
 package Model;
 
-public class Person  implements Data{
+public class Person extends MainData implements Data{
 	int id;
 	String firstName;
 	String lastName;

@@ -1,6 +1,6 @@
 package Model;
 
-public class Observation  implements Data{
+public class Observation extends MainData implements Data{
 	private int id;
 	private boolean tomb; // existenta/inexistenta constructiilor funerare
 	private int modificationNr; // nrActuluiModificari

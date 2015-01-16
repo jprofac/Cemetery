@@ -70,11 +70,8 @@ public class UserLoginGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//TODO verify type of the user and display the appropriate window
 				
-				new AdministratorGUI();
 				new InspectorGUI();
-				new RelatiiCuPubliculGUI();
-				new RegistraturaGUI();
-				
+
 				dispose();
 			}
 		});

@@ -9,7 +9,7 @@ public class Owner extends Person {
 		this.domicile = domicile;
 	}
 
-
+	
 	public String getDomicile() {
 		return domicile;
 	}

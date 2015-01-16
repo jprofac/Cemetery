@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Date;
 
-public class Request  implements Data{
+public class Request extends MainData implements Data{
 	private int id;
 	private Date date;
 	private int infocet;

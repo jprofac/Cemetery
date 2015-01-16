@@ -1,6 +1,6 @@
 package Model;
 
-public class Parcel  implements Data{
+public class Parcel extends MainData implements Data{
 	int id;
 	String code;		//ex. A1 or B3
 	int cemeteryId;

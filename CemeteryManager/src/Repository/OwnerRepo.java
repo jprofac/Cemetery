@@ -13,6 +13,7 @@ import com.mysql.jdbc.Statement;
 
 import Model.Deceased;
 import Model.Owner;
+import Model.Person;
 
 public class OwnerRepo {
 	private Connection connect = null;
@@ -24,6 +25,7 @@ public class OwnerRepo {
 	public OwnerRepo() throws ClassNotFoundException, SQLException {
 		connectToDB();
 		getAllOwner();
+		
 	}
 	
 	public List<Owner> getAllOwner() throws SQLException{

@@ -1,9 +1,10 @@
 package Model;
 
-public class Cemetery  implements Data{
+public class Cemetery extends MainData  implements Data{
 	int id;
 	String name;
 	String address;
+	int valid=1;
 	
 	public Cemetery(int id, String name, String address) {
 		super();
@@ -15,7 +16,7 @@ public class Cemetery  implements Data{
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -35,6 +36,8 @@ public class Cemetery  implements Data{
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+
 
 	@Override
 	public boolean isValid() {

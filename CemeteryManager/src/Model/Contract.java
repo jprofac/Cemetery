@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Date;
 
-public class Contract implements Data{
+public class Contract extends MainData implements Data{
 	private int id;
 	private int ownerId;
 	private int graveId;
