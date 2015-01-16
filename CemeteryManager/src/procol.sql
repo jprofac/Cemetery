@@ -10,7 +10,7 @@ CREATE TABLE `Users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `proiectcolectiv`.`users` (`id`, `name`, `password`, `type`) VALUES ('1', 'admin', 'admin', '0')
+INSERT INTO `proiectcolectiv`.`users` (`id`, `name`, `password`, `type`) VALUES ('1', 'admin', 'admin', '0');
 
 DROP TABLE IF EXISTS `Cemetery`;
 CREATE TABLE `Cemetery` (
