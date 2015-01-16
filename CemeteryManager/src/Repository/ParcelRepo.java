@@ -43,14 +43,13 @@ public class ParcelRepo {
 	}
 
 	public List<Parcel> searchParcel(String s) {
-		/*List<Parcel> searchResult = new ArrayList<Parcel>();
-		for (Parcel Parcel : allParcel) {
-			if (Parcel.getName().contains(s)
-					|| Parcel.getAddress().contains(s)) {
-				searchResult.add(Parcel);
+		List<Parcel> searchResult = new ArrayList<Parcel>();
+		for (Parcel parcel : getAllParcel()) {
+			if (parcel.getCode().contains(s)
+					|| parcel.getCemeteryId()==Integer.parseInt(s)) {
+				searchResult.add(parcel);
 			}
 		}
-		return searchResult;*/
-		return null;
+		return searchResult;
 	}
 }

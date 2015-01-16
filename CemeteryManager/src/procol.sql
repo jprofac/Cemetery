@@ -1,16 +1,18 @@
 CREATE DATABASE  IF NOT EXISTS `proiectcolectiv`;
 USE `proiectcolectiv`;
 
-DROP TABLE IF EXISTS `Users`;
-CREATE TABLE `Users` (
+DROP TABLE IF EXISTS `User`;
+CREATE TABLE `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `firstName` varchar(45) DEFAULT NULL,
+  `lastName` varchar(45) DEFAULT NULL,
+  `username` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `proiectcolectiv`.`users` (`id`, `name`, `password`, `type`) VALUES ('1', 'admin', 'admin', '0');
+INSERT INTO `proiectcolectiv`.`user` (`id`, `firstname`, `lastname`, `username`, `password`, `type`) VALUES ('1', 'Admin', '1', 'admin', 'admin', '0');
 
 DROP TABLE IF EXISTS `Cemetery`;
 CREATE TABLE `Cemetery` (
@@ -57,6 +59,7 @@ CREATE TABLE `Grave` (
   `parcelId` int(11) NOT NULL,
   `surface` int(11) NOT NULL,
   `observationId` int(11) NOT NULL,
+  `isMonument` tinyint(1) DEFAULT 0,
   `valid` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`parcelId`) REFERENCES Parcel(id),
@@ -106,18 +109,6 @@ CREATE TABLE `Request` (
   `date` varchar(45) DEFAULT NULL,
   `infocet` int(11) DEFAULT NULL,
   `completed` boolean DEFAULT false,
-  `valid` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `User`;
-CREATE TABLE `User` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(45) DEFAULT NULL,
-  `lastName` varchar(45) DEFAULT NULL,
-  `username` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `type` varchar(45) DEFAULT NULL,
   `valid` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

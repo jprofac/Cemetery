@@ -5,15 +5,15 @@ public class Grave extends MainData implements Data{
 	private int parcelId;
 	private int surface;
 	private int observationId;
-	private String type;
+	private boolean isMonument;
 	
-	public Grave(int id, int parcelId, int surface, int observationId, String type) {
+	public Grave(int id, int parcelId, int surface, int observationId, boolean isMonument) {
 		super();
 		this.id = id;
 		this.parcelId = parcelId;
 		this.surface = surface;
 		this.observationId = observationId;
-		this.type = type;
+		this.isMonument = isMonument;
 	}
 
 	public int getId() {
@@ -46,12 +46,12 @@ public class Grave extends MainData implements Data{
 		this.observationId = observationId;
 	}
 
-	public String getType() {
-		return type;
+	public boolean getIsMonument() {
+		return isMonument;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setIsMonument(boolean isMonument) {
+		this.isMonument = isMonument;
 	}
 
 	@Override

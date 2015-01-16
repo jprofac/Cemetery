@@ -4,11 +4,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import Model.Deceased;
 import Model.Grave;
-import Model.Parcel;
-import Model.Request;
-import Repository.Repository;
 
 public class GraveTableModel extends AbstractTableModel {
 	private List<Grave> graveList;
@@ -44,7 +40,7 @@ public class GraveTableModel extends AbstractTableModel {
 			case 3:
 				return graveList.get(rowIndex).getSurface();
 			case 4:
-				return graveList.get(rowIndex).getType();
+				return graveList.get(rowIndex).getIsMonument();
 			}
 		return null;
 	}

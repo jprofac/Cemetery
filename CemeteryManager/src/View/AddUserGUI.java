@@ -1,15 +1,11 @@
 package View;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 
 import java.awt.Choice;
 import java.awt.Button;
@@ -18,7 +14,9 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.SpringLayout;
+import Model.User;
+import Repository.Repository;
+import Repository.DataBase;
 
 public class AddUserGUI extends JFrame {
 
@@ -33,7 +31,7 @@ public class AddUserGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddUserGUI(int userID) {
+	public AddUserGUI() {
 		setTitle("Adauga Utilizator");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 351, 441);
@@ -42,23 +40,23 @@ public class AddUserGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel label = new JLabel("Nume:");
+		final JLabel label = new JLabel("Nume:");
 		label.setBounds(45, 97, 73, 39);
 		contentPane.add(label);
 		
-		JLabel lblLastName = new JLabel("Prenume:");
+		final JLabel lblLastName = new JLabel("Prenume:");
 		lblLastName.setBounds(45, 132, 73, 39);
 		contentPane.add(lblLastName);
 		
-		JLabel lblUsername = new JLabel("Nume Utilizator:");
+		final JLabel lblUsername = new JLabel("Nume Utilizator:");
 		lblUsername.setBounds(45, 168, 103, 34);
 		contentPane.add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("Parola:");
+		final JLabel lblPassword = new JLabel("Parola:");
 		lblPassword.setBounds(45, 198, 60, 39);
 		contentPane.add(lblPassword);
 		
-		JLabel lblType = new JLabel("Tip utilizator:");
+		final JLabel lblType = new JLabel("Tip utilizator:");
 		lblType.setBounds(45, 224, 88, 50);
 		contentPane.add(lblType);
 		
@@ -82,7 +80,7 @@ public class AddUserGUI extends JFrame {
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
-		Choice choice = new Choice();
+		final Choice choice = new Choice();
 		choice.setBounds(145, 242, 116, 22);
 		choice.add("inspector");
 		choice.add("registratura primariei");
@@ -93,7 +91,16 @@ public class AddUserGUI extends JFrame {
 		btnSave.setBounds(114, 322, 97, 25);
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			//TODO add or update user
+				int type = -1;
+				if (choice.getSelectedItem() == "inspector"){
+
+					type = 1;
+				} else if (choice.getSelectedItem() == "registratura primariei") {
+					type = 3;
+				} else {
+					type = 2;
+				}
+				Repository.getInstance().userRepo.addUser(new User(-1,textField.getText(), textField_1.getText(),textField_2.getText(),textField_3.getText(),"" + type));
 			}
 		});
 		contentPane.add(btnSave);

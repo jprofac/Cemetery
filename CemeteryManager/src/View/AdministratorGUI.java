@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
 import net.miginfocom.swing.MigLayout;
+import Repository.Repository;
 
 public class AdministratorGUI extends JFrame {
 
@@ -38,7 +39,7 @@ public class AdministratorGUI extends JFrame {
 		JButton btnAddUser = new JButton("Adauga Utilizator");
 		btnAddUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
-				new AddUserGUI(-1);
+				new AddUserGUI();
 			}
 		});
 		contentPane.setLayout(new MigLayout("", "[205px][25px][140px][89px][140px]", "[302px][25px][50px]"));
@@ -54,7 +55,7 @@ public class AdministratorGUI extends JFrame {
 		JButton btnSearch = new JButton("Cauta Utilizator");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO search for users in table
+				Repository.getInstance().userRepo.searchUser(textField_3.getText());
 			}
 		});
 		contentPane.add(btnSearch, "cell 2 1,growx,aligny top");
@@ -64,7 +65,7 @@ public class AdministratorGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//TODO userId for the selected item from table
 				int userId=1;
-				new AddUserGUI(userId);
+				new AddUserGUI();
 			}
 		});
 		contentPane.add(btnModify, "cell 2 2,grow");
