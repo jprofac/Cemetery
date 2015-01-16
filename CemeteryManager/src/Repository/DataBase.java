@@ -93,21 +93,18 @@ public class DataBase {
 	public void addData(Data data) {
 		try {
 			if (data instanceof Cemetery) {
-				if (getDataById(((Cemetery) data).getId(), CEMETERY) == null
-						&& ((Cemetery) data).isValid()) {
+				if (((Cemetery) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into  cemetery values (? , ?, ?)");
-					preparedStatement.setInt(1, ((Cemetery) data).getId());
+							.prepareStatement("insert into  cemetery values (?, ?)");
 					preparedStatement.setString(2, ((Cemetery) data).getName());
 					preparedStatement.setString(3,
 							((Cemetery) data).getAddress());
 
 				}
 			} else if (data instanceof Grave) {
-				if (getDataById(((Grave) data).getId(), GRAVE) == null) {
+				if (((Grave) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into  grave values (?, ?, ?, ?, ?)");
-					preparedStatement.setInt(1, ((Grave) data).getId());
+							.prepareStatement("insert into  grave values (?, ?, ?, ?)");
 					preparedStatement.setInt(2, ((Grave) data).getParcelId());
 					preparedStatement.setInt(3, ((Grave) data).getSurface());
 					preparedStatement.setInt(4,
@@ -116,10 +113,9 @@ public class DataBase {
 				}
 
 			} else if (data instanceof Request) {
-				if (getDataById(((Request) data).getId(), REQUEST) == null) {
+				if (((Request) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into  request values (?, ?, ?, ?)");
-					preparedStatement.setInt(1, ((Request) data).getId());
+							.prepareStatement("insert into  request values (?, ?, ?)");
 					preparedStatement.setDate(2,
 							(Date) ((Request) data).getDate());
 					preparedStatement.setInt(3, ((Request) data).getInfocet());
@@ -127,10 +123,9 @@ public class DataBase {
 							((Request) data).isCompleted());
 				}
 			} else if (data instanceof Deceased) {
-				if (getDataById(((Deceased) data).getId(), DECEASED) == null) {
+				if (((Deceased) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into deceased values (?, ?, ?, ?, ?, ?)");
-					preparedStatement.setInt(1, ((Deceased) data).getId());
+							.prepareStatement("insert into deceased values ( ?, ?, ?, ?, ?)");
 					preparedStatement.setString(2,
 							((Deceased) data).getFirstName());
 					preparedStatement.setString(3,
@@ -142,10 +137,9 @@ public class DataBase {
 							(Date) ((Deceased) data).getBurialDate());
 				}
 			} else if (data instanceof Contract) {
-				if (getDataById(((Contract) data).getId(), CONTRACT) == null) {
+				if (((Contract) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into contract values (?, ?, ?, ?, ?, ?)");
-					preparedStatement.setInt(1, ((Contract) data).getId());
+							.prepareStatement("insert into contract values (?, ?, ?, ?, ?)");
 					preparedStatement.setInt(2, ((Contract) data).getOwnerId());
 					preparedStatement.setInt(3, ((Contract) data).getGraveId());
 					preparedStatement.setDate(4,
@@ -154,10 +148,9 @@ public class DataBase {
 					preparedStatement.setInt(6, ((Contract) data).getReceipt());
 				}
 			} else if (data instanceof Complainer) {
-				if (getDataById(((Complainer) data).getId(), COMPLAINER) == null) {
+				if (((Complainer) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into complainer values (?, ?, ?, ?)");
-					preparedStatement.setInt(1, ((Complainer) data).getId());
+							.prepareStatement("insert into complainer values (?, ?, ?)");
 					preparedStatement.setString(2,
 							((Complainer) data).getFirstName());
 					preparedStatement.setString(3,
@@ -166,10 +159,9 @@ public class DataBase {
 							((Complainer) data).getReason());
 				}
 			} else if (data instanceof Observation) {
-				if (getDataById(((Observation) data).getId(), OBSERVATION) == null) {
+				if (((Observation) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into observation values (?, ?, ?, ?)");
-					preparedStatement.setInt(1, ((Observation) data).getId());
+							.prepareStatement("insert into observation values (?, ?, ?)");
 					preparedStatement.setBoolean(2,
 							((Observation) data).isTomb());
 					preparedStatement.setInt(3,
@@ -178,11 +170,9 @@ public class DataBase {
 							(((Observation) data).getPhotography()));
 				}
 			} else if (data instanceof Parcel) {
-				if (getDataById(((Parcel) data).getId(), PARCEL) == null
-						&& ((Parcel) data).isValid()) {
+				if (((Parcel) data).isValid()) {
 					preparedStatement = connect
-							.prepareStatement("insert into  parcel values (? , ?, ?)");
-					preparedStatement.setInt(1, ((Parcel) data).getId());
+							.prepareStatement("insert into  parcel values (?, ?)");
 					preparedStatement.setString(2, ((Parcel) data).getCode());
 					preparedStatement
 							.setInt(3, ((Parcel) data).getCemeteryId());
