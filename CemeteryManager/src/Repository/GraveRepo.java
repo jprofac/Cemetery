@@ -23,7 +23,7 @@ public class GraveRepo {
 	public GraveRepo() {
 	}
 
-	public List<Grave> getAllGrave(){
+	public ArrayList<Grave> getAllGrave(){
 		ArrayList<Grave> list = new ArrayList<Grave>();
 		for (Data d : DataBase.getInstance().getAll(DataBase.GRAVE)){
 			list.add((Grave) d);
@@ -40,6 +40,7 @@ public class GraveRepo {
 	}
 
 	public void deleteGrave(Grave g){
+		System.out.println(g.getId());
 		DataBase.getInstance().deleteData(g);
 	}
 

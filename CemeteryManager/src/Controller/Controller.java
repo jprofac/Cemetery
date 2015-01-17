@@ -88,10 +88,17 @@ public class Controller {
 	
 	
 	//INSPECTOR
-	public TableModel getAllGrave(){return null;}
-	public void addGrave(String id, String cemetery, String parcel, Owner owner, String surface, String observation, String type){}
-	public void updateGrave(String id, String cemetery, String parcel, Owner owner, String surface, String observation, String type){}
-	public void deleteGrave(String id){}
+	public ArrayList<Grave> getAllGrave(){return repo.graveRepo.getAllGrave();}
+	public void addGrave(int id, int parcelId, int surface, int observationId, boolean isMonument, boolean valid){
+		repo.graveRepo.addGrave(new Grave(id,parcelId,surface,observationId,isMonument,valid));
+	}
+	//public void updateGrave(String id, String cemetery, String parcel, Owner owner, String surface, String observation, String type){
+	public void updateGrave(int id, int parcelId, int surface, int observationId, boolean isMonument, boolean valid){
+		repo.graveRepo.updateGrave(new Grave(id,parcelId,surface,observationId,isMonument,valid));
+	}
+	public void deleteGrave(int id){repo.graveRepo.deleteGrave(
+			repo.graveRepo.getGraveById(id));
+	}
 	public TableModel searchGrave(String s){return null;}
 	
 	public TableModel getAllObservation(){return null;}
@@ -111,8 +118,10 @@ public class Controller {
 		
 		repo.deceasedRepo.addDeceased(new Deceased(id, firstName, lastName, religion, graveId,burialDate));
 		}
-	public void updateDeceased(String id, String firstName, String lastName, String religion, int graveId, String burialDate){}
-	public void deleteDeceased(String id){}
+	public void updateDeceased(int id, String firstName, String lastName, String religion, int graveId, Date burialDate){
+		repo.deceasedRepo.updateDeceased(new Deceased(id, firstName, lastName, religion, graveId,burialDate));
+	}
+	public void deleteDeceased(int id){repo.deceasedRepo.deleteDeceased(repo.deceasedRepo.getDeceasedById(id));}
 	public TableModel searchDeceased(String s){return null;}
 	
 	

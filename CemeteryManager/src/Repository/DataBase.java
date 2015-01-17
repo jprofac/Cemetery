@@ -106,11 +106,11 @@ public class DataBase {
                 if (((Grave) data).isValid()) {
                     preparedStatement = connect
                             .prepareStatement("insert into  grave values (?, ?, ?, ?)");
-                    preparedStatement.setInt(2, ((Grave) data).getParcelId());
-                    preparedStatement.setInt(3, ((Grave) data).getSurface());
-                    preparedStatement.setInt(4,
+                    preparedStatement.setInt(1, ((Grave) data).getParcelId());
+                    preparedStatement.setInt(2, ((Grave) data).getSurface());
+                    preparedStatement.setInt(3,
                             ((Grave) data).getObservationId());
-                    preparedStatement.setInt(5, ((Grave) data).getIsMonument() ? 1 : 0);
+                    preparedStatement.setInt(4, ((Grave) data).getIsMonument() ? 1 : 0);
                 }
 
             } else if (data instanceof Request) {
@@ -249,9 +249,10 @@ public class DataBase {
                         int parcelId = resultSet.getInt("parcelId");
                         int surface = resultSet.getInt("surface");
                         int observationId = resultSet.getInt("observationId");
-                        boolean type = resultSet.getBoolean("type");
-                        data = new Grave(graveId, parcelId, surface, observationId,
-                                type);
+                        boolean monument = resultSet.getBoolean("isMonument");
+                        boolean valid = resultSet.getBoolean("valid");
+                        data = new Grave(graveId, parcelId, surface, observationId,monument,
+                                valid);
                     }
                     break;
                 case CONTRACT:
@@ -373,9 +374,10 @@ public class DataBase {
                         int parcelId = resultSet.getInt("parcelId");
                         int surface = resultSet.getInt("surface");
                         int observationId = resultSet.getInt("observationId");
-                        boolean type = resultSet.getBoolean("type");
+                        boolean monument = resultSet.getBoolean("isMonument");
+                        boolean valid = resultSet.getBoolean("valid");
                         Grave newGrave = new Grave(graveId, parcelId, surface,
-                                observationId, type);
+                                observationId, monument, valid);
                         dataList.add(newGrave);
                     }
                     break;
@@ -449,7 +451,7 @@ public class DataBase {
                     break;
             }
         } catch (Exception e) {
-            // TODO: handle exception
+           System.out.println(e);
         }
 
         return dataList;
@@ -856,9 +858,10 @@ public class DataBase {
                 int parcelId = resultSet.getInt("parcelId");
                 int surface = resultSet.getInt("surface");
                 int observationId = resultSet.getInt("observationId");
+                boolean monument = resultSet.getBoolean("isMonument");
                 boolean type = resultSet.getBoolean("type");
                 Grave newGrave = new Grave(graveId, parcelId, surface,
-                        observationId, type);
+                        observationId, monument, type);
                 dataList.add(newGrave);
             }
         } catch (SQLException e) {
@@ -899,9 +902,10 @@ public class DataBase {
                 int parcelId = resultSet.getInt("parcelId");
                 int surface = resultSet.getInt("surface");
                 int observationId = resultSet.getInt("observationId");
+                boolean monument = resultSet.getBoolean("isMonument");
                 boolean type = resultSet.getBoolean("type");
                 Grave newGrave = new Grave(graveId, parcelId, surface,
-                        observationId, type);
+                        observationId, monument, type);
                 dataList.add(newGrave);
             }
         } catch (SQLException e) {

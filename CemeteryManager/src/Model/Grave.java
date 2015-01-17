@@ -6,14 +6,16 @@ public class Grave extends MainData implements Data{
 	private int surface;
 	private int observationId;
 	private boolean isMonument;
+	private boolean valid;
 	
-	public Grave(int id, int parcelId, int surface, int observationId, boolean isMonument) {
+	public Grave(int id, int parcelId, int surface, int observationId, boolean isMonument, boolean valid) {
 		super();
 		this.id = id;
 		this.parcelId = parcelId;
 		this.surface = surface;
 		this.observationId = observationId;
 		this.isMonument = isMonument;
+		this.valid = valid;
 	}
 
 	public int getId() {
@@ -56,8 +58,7 @@ public class Grave extends MainData implements Data{
 
 	@Override
 	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.valid;
 	}
 	
 	

@@ -18,7 +18,6 @@ import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import Controller.Controller;
-import Model.Deceased;
 import Repository.Repository;
 
 
@@ -30,12 +29,16 @@ public class DeceasedInfoGUI extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JDatePickerImpl datePicker;
+	private Controller controller;
+	private JButton button1;
 
 
 	/**
 	 * Create the frame.
 	 */
 	public DeceasedInfoGUI() {
+		controller = new Controller(new Repository());
 		setTitle("Date Decedat");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 363, 369);
@@ -43,7 +46,7 @@ public class DeceasedInfoGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[146px][12px][149px]", "[18px][18px][18px][18px][19px][39px][50px]"));
-		this.setLocationRelativeTo(null);
+		
 		JLabel lblCnp = new JLabel("CNP: ");
 		contentPane.add(lblCnp, "cell 0 0,alignx center,aligny bottom");
 		
@@ -78,7 +81,7 @@ public class DeceasedInfoGUI extends JFrame {
 			
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
-		final JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+		datePicker = new JDatePickerImpl(datePanel);
 		contentPane.add(datePicker, "cell 2 5,grow");
 		
 		JLabel lblNrMormint = new JLabel("Nr. Mormant");
@@ -90,6 +93,10 @@ public class DeceasedInfoGUI extends JFrame {
 		
 		JButton button = new JButton("Salveaza");
 		contentPane.add(button, "cell 0 6 3 1,grow");
+		
+		button1 = new JButton("Modifica");
+		contentPane.add(button1, "cell 0 6 3 1,grow");
+		
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int id = Integer.parseInt(textField.getText());
@@ -103,20 +110,32 @@ public class DeceasedInfoGUI extends JFrame {
 				    
 				DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); 
 				String reportDate = df.format(utilDate); 
-				new Controller(new Repository()).addDeceased(id, firstName, lastName, religion, grave, date);;
-				System.out.println("Saved");
+				controller.addDeceased(id, firstName, lastName, religion, grave, date);;
 			}
 		});
 		
 		setVisible(true);
 	}
 	
-	public void modifica(Deceased deceased){
-		textField.setText(String.valueOf(deceased.getId()));
-		textField_1.setText(deceased.getFirstName());
-		textField_2.setText(deceased.getLastName());
-		textField_3.setText(deceased.getReligion());
-		textField_4.setText(String.valueOf(deceased.getGrave()));
+	public void modifica(final int id){
+		textField.setText(String.valueOf(id));
+		button1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {				
+				String firstName = textField_1.getText();
+				String lastName = textField_2.getText();
+				String religion = textField_3.getText();
+				int grave = Integer.parseInt(textField_4.getText());
+				java.util.Date utilDate =  (Date) datePicker.getModel().getValue();
+				
+				java.sql.Date date = new java.sql.Date(utilDate.getTime());				   
+				    
+				DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); 
+				String reportDate = df.format(utilDate); 
+				controller.updateDeceased(id, firstName, lastName, religion, grave, date);;
+				System.out.println("Saved");
+			}
+		});
+		
 	}
 }
 
