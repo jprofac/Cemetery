@@ -10,9 +10,13 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
 import net.miginfocom.swing.MigLayout;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class RelatiiCuPubliculGUI extends JFrame {
 
@@ -27,12 +31,60 @@ public class RelatiiCuPubliculGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 809, 680);
 		contentPane = new JPanel();
+		final JFrame view = this;
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[205px][55px][175px][100px][153px]", "[468px][25px][27px][50px]"));
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		JTable morminte = new JTable();
 	
+		final WindowListener listener = new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				view.setVisible(false);
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				view.setVisible(true);
+				
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		
 		tabbedPane.addTab("Morminte", morminte);
 		contentPane.add(tabbedPane, "cell 0 0 5 1,grow");
 		JTable decedati = new JTable();
@@ -57,7 +109,7 @@ public class RelatiiCuPubliculGUI extends JFrame {
 		JButton button_2 = new JButton("Ordin Deschidere Mormant");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new OrderGUI();
+				new OrderGUI().addWindowListener(listener);
 			}
 		});
 		contentPane.add(button_2, "cell 0 3,alignx center,growy");
@@ -65,21 +117,20 @@ public class RelatiiCuPubliculGUI extends JFrame {
 		JButton button_3 = new JButton("Certificat Deces");
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new DeathCertificateGUI();
+				new DeathCertificateGUI().addWindowListener(listener);
 			}
 		});
 		contentPane.add(button_3, "cell 2 3,grow");
-		
 		JButton button_4 = new JButton("Contract Cumparare loc de Veci");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new BuyingContractGUI();
+				new BuyingContractGUI().addWindowListener(listener);
 			}
 		});
 		contentPane.add(button_4, "cell 4 3,grow");
 		
-		setVisible(true);
 		
+		setVisible(true);
 	}
 
 }

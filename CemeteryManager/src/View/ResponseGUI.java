@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
@@ -33,7 +34,7 @@ public class ResponseGUI extends JFrame {
 	 */
 	public ResponseGUI() {
 		setTitle("Raspuns");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 402, 574);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,15 +58,21 @@ public class ResponseGUI extends JFrame {
 				
 				Writer writer = null;
 				 try {
+					 if (!textField.getText().isEmpty()
+								&& !textPane.getText().isEmpty()) {
 				     writer = new BufferedWriter(new OutputStreamWriter(
-				           new FileOutputStream("Raspunsuri/"+textField.getText() + ".txt"), "utf-8"));
+				     new FileOutputStream("Raspunsuri/"+textField.getText() + ".txt"), "utf-8"));
 				     writer.write(textPane.getText());
+				     dispose();
+					 }else{
+						 JOptionPane.showMessageDialog(contentPane,
+									"Field can't be empty");
+					 }
 				 } catch (IOException ex) {
 				   // report
 				 } finally {
 				    try {writer.close();} catch (Exception ex) {}
-				 }
-				 setVisible(false);
+				 }	
 			}
 		});
 		contentPane.add(button, "cell 0 4,alignx center,growy");

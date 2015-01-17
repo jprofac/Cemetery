@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextPane;
@@ -56,15 +57,19 @@ public class CreateRequestGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				 Writer writer = null;
 				 try {
+					 if (!textField.getText().isEmpty() && !textPane.getText().isEmpty()){
 				     writer = new BufferedWriter(new OutputStreamWriter(
 				           new FileOutputStream("Cereri/" + textField.getText() + ".txt"), "utf-8"));
 				     writer.write(textPane.getText());
+				     dispose();
+					 }else{
+						 JOptionPane.showMessageDialog(contentPane, "Field can't be empty");
+					 }
 				 } catch (IOException ex) {
 				   // report
 				 } finally {
 				    try {writer.close();} catch (Exception ex) {}
 				 }
-				 setVisible(false);
 			}
 		});
 		contentPane.add(button, "cell 0 1,alignx center,growy");
