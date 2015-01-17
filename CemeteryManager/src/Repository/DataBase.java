@@ -124,14 +124,22 @@ public class DataBase {
                             ((Request) data).isCompleted());
                 }
             } else if (data instanceof Deceased) {
-                if (((Deceased) data).isValid()) {
+            	if (((Deceased) data).isValid()) {
                     preparedStatement = connect
-                            .prepareStatement("insert into deceased values ( ?, ?, ?, ?, ?)");
-                    preparedStatement.setString(2, ((Deceased) data).getFirstName());
-                    preparedStatement.setString(3, ((Deceased) data).getLastName());
-                    preparedStatement.setString(4, ((Deceased) data).getReligion());
+                            .prepareStatement("insert into deceased values ( ?, ?, ?, ?, ?, ?, ?)");
+                    preparedStatement.setInt(1,
+                            ((Deceased) data).getId());
+                    preparedStatement.setString(2,
+                            ((Deceased) data).getFirstName());
+                    preparedStatement.setString(3,
+                            ((Deceased) data).getLastName());
+                    preparedStatement.setString(4,
+                            ((Deceased) data).getReligion());
                     preparedStatement.setInt(5, ((Deceased) data).getGrave());
-                    preparedStatement.setDate(6, (Date) ((Deceased) data).getBurialDate());
+                    preparedStatement.setDate(6,
+                            (Date) ((Deceased) data).getBurialDate());
+                    preparedStatement.setInt(7,
+                            ((Deceased) data).getValid());
                 }
             } else if (data instanceof Contract) {
                 if (((Contract) data).isValid()) {
