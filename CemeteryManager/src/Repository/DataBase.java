@@ -127,15 +127,11 @@ public class DataBase {
                 if (((Deceased) data).isValid()) {
                     preparedStatement = connect
                             .prepareStatement("insert into deceased values ( ?, ?, ?, ?, ?)");
-                    preparedStatement.setString(2,
-                            ((Deceased) data).getFirstName());
-                    preparedStatement.setString(3,
-                            ((Deceased) data).getLastName());
-                    preparedStatement.setString(4,
-                            ((Deceased) data).getReligion());
+                    preparedStatement.setString(2, ((Deceased) data).getFirstName());
+                    preparedStatement.setString(3, ((Deceased) data).getLastName());
+                    preparedStatement.setString(4, ((Deceased) data).getReligion());
                     preparedStatement.setInt(5, ((Deceased) data).getGrave());
-                    preparedStatement.setDate(6,
-                            (Date) ((Deceased) data).getBurialDate());
+                    preparedStatement.setDate(6, (Date) ((Deceased) data).getBurialDate());
                 }
             } else if (data instanceof Contract) {
                 if (((Contract) data).isValid()) {
@@ -175,22 +171,19 @@ public class DataBase {
                     preparedStatement = connect
                             .prepareStatement("insert into  parcel values (?, ?)");
                     preparedStatement.setString(2, ((Parcel) data).getCode());
-                    preparedStatement
-                            .setInt(3, ((Parcel) data).getCemeteryId());
+                    preparedStatement.setInt(3, ((Parcel) data).getCemeteryId());
 
                 }
             } else if (data instanceof User) {
-                if ( data.isValid()) {
+                if (data.isValid()) {
                     preparedStatement = connect
-                            .prepareStatement("insert into  user values (?, ?, ?, ?, ?)");
+                            .prepareStatement("insert into  user (`firstname`, `lastname`, `username`, `password`, " +
+                                    "`type`) values (?, ?, ?, ?, ?)");
                     preparedStatement.setString(1, ((User) data).getFirstName());
                     preparedStatement.setString(2, ((User) data).getLastName());
                     preparedStatement.setString(3, ((User) data).getUsername());
                     preparedStatement.setString(4, ((User) data).getPassword());
                     preparedStatement.setInt(5, Integer.parseInt(((User) data).getType()));
-                    preparedStatement
-                            .setInt(3, ((Parcel) data).getCemeteryId());
-
                 }
             }
 
@@ -199,6 +192,7 @@ public class DataBase {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
+            System.out.println(e);
             // TODO: handle exception
         }
     }
@@ -304,7 +298,7 @@ public class DataBase {
                         String firstname = resultSet.getString("firstname");
                         String lastname = resultSet.getString("lastname");
                         String username = resultSet.getString("username");
-                        String type = ""+resultSet.getInt("type");
+                        String type = "" + resultSet.getInt("type");
                         data = new User(id, firstname, lastname, username, "", type);
                     }
                     break;
@@ -437,7 +431,7 @@ public class DataBase {
                         String name = resultSet.getString("firstname");
                         String surname = resultSet.getString("lastname");
                         String username = resultSet.getString("username");
-                        String type = ""+resultSet.getInt("type");
+                        String type = "" + resultSet.getInt("type");
                         User user = new User(id, name, surname, username, "", type);
                         dataList.add(user);
                     }
@@ -456,7 +450,7 @@ public class DataBase {
     public void updateData(Data data) {
         try {
             if (data instanceof Cemetery) {
-                if ( data.isValid()) {
+                if (data.isValid()) {
                     preparedStatement = connect
                             .prepareStatement("update cemetery set name = ?, address = ? where id = ?");
                     preparedStatement.setString(1, ((Cemetery) data).getName());
@@ -476,7 +470,7 @@ public class DataBase {
                     }
                 }
             } else if (data instanceof Request) {
-                if ( data.isValid()) {
+                if (data.isValid()) {
                     preparedStatement = connect
                             .prepareStatement("update request set date = ?, infocet = ?, completed = ? where id = ?");
                     preparedStatement.setDate(1,
@@ -500,7 +494,7 @@ public class DataBase {
                     }
                 }
             } else if (data instanceof Grave) {
-                if ( data.isValid()) {
+                if (data.isValid()) {
                     preparedStatement = connect
                             .prepareStatement("update grave set parcelId = ?, surface = ?, observationId = ?, type = " +
                                     "? where id = ?");
@@ -525,10 +519,10 @@ public class DataBase {
                     }
                 }
             } else if (data instanceof Deceased) {
-                if ( data.isValid()) {
+                if (data.isValid()) {
                     preparedStatement = connect
                             .prepareStatement("update deceased set firstName = ?, lastName = ?, religion = ?, graveId" +
-									" = ?, burialDate = ? where id = ?");
+                                    " = ?, burialDate = ? where id = ?");
                     preparedStatement.setString(1,
                             ((Deceased) data).getFirstName());
                     preparedStatement.setString(2,
@@ -563,7 +557,7 @@ public class DataBase {
                 if (data.isValid()) {
                     preparedStatement = connect
                             .prepareStatement("update contract set ownerId = ?, graveId = ?, date = ?, receipt = ?, " +
-									"period = ? where id = ?");
+                                    "period = ? where id = ?");
                     preparedStatement.setInt(1, ((Contract) data).getOwnerId());
                     preparedStatement.setInt(2, ((Contract) data).getGraveId());
                     preparedStatement.setDate(3,
@@ -590,7 +584,7 @@ public class DataBase {
                     }
                 }
             } else if (data instanceof Complainer) {
-                if ( data.isValid()) {
+                if (data.isValid()) {
                     preparedStatement = connect
                             .prepareStatement("update complainer set firstName = ?, lastName = ?, reason = ?");
                     preparedStatement.setString(1,
@@ -663,10 +657,12 @@ public class DataBase {
                         }
                     }
                 }
-            } if (data instanceof User) {
+            }
+            if (data instanceof User) {
                 if (data.isValid()) {
                     preparedStatement = connect
-                            .prepareStatement("update user set firstName = ?, lastName = ?, username = ?, type = ?  where id = ?");
+                            .prepareStatement("update user set firstName = ?, lastName = ?, username = ?, type = ?  " +
+                                    "where id = ?");
                     preparedStatement.setString(1, ((User) data).getFirstName());
                     preparedStatement.setString(2, ((User) data).getLastName());
                     preparedStatement.setString(3, ((User) data).getUsername());
@@ -836,7 +832,8 @@ public class DataBase {
     public ArrayList<Data> getExpiringGraves(int year) {
         ArrayList<Data> dataList = new ArrayList<Data>();
         try {
-            resultSet = statement.executeQuery("select g.id, g.parcelId, g.surface, g.observationId, g.type from grave G join contract C on G.id=C.graveId where year(c.date)+c.period=" + year);
+            resultSet = statement.executeQuery("select g.id, g.parcelId, g.surface, g.observationId, g.type from " +
+                    "grave G join contract C on G.id=C.graveId where year(c.date)+c.period=" + year);
             while (resultSet.next()) {
                 int graveId = resultSet.getInt("id");
                 int parcelId = resultSet.getInt("parcelId");
@@ -878,7 +875,8 @@ public class DataBase {
     public ArrayList<Data> getPaidGraves() {
         ArrayList<Data> dataList = new ArrayList<Data>();
         try {
-            resultSet = statement.executeQuery("select g.id, g.parcelId, g.surface, g.observationId, g.type from grave G join contract C on G.id=C.graveId where year(c.date)+c.period>" + 2014);
+            resultSet = statement.executeQuery("select g.id, g.parcelId, g.surface, g.observationId, g.type from " +
+                    "grave G join contract C on G.id=C.graveId where year(c.date)+c.period>" + 2014);
             while (resultSet.next()) {
                 int graveId = resultSet.getInt("id");
                 int parcelId = resultSet.getInt("parcelId");
@@ -899,7 +897,8 @@ public class DataBase {
     public int logIn(String user, String password) {
         int type = -1;
         try {
-            resultSet = statement.executeQuery("select type from user where username='" + user + "' and password='" + password + "'");
+            resultSet = statement.executeQuery("select type from user where username='" + user + "' and password='" +
+                    password + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }

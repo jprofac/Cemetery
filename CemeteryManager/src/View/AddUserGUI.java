@@ -101,6 +101,7 @@ public class AddUserGUI extends JFrame {
 					type = 2;
 				}
 				Repository.getInstance().userRepo.addUser(new User(-1,textField.getText(), textField_1.getText(),textField_2.getText(),textField_3.getText(),"" + type));
+				dispose();
 			}
 		});
 		contentPane.add(btnSave);
