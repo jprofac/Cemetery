@@ -462,6 +462,18 @@ public class DataBase {
                         dataList.add(user);
                     }
                     break;
+                case OWNER:
+                    dataList = new ArrayList<Data>();
+                    resultSet = statement.executeQuery("select * from user");
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String name = resultSet.getString("firstname");
+                        String surname = resultSet.getString("lastname");
+                        String domicile = resultSet.getString("domicile");
+                        Owner user = new Owner(id, name, surname, domicile);
+                        dataList.add(user);
+                    }
+                    break;
                 // etc
                 default:
                     break;
