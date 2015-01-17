@@ -36,6 +36,7 @@ public class UserLoginGUI extends JFrame {
 				try {
 					UserLoginGUI frame = new UserLoginGUI();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -80,15 +81,19 @@ public class UserLoginGUI extends JFrame {
 				switch (userType){
 					case DataBase.USER_ADMIN:
 						frame = new AdministratorGUI();
+						frame.setLocationRelativeTo(null);
 						break;
 					case DataBase.USER_INSPECTOR:
 						frame = new InspectorGUI();
+						frame.setLocationRelativeTo(null);
 						break;
 					case DataBase.USER_REGISTRATURA:
 						frame = new RegistraturaGUI();
+						frame.setLocationRelativeTo(null);
 						break;
 					case DataBase.USER_RELATII:
 						frame = new RelatiiCuPubliculGUI();
+						frame.setLocationRelativeTo(null);
 						break;
 					default:
 						JOptionPane.showMessageDialog(contentPane, "Wrong username or password!");

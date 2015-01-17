@@ -38,7 +38,7 @@ public class GraveInfoGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[86px][1px][123px]", "[18px][18px][18px][18px][18px][25px][50px]"));
-		
+		this.setLocationRelativeTo(null);
 		JLabel lblNewLabel = new JLabel("Nr. Mormant:");
 		contentPane.add(lblNewLabel, "cell 0 0,growx,aligny center");
 		

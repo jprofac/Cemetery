@@ -41,7 +41,7 @@ public class ReceiptGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.setLayout(new MigLayout("", "[378px]", "[391px][50px]"));
-
+		this.setLocationRelativeTo(null);
 		textPane = new JTextPane();
 		textPane.setBounds(30, 31, 378, 391);
 		contentPane.add(textPane, "cell 0 0,grow");
