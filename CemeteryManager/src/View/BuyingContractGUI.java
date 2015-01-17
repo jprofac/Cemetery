@@ -19,9 +19,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.sql.Date;
+import java.util.Calendar;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import Model.Request;
+import Repository.Repository;
 
 public class BuyingContractGUI extends JFrame {
 
@@ -29,6 +33,7 @@ public class BuyingContractGUI extends JFrame {
 	private JTextPane textPane;
 	private JLabel lblNewLabel;
 	private JTextField textField;
+	private JTextField textField2;
 
 	/**
 	 * Create the frame.
@@ -54,6 +59,8 @@ public class BuyingContractGUI extends JFrame {
 				     writer = new BufferedWriter(new OutputStreamWriter(
 				           new FileOutputStream("Ordin/"+textField.getText() + ".txt"), "utf-8"));
 				     writer.write(textPane.getText());
+						 Repository.getInstance().requestRepo.addRequest(new Request(-1,new Date(Calendar.getInstance().getTimeInMillis()),
+								 Integer.parseInt(textField2.getText()),false));
 					 dispose();
 					 } else{
 						 JOptionPane.showMessageDialog(contentPane, "Field can't be empty");
@@ -72,6 +79,8 @@ public class BuyingContractGUI extends JFrame {
 		
 		textField = new JTextField();
 		contentPane.add(textField, "cell 0 1");
+		textField2 = new JTextField();
+		//contentPane.add(textField2, "cell 1 1");
 		textField.setColumns(10);
 		contentPane.add(button, "cell 0 1,alignx center,growy");
 		setVisible(true);
