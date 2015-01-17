@@ -34,6 +34,8 @@ public class BuyingContractGUI extends JFrame {
 	private JLabel lblNewLabel;
 	private JTextField textField;
 	private JTextField textField2;
+	private JLabel lblNrInfocet;
+	private JTextField textField_1;
 
 	/**
 	 * Create the frame.
@@ -45,7 +47,7 @@ public class BuyingContractGUI extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[376px]", "[391px][50px]"));
+		contentPane.setLayout(new MigLayout("", "[376px]", "[391px][50px][][]"));
 		this.setLocationRelativeTo(null);
 		textPane = new JTextPane();
 		contentPane.add(textPane, "cell 0 0,grow");
@@ -83,6 +85,13 @@ public class BuyingContractGUI extends JFrame {
 		//contentPane.add(textField2, "cell 1 1");
 		textField.setColumns(10);
 		contentPane.add(button, "cell 0 1,alignx center,growy");
+		
+		lblNrInfocet = new JLabel("Nr. infocet:           ");
+		contentPane.add(lblNrInfocet, "flowx,cell 0 2");
+		
+		textField_1 = new JTextField();
+		contentPane.add(textField_1, "cell 0 2");
+		textField_1.setColumns(10);
 		setVisible(true);
 	}
 
