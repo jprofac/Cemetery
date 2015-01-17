@@ -41,12 +41,13 @@ public class DeceasedInfoGUI extends JFrame {
 		controller = new Controller(new Repository());
 		setTitle("Date Decedat");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		setBounds(100, 100, 363, 369);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[146px][12px][149px]", "[18px][18px][18px][18px][19px][39px][50px]"));
-		
+		this.setLocationRelativeTo(null);
 		JLabel lblCnp = new JLabel("CNP: ");
 		contentPane.add(lblCnp, "cell 0 0,alignx center,aligny bottom");
 		
@@ -99,7 +100,6 @@ public class DeceasedInfoGUI extends JFrame {
 		
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id = Integer.parseInt(textField.getText());
 				String firstName = textField_1.getText();
 				String lastName = textField_2.getText();
 				String religion = textField_3.getText();
@@ -108,9 +108,8 @@ public class DeceasedInfoGUI extends JFrame {
 				
 				java.sql.Date date = new java.sql.Date(utilDate.getTime());				   
 				    
-				DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); 
-				String reportDate = df.format(utilDate); 
-				controller.addDeceased(id, firstName, lastName, religion, grave, date);;
+				DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+				controller.addDeceased(-1, firstName, lastName, religion, grave, date);;
 			}
 		});
 		

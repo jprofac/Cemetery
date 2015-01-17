@@ -49,6 +49,7 @@ public class UserLoginGUI extends JFrame {
 		setTitle("Log In");
 		setBackground(Color.DARK_GRAY);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		setBounds(100, 100, 453, 291);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

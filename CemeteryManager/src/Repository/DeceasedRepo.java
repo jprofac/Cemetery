@@ -1,7 +1,6 @@
 package Repository;
 
 import java.sql.Connection;
-
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +14,7 @@ import Model.Data;
 import Model.Deceased;
 import Model.Owner;
 import Model.Request;
+import Model.User;
 
 import com.mysql.jdbc.Statement;
 
@@ -59,6 +59,13 @@ public class DeceasedRepo {
 			}
 			return list;
 		}
+	public ArrayList<Deceased> searchDeceased(String s){ArrayList<Deceased> searchResult = new ArrayList<Deceased>();
+	for (Deceased deceased : getAllDeceased()) {
+		if (deceased.getLastName().contains(s)) {
+			searchResult.add(deceased);
+		}
+	}
+	return searchResult;}
 	
 }
 
