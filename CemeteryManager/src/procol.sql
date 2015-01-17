@@ -212,3 +212,46 @@ CREATE TABLE `UserHistory` (
   `type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into cemetery(name, address) values ("Cimitirul Militar","Drumul Pepiniera");
+insert into cemetery(name, address) values  ("Cimitirul Eroilor","Calea Turzii");
+insert into cemetery(name, address) values ("Cimitirul Central", "Strada Avram Iancu");
+insert into cemetery(name, address) values ("Cimitirul Evreiesc", "Strada Aviator Badescu");
+
+insert into parcel(code,cemeteryId) values("MIL01",1);
+insert into parcel(code,cemeteryId) values("MIL02",1);
+insert into parcel(code,cemeteryId) values("MIL03",1);
+insert into parcel(code,cemeteryId) values("MIL04",1);
+insert into parcel(code,cemeteryId) values("MIL05",1);
+insert into parcel(code,cemeteryId) values("ERO01",2);
+insert into parcel(code,cemeteryId) values("ERO02",2);
+insert into parcel(code,cemeteryId) values("ERO03",2);
+insert into parcel(code,cemeteryId) values("ERO04",2);
+insert into parcel(code,cemeteryId) values("ERO05",2);
+insert into parcel(code,cemeteryId) values("CEN01",3);
+insert into parcel(code,cemeteryId) values("CEN02",3);
+insert into parcel(code,cemeteryId) values("CEN03",3);
+insert into parcel(code,cemeteryId) values("CEN04",3);
+insert into parcel(code,cemeteryId) values("CEN05",3);
+insert into parcel(code,cemeteryId) values("EVR01",4);
+insert into parcel(code,cemeteryId) values("EVR02",4);
+
+insert  into observation (tomb, modificationNr,photography) values (true,1,"bgb");
+insert  into observation (tomb, modificationNr,photography) values (true,2,"vfvd");
+insert  into observation (tomb, modificationNr,photography) values (true,3,"vdfv");
+insert  into observation (tomb, modificationNr,photography) values (true,4,"xoox");
+insert  into observation (tomb, modificationNr,photography) values (true,5,"gfbb");
+
+insert into grave (parcelId,surface,observationId,isMonument) values (1,5,1,false);
+insert into grave (parcelId,surface,observationId,isMonument) values (2,5,2,false);
+insert into grave (parcelId,surface,observationId,isMonument) values (3,5,3,true);
+insert into grave (parcelId,surface,observationId,isMonument) values (4,5,4,false);
+insert into grave (parcelId,surface,observationId,isMonument) values (5,5,5,false);
+
+insert into deceased(firstName,lastName,religion,graveId,burialDate) values ("Marian","Alexandru","Baprist",1,"2012-03-25");
+insert into deceased(firstName,lastName,religion,graveId,burialDate) values ("Bogdan","Muresan","Ortodox",2,"2011-03-25");
+insert into deceased(firstName,lastName,religion,graveId,burialDate) values ("Aurel","Popescu","Reformat",3,"2010-03-25");
+insert into deceased(firstName,lastName,religion,graveId,burialDate) values ("Ioana","Pop","Ortodox",4,"2013-03-25");
+insert into deceased(firstName,lastName,religion,graveId,burialDate) values ("Alexandra","Ionescu","Ortodox",5,"2015-01-02");
+
+
