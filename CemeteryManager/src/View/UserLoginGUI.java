@@ -81,6 +81,15 @@ public class UserLoginGUI extends JFrame {
 					case DataBase.USER_ADMIN:
 						frame = new AdministratorGUI();
 						break;
+					case DataBase.USER_INSPECTOR:
+						frame = new InspectorGUI();
+						break;
+					case DataBase.USER_REGISTRATURA:
+						frame = new RegistraturaGUI();
+						break;
+					case DataBase.USER_RELATII:
+						frame = new RelatiiCuPubliculGUI();
+						break;
 					default:
 						JOptionPane.showMessageDialog(contentPane, "Wrong username or password!");
 				}

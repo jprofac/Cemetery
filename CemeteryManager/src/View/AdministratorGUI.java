@@ -61,6 +61,7 @@ public class AdministratorGUI extends JFrame {
 
             @Override
             public void windowClosed(WindowEvent e) {
+                reload();
                 view.setVisible(true);
             }
 

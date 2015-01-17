@@ -328,7 +328,7 @@ public class DataBase {
             switch (dataType) {
                 case CEMETERY:
                     dataList = new ArrayList<Data>();
-                    resultSet = statement.executeQuery("select * from cemetery");
+                    resultSet = statement.executeQuery("select * from cemetery where valid = 1");
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
                         String name = resultSet.getString("name");
@@ -339,7 +339,7 @@ public class DataBase {
                     break;
                 case REQUEST:
                     dataList = new ArrayList<Data>();
-                    resultSet = statement.executeQuery("select * from request");
+                    resultSet = statement.executeQuery("select * from request where valid = 1");
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
                         Date date = resultSet.getDate("date");
@@ -352,7 +352,7 @@ public class DataBase {
                     break;
                 case DECEASED:
                     dataList = new ArrayList<Data>();
-                    resultSet = statement.executeQuery("select * from deceased");
+                    resultSet = statement.executeQuery("select * from deceased where valid = 1");
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
                         String firstName = resultSet.getString("firstName");
@@ -367,7 +367,7 @@ public class DataBase {
                     break;
                 case GRAVE:
                     dataList = new ArrayList<Data>();
-                    resultSet = statement.executeQuery("select * from grave");
+                    resultSet = statement.executeQuery("select * from grave where valid = 1");
                     while (resultSet.next()) {
                         int graveId = resultSet.getInt("id");
                         int parcelId = resultSet.getInt("parcelId");
@@ -381,7 +381,7 @@ public class DataBase {
                     break;
                 case CONTRACT:
                     dataList = new ArrayList<Data>();
-                    resultSet = statement.executeQuery("select * from contract");
+                    resultSet = statement.executeQuery("select * from contract where valid = 1");
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
                         int ownerId = resultSet.getInt("ownerId");
@@ -396,7 +396,7 @@ public class DataBase {
                     break;
                 case COMPLAINER:
                     dataList = new ArrayList<Data>();
-                    resultSet = statement.executeQuery("select * from complainer");
+                    resultSet = statement.executeQuery("select * from complainer where valid = 1");
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
                         String firstName = resultSet.getString("firstName");
@@ -409,7 +409,7 @@ public class DataBase {
                     break;
                 case OBSERVATION:
                     dataList = new ArrayList<Data>();
-                    resultSet = statement.executeQuery("select * from observation");
+                    resultSet = statement.executeQuery("select * from observation where valid = 1");
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
                         boolean tomb = resultSet.getBoolean("tomb");
@@ -422,7 +422,7 @@ public class DataBase {
                     break;
                 case PARCEL:
                     dataList = new ArrayList<Data>();
-                    resultSet = statement.executeQuery("select * from parcel");
+                    resultSet = statement.executeQuery("select * from parcel where valid = 1");
                     while (resultSet.next()) {
                         int id = resultSet.getInt("id");
                         int cemeteryId = resultSet.getInt("cemeteryId");
@@ -692,66 +692,75 @@ public class DataBase {
             if (data instanceof Cemetery) {
                 if (getDataById(((Cemetery) data).getId(), CEMETERY) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from cemetery where id = ?");
-                    preparedStatement.setInt(1, ((Cemetery) data).getId());
+                            .prepareStatement("update cemetery set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((Cemetery) data).getId());
                     preparedStatement.executeUpdate();
                 }
             } else if (data instanceof Request) {
                 if (getDataById(((Request) data).getId(), REQUEST) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from request where id = ?");
-                    preparedStatement.setInt(1, ((Request) data).getId());
+                            .prepareStatement("update request set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((Request) data).getId());
                     preparedStatement.executeUpdate();
                 }
             } else if (data instanceof Grave) {
                 if (getDataById(((Grave) data).getId(), GRAVE) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from grave where id = ?");
-                    preparedStatement.setInt(1, ((Grave) data).getId());
+                            .prepareStatement("update grave set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((Grave) data).getId());
                     preparedStatement.executeUpdate();
                 }
 
             } else if (data instanceof Deceased) {
                 if (getDataById(((Deceased) data).getId(), DECEASED) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from deceased where id = ?");
-                    preparedStatement.setInt(1, ((Deceased) data).getId());
+                            .prepareStatement("update deceased set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((Deceased) data).getId());
                     preparedStatement.executeUpdate();
                 }
             } else if (data instanceof Contract) {
                 if (getDataById(((Contract) data).getId(), CONTRACT) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from contract where id = ?");
-                    preparedStatement.setInt(1, ((Contract) data).getId());
+                            .prepareStatement("update contract set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((Contract) data).getId());
                     preparedStatement.executeUpdate();
 
                 }
             } else if (data instanceof Complainer) {
                 if (getDataById(((Complainer) data).getId(), COMPLAINER) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from complainer where id = ?");
-                    preparedStatement.setInt(1, ((Complainer) data).getId());
+                            .prepareStatement("update complainer set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((Complainer) data).getId());
                     preparedStatement.executeUpdate();
                 }
             } else if (data instanceof Observation) {
                 if (getDataById(((Observation) data).getId(), OBSERVATION) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from observation where id = ?");
-                    preparedStatement.setInt(1, ((Observation) data).getId());
+                            .prepareStatement("update observation set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((Observation) data).getId());
                     preparedStatement.executeUpdate();
                 }
             } else if (data instanceof Parcel) {
                 if (getDataById(((Parcel) data).getId(), PARCEL) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from parcel where id = ?");
-                    preparedStatement.setInt(1, ((Parcel) data).getId());
+                            .prepareStatement("update parcel set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((Parcel) data).getId());
                     preparedStatement.executeUpdate();
                 }
             } else if (data instanceof User) {
                 if (getDataById(((User) data).getId(), USER) != null) {
                     preparedStatement = connect
-                            .prepareStatement("delete from user where id = ?");
-                    preparedStatement.setInt(1, ((User) data).getId());
+                            .prepareStatement("update user set valid = ? where id = ?");
+                    preparedStatement.setInt(1, 0);
+                    preparedStatement.setInt(2, ((User) data).getId());
                     preparedStatement.executeUpdate();
                 }
             }
