@@ -30,6 +30,7 @@ public class RegistraturaGUI extends JFrame {
 	public RegistraturaGUI() {
 		setTitle("Registratura");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		setBounds(100, 100, 725, 536);
 		contentPane = new JPanel();
 		final JFrame view = this;

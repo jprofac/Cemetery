@@ -41,6 +41,7 @@ public class DeceasedInfoGUI extends JFrame {
 		controller = new Controller(new Repository());
 		setTitle("Date Decedat");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		setBounds(100, 100, 363, 369);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

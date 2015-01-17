@@ -45,6 +45,7 @@ public class InspectorGUI extends JFrame {
 		controller = new Controller(repo);
 		setTitle("Inspector\r\n");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		setBounds(100, 100, 737, 521);	
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

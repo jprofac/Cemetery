@@ -47,6 +47,7 @@ public class RelatiiCuPubliculGUI extends JFrame {
 		controller = new Controller(repo);
 		setTitle("Relatii cu publicul");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		setBounds(100, 100, 809, 680);
 		contentPane = new JPanel();
 		final JFrame view = this;

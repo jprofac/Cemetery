@@ -36,6 +36,7 @@ public class CreateRequestGUI extends JFrame {
 	public CreateRequestGUI() {
 		setTitle("Creaza Cerere");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		setBounds(100, 100, 422, 562);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
