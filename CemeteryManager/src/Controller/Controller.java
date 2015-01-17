@@ -1,16 +1,23 @@
 package Controller;
 
-import java.security.acl.Owner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.table.TableModel;
 
+import Model.Cemetery;
+import Model.Contract;
 import Model.Deceased;
 import Model.Grave;
 import Model.Observation;
+import Model.Owner;
+import Model.Parcel;
 import Model.Request;
 import Model.User;
 import Repository.Repository;
@@ -141,7 +148,80 @@ public class Controller {
 	//Relatii cu publicul
 	public void generateDiggingCommand(String graveId){}					//comanda sapat grapa catre RADP
 	public void generateDeceasedDocument(String deceasedId){}				//act pentru preot
-	public void generateReciept(String ownerId){}							//dispozitia de plata a cheltuielilor aferente
-	public void generateContract(String ownerId){}							//contractul de concesiune cand e cazul
+	public void generateReciept(String ownerId){}								//contractul de concesiune cand e cazul
+	
+	// contractul de concesiune
+		public void generateContract(String contractId) {
+			Contract c = repo.contractRepo.getContractById(Integer
+					.parseInt(contractId));
+			Owner o = repo.ownerRepo.getOwnerById(Integer.parseInt(contractId));
+			Grave g = repo.graveRepo.getGraveById(Integer.parseInt(contractId));
+			Parcel p = repo.parcelRepo.getParcelById(g.getParcelId());
+			Cemetery cem = repo.cemeteryRepo.getCemeteryById(p.getCemeteryId());
+			Observation obs = repo.observationRepo.getObservationById(g.getId());
+			String timeStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar
+					.getInstance().getTime());
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(c.getDate());
+			int year = cal.get(Calendar.YEAR);
+			int month = cal.get(Calendar.MONTH);
+			int day = cal.get(Calendar.DAY_OF_MONTH);
+			year += c.getPeriod();
+			String s = "\t\tCONTRACT DE CONCESIUNE\n\t\tNR. "
+					+ c.getId()
+					+ " din "
+					+ timeStamp
+					+ "\n\nI. Partile contractante\n"
+					+ "\tArt. 1. Municipiul CLUJ - NAPOCA prin Serviciul Administrare Cimitire\n"
+					+ "Domeniul Public cu sediul in municipiul Cluj – Napoca, str. Avram Iancu nr.\n"
+					+ "26-28, telefon 0264.454.421, reprezentant de primar Emil Boc in calitate de\n"
+					+ "concedent,  pe de o parte, si D-nul/D-na "
+					+ o.getLastName()
+					+ " "
+					+ o.getFirstName()
+					+ " cu domiciliul in "
+					+ o.getDomicile()
+					+ "\nin calitate de concesionar pe de alta parte.\n"
+					+ "In temeiul OUG nr. 54/2006 privind regimul contractelor de concesiune de bunuri\n"
+					+ "proprietate publica, aprobata cu modificari prin Legea nr. 22/2007 si in conformitate\n"
+					+ "cu HCL nr.300/2014 s-a incheiat prezentul contract de concesiune in urmatoarele conditii:\n"
+					+ "II. Obiectul contractului de concesiune\n"
+					+ "\tArt. 2. Obiectul contractului este concesionarea locului de inhumare situat in\n"
+					+ cem.getName()
+					+ ", parcela "
+					+ p.getCode()
+					+ ", nr. "
+					+ g.getId()
+					+ ", avand fiecare suprafata de "
+					+ g.getSurface()
+					+ " mp\n"
+					+ "III. Termenul"
+					+ "\n\tArt. 3. Durata concesiunii este de "
+					+ c.getPeriod()
+					+ " de ani, pentru perioada "
+					+ getPaidPeriod(Integer.toString(g.getId()))
+					+ "\n\tArt. 4. Durata contractului de concesiune poate fi prelungita, prin act aditional,\n"
+					+ "In favoarea concesionarului sau a mostenitorilor acestuia pentru o perioada de inca "
+					+ c.getPeriod() + " de ani,\n"
+					+ "cu plata taxei de reconcesionare pana in data de " + year
+					+ "-" + month + "-" + day
+					+ " a anului urmator anului incare \n"
+					+ "expira durata contractului.";
+			String filename = "Contract_" + c.getId()+".txt";
+			BufferedWriter writer = null;
+			try {
+				writer = new BufferedWriter(new FileWriter(filename));
+				writer.write(s);
+
+			} catch (IOException e) {
+			} finally {
+				try {
+					if (writer != null)
+						writer.close();
+				} catch (IOException e) {
+				}
+			}
+
+		}
 
 }
