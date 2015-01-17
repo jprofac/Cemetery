@@ -99,7 +99,6 @@ public class DeceasedInfoGUI extends JFrame {
 		
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int id = Integer.parseInt(textField.getText());
 				String firstName = textField_1.getText();
 				String lastName = textField_2.getText();
 				String religion = textField_3.getText();
@@ -108,9 +107,8 @@ public class DeceasedInfoGUI extends JFrame {
 				
 				java.sql.Date date = new java.sql.Date(utilDate.getTime());				   
 				    
-				DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); 
-				String reportDate = df.format(utilDate); 
-				controller.addDeceased(id, firstName, lastName, religion, grave, date);;
+				DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+				controller.addDeceased(-1, firstName, lastName, religion, grave, date);;
 			}
 		});
 		

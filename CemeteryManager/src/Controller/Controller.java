@@ -173,7 +173,7 @@ public class Controller {
 					+ timeStamp
 					+ "\n\nI. Partile contractante\n"
 					+ "\tArt. 1. Municipiul CLUJ - NAPOCA prin Serviciul Administrare Cimitire\n"
-					+ "Domeniul Public cu sediul in municipiul Cluj – Napoca, str. Avram Iancu nr.\n"
+					+ "Domeniul Public cu sediul in municipiul Cluj ï¿½ Napoca, str. Avram Iancu nr.\n"
 					+ "26-28, telefon 0264.454.421, reprezentant de primar Emil Boc in calitate de\n"
 					+ "concedent,  pe de o parte, si D-nul/D-na "
 					+ o.getLastName()
