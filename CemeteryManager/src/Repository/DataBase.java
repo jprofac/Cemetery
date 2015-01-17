@@ -850,7 +850,7 @@ public class DataBase {
     public ArrayList<Data> getExpiringGraves(int year) {
         ArrayList<Data> dataList = new ArrayList<Data>();
         try {
-            resultSet = statement.executeQuery("select g.id, g.parcelId, g.surface, g.observationId, g.type from " +
+            resultSet = statement.executeQuery("select g.id, g.parcelId, g.surface, g.observationId, g.isMonument from " +
                     "grave G join contract C on G.id=C.graveId where year(c.date)+c.period=" + year);
             while (resultSet.next()) {
                 int graveId = resultSet.getInt("id");
