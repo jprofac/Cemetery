@@ -18,7 +18,10 @@ import javax.swing.JButton;
 import Controller.Controller;
 import Model.Deceased;
 import Model.Grave;
+import Model.User;
+import Repository.DeceasedRepo;
 import Repository.Repository;
+import Repository.UserRepo;
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.event.ActionListener;
@@ -34,9 +37,10 @@ public class RelatiiCuPubliculGUI extends JFrame {
 	private JTextField textField_1;
 	private JTabbedPane tabbedPane;
 	
+	public DeceasedRepo deceasedRepo;
 	private Controller controller;
 	private ArrayList<Deceased> deceased = new ArrayList<Deceased>();
-	private ArrayList<Grave> grave= new ArrayList<Grave>();
+	private ArrayList<Grave> grave = new ArrayList<Grave>();
 	private DefaultTableModel modelDeceased;
 	private DefaultTableModel modelGrave;
 
@@ -103,12 +107,13 @@ public class RelatiiCuPubliculGUI extends JFrame {
 
 			}
 		};
-		String[] columnDeceasedNames = {"CNP", "First Name", "Last Name", "Religion", "GraveID", "burialDate"};
-		String[] columnGraveNames = {"ID", "ParcelId", "Surface", "ObservationId", "isMonument", "isValid"};
-		modelDeceased = new DefaultTableModel(columnDeceasedNames,0);
-		modelGrave = new DefaultTableModel(columnGraveNames,0);
-		   	    
-		
+		String[] columnDeceasedNames = { "CNP", "First Name", "Last Name",
+				"Religion", "GraveID", "burialDate" };
+		String[] columnGraveNames = { "ID", "ParcelId", "Surface",
+				"ObservationId", "isMonument", "isValid" };
+		modelDeceased = new DefaultTableModel(columnDeceasedNames, 0);
+		modelGrave = new DefaultTableModel(columnGraveNames, 0);
+
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		final JTable decedati = new JTable(modelDeceased);
 		final JTable morminte = new JTable(modelGrave);
@@ -116,7 +121,6 @@ public class RelatiiCuPubliculGUI extends JFrame {
 		tabbedPane.addTab("Decedati", new JScrollPane(decedati));
 		tabbedPane.addTab("Morminte", new JScrollPane(morminte));
 		tabbedPane.addTab("Monumente", new JScrollPane(monumente));
-		
 
 		contentPane.add(tabbedPane, "cell 0 0 5 1,grow");
 		textField = new JTextField();
@@ -124,19 +128,24 @@ public class RelatiiCuPubliculGUI extends JFrame {
 		contentPane.add(textField, "cell 0 1,growx,aligny center");
 
 		JButton button = new JButton("Cauta Loc Disponibil");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				reload();
+			}
+		});
 		contentPane.add(button, "cell 2 1,growx,aligny top");
 
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		contentPane.add(textField_1, "cell 0 2,growx,aligny top");
-		
+
 		print();
-		 tabbedPane.addChangeListener(new ChangeListener() {
-		        public void stateChanged(ChangeEvent e) {		 
-		        	print();
-		        } 
-		    }); 	
-		
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				print();
+			}
+		});
+
 		JButton button_1 = new JButton("Cauta Dupa Nume");
 		contentPane.add(button_1, "cell 2 2,growx,aligny bottom");
 
@@ -165,37 +174,74 @@ public class RelatiiCuPubliculGUI extends JFrame {
 
 		setVisible(true);
 	}
-	public void print(){
+
+	public void print() {
 		int selectedIndex = tabbedPane.getSelectedIndex();
-    	
-		if (selectedIndex == 0){
+
+		if (selectedIndex == 0) {
 			modelDeceased.setRowCount(0);
-        	deceased = controller.getAllDeceased();
-        	if (deceased != null)
-        		for (Deceased d : deceased){
-        			Object[] data = {d.getId(),d.getFirstName(),d.getLastName(),d.getReligion(),d.getGrave(),d.getBurialDate(),d.getValid()};
-        			modelDeceased.addRow(data);
-        		}
-           
-        }else if (selectedIndex == 1){
-        	modelGrave.setRowCount(0);
-        	grave = controller.getAllGrave();        		 
-        	if (grave != null)
-        		for (Grave g : grave){
-        			Object[] data = {g.getId(),g.getParcelId(), g.getSurface(), g.getObservationId(), g.getIsMonument(), g.isValid()};
-        			modelGrave.addRow(data);
-        		}
-        	
-        }else if (selectedIndex == 2){
-        	modelGrave.setRowCount(0);
-        	grave = (ArrayList<Grave>) controller.getAllGrave();        		 
-        	if (grave != null)
-        		for (Grave g : grave){
-        			if (g.getIsMonument()){
-        				Object[] data = {g.getId(),g.getParcelId(), g.getSurface(), g.getObservationId(), g.getIsMonument(), g.isValid()};
-        				modelGrave.addRow(data);
-        			}
-        		}
-        }
+			deceased = controller.getAllDeceased();
+			if (deceased != null)
+				for (Deceased d : deceased) {
+					Object[] data = { d.getId(), d.getFirstName(),
+							d.getLastName(), d.getReligion(), d.getGrave(),
+							d.getBurialDate(), d.getValid() };
+					modelDeceased.addRow(data);
+				}
+
+		} else if (selectedIndex == 1) {
+			modelGrave.setRowCount(0);
+			grave = controller.getAllGrave();
+			if (grave != null)
+				for (Grave g : grave) {
+					Object[] data = { g.getId(), g.getParcelId(),
+							g.getSurface(), g.getObservationId(),
+							g.getIsMonument(), g.isValid() };
+					modelGrave.addRow(data);
+				}
+
+		} else if (selectedIndex == 2) {
+			modelGrave.setRowCount(0);
+			grave = (ArrayList<Grave>) controller.getAllGrave();
+			if (grave != null)
+				for (Grave g : grave) {
+					if (g.getIsMonument()) {
+						Object[] data = { g.getId(), g.getParcelId(),
+								g.getSurface(), g.getObservationId(),
+								g.getIsMonument(), g.isValid() };
+						modelGrave.addRow(data);
+					}
+				}
+		}
+	}
+
+	private void reload() {
+		int selectedIndex = tabbedPane.getSelectedIndex();
+
+		if (selectedIndex == 0) {
+			modelDeceased.setRowCount(0);
+			deceased = (ArrayList<Deceased>) controller.getAllDeceased();
+			if (deceased != null)
+				for (Deceased d : Repository.getInstance().deceasedRepo
+						.searchDeceased(textField_1.getText())) {
+					Object[] data = { d.getId(), d.getFirstName(),
+							d.getLastName(), d.getReligion(), d.getGrave(),
+							d.getBurialDate(), d.getValid() };
+					modelDeceased.addRow(data);
+				}
+
+		} else if (selectedIndex == 1) {
+			modelGrave.setRowCount(0);
+			grave = controller.getAllGrave();
+			if (grave != null)
+				for (Grave g : grave) {
+					Object[] data = { g.getId(), g.getParcelId(),
+							g.getSurface(), g.getObservationId(),
+							g.getIsMonument(), g.isValid() };
+					modelGrave.addRow(data);
+				}
+
+		}
+
 	}
 }
