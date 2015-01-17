@@ -760,9 +760,8 @@ public class DataBase {
             } else if (data instanceof User) {
                 if (getDataById(((User) data).getId(), USER) != null) {
                     preparedStatement = connect
-                            .prepareStatement("update user set valid = ? where id = ?");
-                    preparedStatement.setInt(1, 0);
-                    preparedStatement.setInt(2, ((User) data).getId());
+                            .prepareStatement("delete user where id = ?");
+                    preparedStatement.setInt(1, ((User) data).getId());
                     preparedStatement.executeUpdate();
                 }
             }
