@@ -33,6 +33,7 @@ public class OrderGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public OrderGUI() {
+		setTitle("Ordin");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 418, 558);
 		contentPane = new JPanel();

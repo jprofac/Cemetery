@@ -28,6 +28,7 @@ public class RelatiiCuPubliculGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public RelatiiCuPubliculGUI() {
+		setTitle("Relatii cu publicul");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 809, 680);
 		contentPane = new JPanel();

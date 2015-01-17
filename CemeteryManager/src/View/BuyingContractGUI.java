@@ -34,6 +34,7 @@ public class BuyingContractGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public BuyingContractGUI() {
+		setTitle("Contract cumparare");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 423, 569);
 		contentPane = new JPanel();

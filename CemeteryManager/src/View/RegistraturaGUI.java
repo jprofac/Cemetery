@@ -28,6 +28,7 @@ public class RegistraturaGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public RegistraturaGUI() {
+		setTitle("Registratura");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 725, 536);
 		contentPane = new JPanel();

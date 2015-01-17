@@ -33,6 +33,7 @@ public class DeathCertificateGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public DeathCertificateGUI() {
+		setTitle("Certificat de deces");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 422, 567);
 		contentPane = new JPanel();
