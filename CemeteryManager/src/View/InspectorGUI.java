@@ -23,6 +23,8 @@ import Repository.Repository;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import net.miginfocom.swing.MigLayout;
@@ -35,7 +37,7 @@ public class InspectorGUI extends JFrame {
 	private DefaultTableModel modelDeceased;
 	private DefaultTableModel modelGrave;
 	private JTabbedPane tabbedPane;
-	
+	final JFrame view = this;
 	private JPanel contentPane;
 
 	/**
@@ -69,6 +71,51 @@ public class InspectorGUI extends JFrame {
 		
 		contentPane.add(tabbedPane, "cell 0 0 5 1,grow");
 
+		final WindowListener listener = new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				view.setVisible(false);
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				view.setVisible(true);
+
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		};
 		
 		print();
 		 tabbedPane.addChangeListener(new ChangeListener() {
@@ -85,13 +132,13 @@ public class InspectorGUI extends JFrame {
 				
 		        int selectedIndex = tabbedPane.getSelectedIndex();		        
 		        if (selectedIndex == 0){
-		        	new DeceasedInfoGUI();
+		        	new DeceasedInfoGUI().addWindowListener(listener);
 		        	print();
 		        }else if (selectedIndex == 1){
-		        	new GraveInfoGUI();
+		        	new GraveInfoGUI().addWindowListener(listener);
 		        	print();
 		        }else if (selectedIndex == 2){
-		        	new GraveInfoGUI();
+		        	new GraveInfoGUI().addWindowListener(listener);
 		        	print();
 		        }
 			}
@@ -106,18 +153,25 @@ public class InspectorGUI extends JFrame {
 				 if (selectedIndex == 0){					
 					int row = decedati.getSelectedRow();
 					int id = (int) decedati.getValueAt(row, 0);
-			        new DeceasedInfoGUI().modifica(id);
+					
+			        DeceasedInfoGUI frame=new DeceasedInfoGUI();
+			        frame.addWindowListener(listener);
+			        frame.modifica(id);
 			        print();
 			        	
 			        }else if (selectedIndex == 1){
 			        	int row = morminte.getSelectedRow();
 						int id = (int) morminte.getValueAt(row, 0);
-				        new GraveInfoGUI().modifica(id);
+						GraveInfoGUI gui = new GraveInfoGUI();
+						gui.addWindowListener(listener);
+						gui.modifica(id);
 				        print();
 			        }else if (selectedIndex == 2){
 			        	int row = monumente.getSelectedRow();
 						int id = (int) monumente.getValueAt(row, 0);
-				        new GraveInfoGUI().modifica(id);
+						GraveInfoGUI gui = new GraveInfoGUI();
+						gui.addWindowListener(listener);
+						gui.modifica(id);
 				        print();
 			        }
 			}
