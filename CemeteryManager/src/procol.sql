@@ -254,4 +254,16 @@ insert into deceased(firstName,lastName,religion,graveId,burialDate) values ("Au
 insert into deceased(firstName,lastName,religion,graveId,burialDate) values ("Ioana","Pop","Ortodox",4,"2013-03-25");
 insert into deceased(firstName,lastName,religion,graveId,burialDate) values ("Alexandra","Ionescu","Ortodox",5,"2015-01-02");
 
+insert into owner(firstName,lastName,domicile) values ("Maria","Popescu","Cluj");
+insert into owner(firstName,lastName,domicile) values ("Marian","Ionescu","Cluj");
+insert into owner(firstName,lastName,domicile) values ("Alexandru","Balan","Cluj");
+insert into owner(firstName,lastName,domicile) values ("Ioana","Popescu","Cluj");
+insert into owner(firstName,lastName,domicile) values ("Viorel","Vlaicu","Cluj");
+
+insert into contract (ownerId,graveId,date,period,receipt) values (1,1,"2011-12-23",7,123);
+insert into contract (ownerId,graveId,date,period,receipt) values (2,1,"2011-12-23",5,123);
+insert into contract (ownerId,graveId,date,period,receipt) values (4,1,"2011-12-23",2,123);
+insert into contract (ownerId,graveId,date,period,receipt) values (3,1,"2011-12-23",5,123);
+insert into contract (ownerId,graveId,date,period,receipt) values (5,1,"2011-12-23",10,123);
+
 

@@ -39,13 +39,14 @@ public class GraveRegisterTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		List<Contract> list=repo.contractRepo.getAllContract();
+		System.out.print(list.get(1).getOwnerId());
         switch (columnIndex){
            case 0: return repo.cemeteryRepo.getCemeteryById(repo.parcelRepo.getParcelById(repo.graveRepo.getGraveById(list.get(rowIndex).getGraveId()).getParcelId()).getCemeteryId()).getName();
 
            case 1: return  repo.parcelRepo.getParcelById(repo.graveRepo.getGraveById(list.get(rowIndex).getGraveId()).getParcelId()).getCode();
            case 2: return  Integer.toString(list.get(rowIndex).getGraveId());              
-           case 3: return  repo.ownerRepo.getOwnerById(list.get(rowIndex).getOwnerId()).getFirstName() + " " + repo.ownerRepo.getOwnerById(list.get(rowIndex).getOwnerId()).getLastName();
-           case 4: return  repo.ownerRepo.getOwnerById(list.get(rowIndex).getOwnerId()).getDomicile();           
+           case 3: {System.out.println(list.get(rowIndex).getOwnerId()); return  null; }//repo.ownerRepo.getOwnerById(list.get(rowIndex).getOwnerId()).getFirstName() + " " + repo.ownerRepo.getOwnerById(list.get(rowIndex).getOwnerId()).getLastName();
+           case 4: return  null; //repo.ownerRepo.getOwnerById(list.get(rowIndex).getOwnerId()).getDomicile();           
            case 5: return  Integer.toString(list.get(rowIndex).getReceipt());
            case 6: return  repo.deceasedRepo.getDeceasedByGrave(list.get(rowIndex).getGraveId()).getFirstName() + " "+ repo.deceasedRepo.getDeceasedByGrave(list.get(rowIndex).getGraveId()).getLastName();
            case 7: return  repo.deceasedRepo.getDeceasedByGrave(list.get(rowIndex).getGraveId()).getBurialDate();
