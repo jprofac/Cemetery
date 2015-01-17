@@ -1,22 +1,25 @@
 package View;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
-import net.sourceforge.jdatepicker.JDatePanel;
+import net.miginfocom.swing.MigLayout;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilCalendarModel;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
-import javax.swing.JButton;
-import net.miginfocom.swing.MigLayout;
+import Controller.Controller;
+import Model.Deceased;
+import Repository.Repository;
 
 
 public class DeceasedInfoGUI extends JFrame {
@@ -59,6 +62,7 @@ public class DeceasedInfoGUI extends JFrame {
 		textField = new JTextField();
 		contentPane.add(textField, "cell 2 0,alignx left,growy");
 		textField.setColumns(10);
+
 		
 		textField_1 = new JTextField();
 		contentPane.add(textField_1, "cell 2 1,alignx left,growy");
@@ -66,15 +70,15 @@ public class DeceasedInfoGUI extends JFrame {
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		contentPane.add(textField_2, "cell 2 2,alignx left,growy");
+		contentPane.add(textField_2, "cell 2 2,alignx left,growy");		
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		contentPane.add(textField_3, "cell 2 3,alignx left,growy");
+		contentPane.add(textField_3, "cell 2 3,alignx left,growy");		
 			
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+		final JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
 		contentPane.add(datePicker, "cell 2 5,grow");
 		
 		JLabel lblNrMormint = new JLabel("Nr. Mormant");
@@ -86,7 +90,33 @@ public class DeceasedInfoGUI extends JFrame {
 		
 		JButton button = new JButton("Salveaza");
 		contentPane.add(button, "cell 0 6 3 1,grow");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int id = Integer.parseInt(textField.getText());
+				String firstName = textField_1.getText();
+				String lastName = textField_2.getText();
+				String religion = textField_3.getText();
+				int grave = Integer.parseInt(textField_4.getText());
+				java.util.Date utilDate = (Date) datePicker.getModel().getValue();
+				
+				java.sql.Date date = new java.sql.Date(utilDate.getTime());				   
+				    
+				DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); 
+				String reportDate = df.format(utilDate); 
+				new Controller(new Repository()).addDeceased(id, firstName, lastName, religion, grave, date);;
+				System.out.println("Saved");
+			}
+		});
 		
 		setVisible(true);
 	}
+	
+	public void modifica(Deceased deceased){
+		textField.setText(String.valueOf(deceased.getId()));
+		textField_1.setText(deceased.getFirstName());
+		textField_2.setText(deceased.getLastName());
+		textField_3.setText(deceased.getReligion());
+		textField_4.setText(String.valueOf(deceased.getGrave()));
+	}
 }
+

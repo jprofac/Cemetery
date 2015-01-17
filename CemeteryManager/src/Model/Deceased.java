@@ -1,5 +1,5 @@
 package Model;
-import java.util.Date;
+import java.sql.Date;
 public class Deceased extends Person {
 	private String religion;
 	private int graveId;
@@ -30,8 +30,8 @@ public class Deceased extends Person {
 		this.burialDate = burialDate;
 	}
 	
-	private boolean isValid(String firstName, String lastName, String religion) {
-		if (firstName.matches("[a-zA-Z]+") && lastName.matches("[a-zA-Z]+")  && religion.matches("[a-zA-z0-9.,]+")) {
+	public boolean isValid() {
+		if (super.isValid() && religion.matches("[a-zA-z0-9.,]+")) {
 			return true;
 		}
 		return false;

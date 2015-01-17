@@ -9,8 +9,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import Model.Grave;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import net.miginfocom.swing.MigLayout;
 
 public class GraveInfoGUI extends JFrame {
@@ -81,6 +85,17 @@ public class GraveInfoGUI extends JFrame {
 		button_1 = new JButton("Salveaza");
 		contentPane.add(button_1, "cell 0 6 3 1,grow");
 		setVisible(true);
+	}
+	
+	
+	public void modifica(Grave grave){
+		//TODO 
+		
+		textField.setText(String.valueOf(grave.getId()));
+		//textField_1.setText(String.valueOf(grave.getType()));
+		textField_2.setText(String.valueOf(grave.getParcelId()));
+		//textField_3.setText(grave.);
+		//textField_4.setText(grave.getGrave());
 	}
 
 }

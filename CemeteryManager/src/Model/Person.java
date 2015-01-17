@@ -34,7 +34,7 @@ public class Person extends MainData implements Data{
 
 	@Override
 	public boolean isValid() {
-		if (id <=0 && firstName.matches("[a-zA-Z]+") && lastName.matches("[a-zA-Z]+")) {
+		if (id >=0 && firstName.matches("[a-zA-Z]+") && lastName.matches("[a-zA-Z]+")) {
 			return true;
 		} else {
 			return false;

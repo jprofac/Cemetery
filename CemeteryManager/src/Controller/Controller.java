@@ -1,8 +1,9 @@
 package Controller;
 
 import java.security.acl.Owner;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.swing.table.TableModel;
@@ -105,9 +106,12 @@ public class Controller {
 	public void deleteOwner(String id){}
 	public TableModel searchOwner(String s){return null;}
 	
-	public TableModel getAllDeceased(){return null;}
-	public void addDeceased(String id, String firstName, String lastName, String religion, Grave grave, String burialDate){}
-	public void updateDeceased(String id, String firstName, String lastName, String religion, Grave grave, String burialDate){}
+	public ArrayList<Deceased>  getAllDeceased(){return repo.deceasedRepo.getAllDeceased();}
+	public void addDeceased(int id, String firstName, String lastName, String religion, int graveId, Date burialDate){
+		
+		repo.deceasedRepo.addDeceased(new Deceased(id, firstName, lastName, religion, graveId,burialDate));
+		}
+	public void updateDeceased(String id, String firstName, String lastName, String religion, int graveId, String burialDate){}
 	public void deleteDeceased(String id){}
 	public TableModel searchDeceased(String s){return null;}
 	
