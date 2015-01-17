@@ -52,7 +52,7 @@ public class InspectorGUI extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[180px][91px][140px][79px][160px]", "[336px][50px]"));
 			
 		String[] columnDeceasedNames = {"CNP", "First Name", "Last Name", "Religion", "GraveID", "burialDate"};
-		String[] columnGraveNames = {"CNP", "First Name", "Last Name", "Religion", "GraveID", "burialDate"};
+		String[] columnGraveNames = {"ID", "ParcelId", "Surface", "ObservationId", "isMonument", "isValid"};
 		modelDeceased = new DefaultTableModel(columnDeceasedNames,0);
 		modelGrave = new DefaultTableModel(columnGraveNames,0);
 		   	    
@@ -61,11 +61,14 @@ public class InspectorGUI extends JFrame {
 		final JTable decedati = new JTable(modelDeceased);
 		final JTable morminte = new JTable(modelGrave);
 		final JTable monumente = new JTable(modelGrave);
-		tabbedPane.addTab("Decedati", decedati);
-		tabbedPane.addTab("Morminte", morminte);
-		tabbedPane.addTab("Monumente", monumente);
+		tabbedPane.addTab("Decedati", new JScrollPane(decedati));
+		tabbedPane.addTab("Morminte", new JScrollPane(morminte));
+		tabbedPane.addTab("Monumente", new JScrollPane(monumente));
+
+		
 		contentPane.add(tabbedPane, "cell 0 0 5 1,grow");
-	
+
+		
 		print();
 		 tabbedPane.addChangeListener(new ChangeListener() {
 		        public void stateChanged(ChangeEvent e) {		 
