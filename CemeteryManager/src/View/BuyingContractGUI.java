@@ -41,7 +41,7 @@ public class BuyingContractGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[376px]", "[391px][50px]"));
-		
+		this.setLocationRelativeTo(null);
 		textPane = new JTextPane();
 		contentPane.add(textPane, "cell 0 0,grow");
 		

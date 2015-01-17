@@ -41,7 +41,7 @@ public class ResponseGUI extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setLayout(new MigLayout("", "[378px][]",
 				"[391px][][36px][13px][50px]"));
-
+		this.setLocationRelativeTo(null);
 		textPane = new JTextPane();
 		contentPane.add(textPane, "cell 0 0,grow");
 

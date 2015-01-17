@@ -36,6 +36,7 @@ public class UserLoginGUI extends JFrame {
 				try {
 					UserLoginGUI frame = new UserLoginGUI();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,84 +55,91 @@ public class UserLoginGUI extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[64px][43px][116px]", "[22px][22px][25px][][][][][]"));
-		
+		contentPane.setLayout(new MigLayout("", "[64px][43px][116px]",
+				"[22px][22px][25px][][][][][]"));
+
 		JLabel lblUsername = new JLabel("Nume Utilizator:");
 		contentPane.add(lblUsername, "cell 1 2,alignx left,aligny center");
-		
+
 		textField = new JTextField();
 		contentPane.add(textField, "cell 2 2,alignx left,aligny top");
 		textField.setColumns(10);
-		
+
 		JLabel lblNewLabel = new JLabel("Parola:");
 		contentPane.add(lblNewLabel, "cell 1 3,growx,aligny center");
-		
+
 		passwordField = new JPasswordField();
 		contentPane.add(passwordField, "cell 2 3,growx,aligny top");
-		
+
 		JButton btnLogIn = new JButton("Autentificare");
 
 		final JFrame view = this;
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO verify type of the user and display the appropriate window
-				int userType=DataBase.getInstance().logIn(textField.getText(), passwordField.getText());
+				// TODO verify type of the user and display the appropriate
+				// window
+				int userType = DataBase.getInstance().logIn(
+						textField.getText(), passwordField.getText());
 				JFrame frame = null;
-				switch (userType){
-					case DataBase.USER_ADMIN:
-						frame = new AdministratorGUI();
-						break;
-					case DataBase.USER_INSPECTOR:
-						frame = new InspectorGUI();
-						break;
-					case DataBase.USER_REGISTRATURA:
-						frame = new RegistraturaGUI();
-						break;
-					case DataBase.USER_RELATII:
-						frame = new RelatiiCuPubliculGUI();
-						break;
-					default:
-						JOptionPane.showMessageDialog(contentPane, "Wrong username or password!");
+				switch (userType) {
+				case DataBase.USER_ADMIN:
+					frame = new AdministratorGUI();
+					frame.setLocationRelativeTo(null);
+					break;
+				case DataBase.USER_INSPECTOR:
+					frame = new InspectorGUI();
+					frame.setLocationRelativeTo(null);
+					break;
+				case DataBase.USER_REGISTRATURA:
+					frame = new RegistraturaGUI();
+					frame.setLocationRelativeTo(null);
+					break;
+				case DataBase.USER_RELATII:
+					frame = new RelatiiCuPubliculGUI();
+					frame.setLocationRelativeTo(null);
+					break;
+				default:
+					JOptionPane.showMessageDialog(contentPane,
+							"Wrong username or password!");
 				}
 
-
 				if (frame != null)
-				frame.addWindowListener(new WindowListener() {
-					@Override
-					public void windowOpened(WindowEvent e) {
+					frame.addWindowListener(new WindowListener() {
+						@Override
+						public void windowOpened(WindowEvent e) {
 
-					}
+						}
 
-					@Override
-					public void windowClosing(WindowEvent e) {
+						@Override
+						public void windowClosing(WindowEvent e) {
 
-					}
+						}
 
-					@Override
-					public void windowClosed(WindowEvent e) {
-						view.setVisible(true);
-					}
+						@Override
+						public void windowClosed(WindowEvent e) {
+							view.setVisible(true);
+						}
 
-					@Override
-					public void windowIconified(WindowEvent e) {
+						@Override
+						public void windowIconified(WindowEvent e) {
 
-					}
+						}
 
-					@Override
-					public void windowDeiconified(WindowEvent e) {
+						@Override
+						public void windowDeiconified(WindowEvent e) {
 
-					}
+						}
 
-					@Override
-					public void windowActivated(WindowEvent e) {
+						@Override
+						public void windowActivated(WindowEvent e) {
 
-					}
+						}
 
-					@Override
-					public void windowDeactivated(WindowEvent e) {
+						@Override
+						public void windowDeactivated(WindowEvent e) {
 
-					}
-				});
+						}
+					});
 
 				view.setVisible(false);
 			}

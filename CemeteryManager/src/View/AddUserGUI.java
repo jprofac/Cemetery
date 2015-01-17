@@ -39,7 +39,7 @@ public class AddUserGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		this.setLocationRelativeTo(null);
 		final JLabel label = new JLabel("Nume:");
 		label.setBounds(45, 97, 73, 39);
 		contentPane.add(label);

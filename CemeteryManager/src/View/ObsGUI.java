@@ -30,7 +30,7 @@ public class ObsGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[131px][20px][108px]", "[27px][27px][27px][50px]"));
-		
+		this.setLocationRelativeTo(null);
 		JButton btnSalveaza = new JButton("Salveaza");
 		contentPane.add(btnSalveaza, "cell 0 3 3 1,grow");
 		
