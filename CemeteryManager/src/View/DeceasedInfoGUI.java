@@ -47,7 +47,7 @@ public class DeceasedInfoGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[146px][12px][149px]", "[18px][18px][18px][18px][19px][39px][50px]"));
-		
+		this.setLocationRelativeTo(null);
 		JLabel lblCnp = new JLabel("CNP: ");
 		contentPane.add(lblCnp, "cell 0 0,alignx center,aligny bottom");
 		
