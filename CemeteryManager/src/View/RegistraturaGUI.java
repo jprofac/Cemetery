@@ -49,7 +49,7 @@ public class RegistraturaGUI extends JFrame {
 		textField.setColumns(10);
 		contentPane.add(textField, "cell 0 1,growx,aligny center");
 
-		JButton button = new JButton("Cauta");
+		JButton button = new JButton("Cauta dupa nume");
 		contentPane.add(button, "cell 2 1,growx,aligny top");
 
 		final WindowListener listener = new WindowListener() {
@@ -109,7 +109,7 @@ public class RegistraturaGUI extends JFrame {
 		JButton button_2 = new JButton("Creaza Chitanta");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ReceiptGUI().addWindowListener(listener);;
+				new ReceiptGUI().addWindowListener(listener);
 			}
 		});
 		contentPane.add(button_2, "cell 2 2,grow");
@@ -117,7 +117,8 @@ public class RegistraturaGUI extends JFrame {
 		JButton button_3 = new JButton("Trimite Raspuns");
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ResponseGUI().addWindowListener(listener);;
+				new ResponseGUI().addWindowListener(listener);
+				;
 			}
 		});
 		contentPane.add(button_3, "cell 4 2,grow");

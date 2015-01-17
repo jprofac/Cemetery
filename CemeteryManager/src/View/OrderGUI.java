@@ -29,7 +29,6 @@ public class OrderGUI extends JFrame {
 	private JTextField textField;
 	private JTextPane textPane;
 
-
 	/**
 	 * Create the frame.
 	 */
@@ -40,36 +39,43 @@ public class OrderGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[378px]", "[391px][50px]"));
-		
-		 textPane = new JTextPane();
+
+		textPane = new JTextPane();
 		contentPane.add(textPane, "cell 0 0,grow");
-		
+
 		JLabel lblNumeCreator = new JLabel("Nume creator:");
 		contentPane.add(lblNumeCreator, "flowx,cell 0 1");
-		
+
 		textField = new JTextField();
 		contentPane.add(textField, "cell 0 1");
 		textField.setColumns(10);
-		
+
 		JButton button = new JButton("Salveaza Ordin");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Writer writer = null;
-				 try {
-					 if (!textField.getText().isEmpty() && !textPane.getText().isEmpty()){
-				     writer = new BufferedWriter(new OutputStreamWriter(
-				           new FileOutputStream("Ordin/"+textField.getText() + ".txt"), "utf-8"));
-				     writer.write(textPane.getText());
-				     dispose();
-					 }else{
-						 JOptionPane.showMessageDialog(contentPane, "Field can't be empty");
-					 }
-				 } catch (IOException ex) {
-				   // report
-				 } finally {
-				    try {writer.close();} catch (Exception ex) {}
-				 }
-				 dispose();
+				try {
+					if (!textField.getText().isEmpty()
+							&& !textPane.getText().isEmpty()) {
+						writer = new BufferedWriter(new OutputStreamWriter(
+								new FileOutputStream("Ordin/"
+										+ textField.getText() + ".txt"),
+								"utf-8"));
+						writer.write(textPane.getText());
+						dispose();
+					} else {
+						JOptionPane.showMessageDialog(contentPane,
+								"Field can't be empty");
+					}
+				} catch (IOException ex) {
+					// report
+				} finally {
+					try {
+						writer.close();
+					} catch (Exception ex) {
+					}
+				}
+				dispose();
 			}
 		});
 		contentPane.add(button, "cell 0 1,alignx center,growy");

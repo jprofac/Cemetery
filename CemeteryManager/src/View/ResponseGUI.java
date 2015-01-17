@@ -28,7 +28,6 @@ public class ResponseGUI extends JFrame {
 	private JTextField textField;
 	private JTextPane textPane;
 
-
 	/**
 	 * Create the frame.
 	 */
@@ -40,39 +39,45 @@ public class ResponseGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		contentPane.setLayout(new MigLayout("", "[378px][]", "[391px][][36px][13px][50px]"));
-		
+		contentPane.setLayout(new MigLayout("", "[378px][]",
+				"[391px][][36px][13px][50px]"));
+
 		textPane = new JTextPane();
 		contentPane.add(textPane, "cell 0 0,grow");
-		
+
 		JLabel lblNewLabel = new JLabel("Nume Proprietar");
 		contentPane.add(lblNewLabel, "flowx,cell 0 1,alignx left,aligny top");
-		
+
 		textField = new JTextField();
 		contentPane.add(textField, "cell 0 1,alignx center,aligny bottom");
 		textField.setColumns(10);
-		
+
 		JButton button = new JButton("Trimite Raspuns");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Writer writer = null;
-				 try {
-					 if (!textField.getText().isEmpty()
-								&& !textPane.getText().isEmpty()) {
-				     writer = new BufferedWriter(new OutputStreamWriter(
-				     new FileOutputStream("Raspunsuri/"+textField.getText() + ".txt"), "utf-8"));
-				     writer.write(textPane.getText());
-				     dispose();
-					 }else{
-						 JOptionPane.showMessageDialog(contentPane,
-									"Field can't be empty");
-					 }
-				 } catch (IOException ex) {
-				   // report
-				 } finally {
-				    try {writer.close();} catch (Exception ex) {}
-				 }	
+				try {
+					if (!textField.getText().isEmpty()
+							&& !textPane.getText().isEmpty()) {
+						writer = new BufferedWriter(new OutputStreamWriter(
+								new FileOutputStream("Raspunsuri/"
+										+ textField.getText() + ".txt"),
+								"utf-8"));
+						writer.write(textPane.getText());
+						dispose();
+					} else {
+						JOptionPane.showMessageDialog(contentPane,
+								"Field can't be empty");
+					}
+				} catch (IOException ex) {
+					// report
+				} finally {
+					try {
+						writer.close();
+					} catch (Exception ex) {
+					}
+				}
 			}
 		});
 		contentPane.add(button, "cell 0 4,alignx center,growy");

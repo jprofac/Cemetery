@@ -57,7 +57,8 @@ public class CreateRequestGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				 Writer writer = null;
 				 try {
-					 if (!textField.getText().isEmpty() && !textPane.getText().isEmpty()){
+					if (!textField.getText().isEmpty()
+							&& !textPane.getText().isEmpty()) {
 				     writer = new BufferedWriter(new OutputStreamWriter(
 				           new FileOutputStream("Cereri/" + textField.getText() + ".txt"), "utf-8"));
 				     writer.write(textPane.getText());
